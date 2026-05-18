@@ -1,0 +1,21 @@
+# Local environment
+.env
+.env.local
+
+# Build outputs
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+dist/
+build/
+
+# Sim outputs (user-generated)
+sims/
+runs/
+*/runs/
+templates/*/runs/
+
+# OS junk
+.DS_Store
+Thumbs.db

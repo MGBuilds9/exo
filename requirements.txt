@@ -1,0 +1,30 @@
+# exo — Python dependencies (v0.1)
+
+# Agent runtime
+camel-ai>=0.2.0
+# Note: camel-oasis is optional for social-media-style sims; pin when needed.
+
+# Storage
+qdrant-client>=1.13.0
+neo4j>=5.15.0
+psycopg2-binary>=2.9.9
+sqlalchemy>=2.0.0
+
+# LLM / embedding clients
+openai>=1.40.0
+requests>=2.31.0
+
+# YAML config + CLI
+pyyaml>=6.0.1
+click>=8.1.7
+rich>=13.7.0
+
+# API server (minimal)
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+
+# Validation
+pydantic>=2.6.0
+
+# Logging
+structlog>=24.1.0

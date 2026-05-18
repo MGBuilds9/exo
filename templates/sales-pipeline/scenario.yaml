@@ -1,0 +1,46 @@
+name: sales-pipeline-default
+domain_ref: ./domain.yaml
+description: |
+  Rehearse the 30-minute discovery call before pitching to a real prospect.
+  Founder walks through value prop; three decision-makers probe from
+  operations, finance, and technical angles.
+
+trigger: |
+  The founder has just opened the call. They have 30 minutes. They are
+  pitching an AI-powered platform that simulates multi-stakeholder dynamics
+  for B2B sales rehearsal. The prospect company is a mid-size construction
+  general contractor evaluating tooling for their estimating + project
+  management team. They have already done one demo two weeks ago.
+
+initial_context: |
+  This is a sales discovery call. The founder is selling. The three prospect
+  roles (VP Ops, CFO, IT Director) are all in the room and each will speak
+  from their own angle. The founder's job is to advance the deal toward a
+  paid pilot. The prospects' job is to surface objections honestly.
+
+rounds: 5
+
+exit_conditions:
+  max_turns: 20
+  max_minutes: 30
+
+signals:
+  - name: prospect_interest
+    type: numeric
+    scale: 0..10
+    description: How interested is this actor in moving forward?
+
+  - name: trust
+    type: numeric
+    scale: 0..10
+    description: How much do they trust the founder's claims?
+
+  - name: deal_momentum
+    type: numeric
+    scale: 0..10
+    description: |
+      Subjective sense of whether the deal is moving toward a close or stalling.
+
+output:
+  format: jsonl
+  directory: ./runs/
