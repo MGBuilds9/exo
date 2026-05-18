@@ -1,0 +1,120 @@
+name: mirofish-extend
+purpose: Add a new actor type (RegulatoryInspector) to the Mirofish construction-domain sim and observe whether the original 8 actors behave measurably differently with vs. without the inspector present.
+created_by: exo-architect v0.1.0 (Mirofish reference port + extended)
+system_kind: organizational
+scale: medium
+memory:
+  tier: none
+  vector_backend: none
+  graph_backend: none
+  sql_backend: none
+
+# Same 8 actors as E1 (mirofish-recreate) — DO NOT modify their personas.
+# E2 tests whether ADDING ONE NEW ACTOR changes the dynamic of the existing 8.
+# Comparison: E2 transcripts vs E1 transcripts (same trigger, same actors,
+# one extra voice in the room).
+
+actors:
+  - id: owner_executive
+    persona: |
+      Owner/Executive of MDM Group Inc., the construction operations firm.
+      Primary concern: system adoption + data integrity. Strategic, watches
+      the P&L, tolerates pilot pain only if metrics improve within 90 days.
+      Has signed off on the KrewPact rollout but wants weekly proof points.
+    role: decider
+    model: claude-oauth
+
+  - id: project_manager
+    persona: |
+      Project manager at MDM. Primary concern: day-to-day coordination.
+      Medium risk tolerance. Will use KrewPact for core tasks but worries
+      about data drift across CRM, estimating, project, inventory, finance.
+    role: coordinator
+    model: claude-oauth
+
+  - id: field_foreman
+    persona: |
+      Field foreman / site lead at MDM. Mobile-first workflow preference.
+      Cares about: photos, daily logs, inventory movement. Will use
+      KrewPact via mobile. Suspicious of any feature requiring a laptop
+      while standing in concrete.
+    role: operator
+    model: claude-oauth
+
+  - id: estimator
+    persona: |
+      Estimator / preconstruction lead at MDM. Multiple data sources to
+      reconcile. Needs confidence that CRM, estimating, project, inventory,
+      and finance data will not drift across systems during the rollout.
+    role: analyst
+    model: claude-oauth
+
+  - id: finance_admin
+    persona: |
+      Finance/admin lead at MDM. Accounting system: ERPNext. Audit focus:
+      reconciliation. Will not green-light migration if anything threatens
+      month-end close.
+    role: gatekeeper
+    model: claude-oauth
+
+  - id: skeptical_employee
+    persona: |
+      Long-time MDM employee (10+ years). Resists change due to reliance
+      on existing processes. Has seen vendor pilots come and go. Sets the
+      tone for the rest of the team.
+    role: skeptic
+    model: claude-oauth
+
+  - id: subcontractor_rep
+    persona: |
+      External / subcontractor-adjacent user. Onboarding experience matters.
+      Worried about: extra steps, new logins, getting paid on time.
+    role: external
+    model: claude-oauth
+
+  - id: michael
+    persona: |
+      Michael — leadership voice driving the KrewPact rollout. Owns the
+      internal narrative.
+    role: change_agent
+    model: claude-oauth
+
+  # === NEW ACTOR (E2) — the only difference from E1 ===
+  - id: regulatory_inspector
+    persona: |
+      Provincial labour-safety inspector. Cold-arrival, unannounced. Has
+      statutory authority to halt operations and issue stop-work orders.
+      Reads project records line-by-line, especially daily logs and
+      worker-hours documentation. Skeptical of "we'll fix it later"
+      promises. Will demand to see the audit trail for any digital
+      system change because "if it didn't happen in the system, it
+      didn't happen for me." Mid-meeting arrival — walked in during the
+      KrewPact rollout discussion and asked to verify documentation
+      compliance.
+    role: regulator
+    model: claude-oauth
+
+runtime:
+  default_model: claude-oauth
+  fallback_model: ollama-cloud/qwen3-coder:480b
+  llm_preference: claude-oauth
+  temperature: 0.7
+  parallel_agents: 4
+  log_level: INFO
+
+machine_profile:
+  source: same as E1 — exo doctor on this machine
+  os: Windows 10.0.26200
+  ram_gb: 62.9
+  gpu: AMD Radeon RX 7900 XT
+
+experiment_meta:
+  baseline: ./experiments/E1-recreate-mirofish/runs/
+  hypothesis: |
+    Adding RegulatoryInspector should measurably shift the original 8
+    actors' signals — particularly finance_admin (audit trail concern),
+    field_foreman (daily logs scrutiny), and skeptical_employee (sees
+    the inspector as validation of their "old way worked" position).
+    Per the falsifiable criteria in PLAN.md: ≥2 of original 8 actors'
+    sentiment or trust signal trajectories should differ by > 1.5
+    between WITH-inspector and WITHOUT-inspector runs.

@@ -1,0 +1,55 @@
+name: mirofish-extend-rollout-meeting-with-inspector
+domain_ref: ./domain.yaml
+description: |
+  Same MDM Group KrewPact rollout meeting as E1, but mid-meeting a labour-
+  safety inspector arrives unannounced and asks for documentation evidence.
+  This is the ONLY scenario change from E1. Comparison is signal-trajectory
+  delta on the original 8 actors WITH vs WITHOUT the inspector.
+
+trigger: |
+  Michael opens the meeting: "Effective next Monday, KrewPact goes live as
+  our daily workflow platform for projects, field operations, estimating,
+  and inventory. ERPNext stays as the system of record for finance and
+  accounting. Field teams will see KrewPact on their phones first thing
+  Monday morning. Office teams: your existing reports stay, but daily
+  task management moves to KrewPact. We're committed — this isn't a pilot.
+  Questions, concerns, blockers — let me hear them now."
+
+  [10 minutes into the meeting] A provincial labour-safety inspector walks
+  in without an appointment, badge visible, and says: "I'm here for a
+  spot inspection. I need to see documentation that this transition won't
+  break your audit trail for daily worker-hours and on-site safety logs.
+  Show me how that works in KrewPact."
+
+initial_context: |
+  Same all-hands meeting as E1 (Mirofish recreate). Same 8 stakeholders.
+  ADDITIONAL: a labour-safety inspector has joined unannounced mid-meeting
+  and is demanding evidence of audit-trail continuity through the rollout.
+  All actors must now factor the inspector's authority into their
+  responses.
+
+rounds: 5
+
+exit_conditions:
+  max_turns: 40
+  max_minutes: 30
+
+signals:
+  - name: sentiment
+    type: numeric
+    scale: 0..10
+    description: Actor's current emotional state about the rollout
+
+  - name: trust
+    type: numeric
+    scale: 0..10
+    description: Actor's trust in leadership's claims about the transition
+
+  - name: adoption_likelihood
+    type: numeric
+    scale: 0..10
+    description: Self-reported likelihood to use KrewPact as primary tool day-1
+
+output:
+  format: jsonl
+  directory: ./runs/
