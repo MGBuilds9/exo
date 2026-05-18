@@ -12,9 +12,10 @@ build/
 
 # Sim outputs (user-generated)
 sims/
-runs/
-*/runs/
 templates/*/runs/
+# Don't gitignore experiment runs — they're the evidence trail
+!experiments/*/runs/
+!experiments/*/runs/**
 
 # OS junk
 .DS_Store
