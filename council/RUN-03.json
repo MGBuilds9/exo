@@ -1,0 +1,125 @@
+{
+  "run_number": 3,
+  "timestamp": "2026-05-18T09:38:04.888038+00:00",
+  "contract_sha": "732e940d7a27fc1fe0b73ca4cac714cab4118ae5a89e7992218cc77796f1d505",
+  "sealed_prompts_sha": "e0ce0622564fb391d83a95513a68c445119be9153d38fff01c45bf60fa4939af",
+  "variant": 3,
+  "voices": [
+    {
+      "engine": "codex",
+      "model": "gpt-5.5"
+    },
+    {
+      "engine": "gemini",
+      "model": "gemini-2.5-pro"
+    },
+    {
+      "engine": "ollama",
+      "model": "qwen3-coder:480b"
+    },
+    {
+      "engine": "ollama",
+      "model": "gpt-oss:120b"
+    }
+  ],
+  "judgments": [
+    {
+      "voice_engine": "codex",
+      "voice_model": "gpt-5.5",
+      "archetype": "Homelab self-hoster",
+      "archetype_idx": 3,
+      "elapsed_seconds": 17.95,
+      "raw_response": "SUCCESS: The process with PID 31428 (child process of PID 18944) has been terminated.\nSUCCESS: The process with PID 18944 (child process of PID 33920) has been terminated.\nSUCCESS: The process with PID 33920 (child process of PID 33200) has been terminated.\nSUCCESS: The process with PID 33200 (child process of PID 34148) has been terminated.\nSUCCESS: The process with PID 3472 (child process of PID 36000) has been terminated.\nSUCCESS: The process with PID 36000 (child process of PID 34148) has been terminated.\n{\n  \"archetype\": \"Homelab self-hoster\",\n  \"first_impression\": \"The pitch is aimed directly at me, but the bundle still reads more like a promising README than a proven self-hostable system.\",\n  \"biggest_strength\": \"YAML-first simulations, Apache 2.0 licensing, and optional local Ollama support are the right instincts for a fork-and-run homelab tool.\",\n  \"biggest_weakness\": \"The actual template and example lean on Claude OAuth and Ollama Cloud, while the local-only path and lazy-start Docker claims are not substantiated by the provided artifact.\",\n  \"would_star\": false,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 8,\n  \"what_would_make_me_more_likely_to_engage\": \"Show a complete docker-compose local-only run using a pulled Ollama model, no cloud credentials, real logs, generated files, and a non-generic transcript from one included template.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Homelab self-hoster",
+        "first_impression": "The pitch is aimed directly at me, but the bundle still reads more like a promising README than a proven self-hostable system.",
+        "biggest_strength": "YAML-first simulations, Apache 2.0 licensing, and optional local Ollama support are the right instincts for a fork-and-run homelab tool.",
+        "biggest_weakness": "The actual template and example lean on Claude OAuth and Ollama Cloud, while the local-only path and lazy-start Docker claims are not substantiated by the provided artifact.",
+        "would_star": false,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "Show a complete docker-compose local-only run using a pulled Ollama model, no cloud credentials, real logs, generated files, and a non-generic transcript from one included template."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "gemini",
+      "voice_model": "gemini-2.5-pro",
+      "archetype": "Senior staff engineer",
+      "archetype_idx": 0,
+      "elapsed_seconds": 31.11,
+      "raw_response": "{\n  \"archetype\": \"Senior staff engineer\",\n  \"first_impression\": \"The infrastructure decoupling and honest README are refreshing, but the actual output is just generic LLM roleplay masquerading as a simulation.\",\n  \"biggest_strength\": \"The declarative, YAML-first design that cleanly separates the multi-agent runtime from the memory tier and model routing without vendor lock-in.\",\n  \"biggest_weakness\": \"The provided example transcript is completely generic and fails to demonstrate why this complex architecture is better than a single zero-shot prompt.\",\n  \"would_star\": false,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": true,\n  \"confidence_0_to_10\": 9,\n  \"what_would_make_me_more_likely_to_engage\": \"Show an example where the graph or vector memory tiers actually drive emergent, non-obvious behavior that a basic chat prompt couldn't reproduce.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "The infrastructure decoupling and honest README are refreshing, but the actual output is just generic LLM roleplay masquerading as a simulation.",
+        "biggest_strength": "The declarative, YAML-first design that cleanly separates the multi-agent runtime from the memory tier and model routing without vendor lock-in.",
+        "biggest_weakness": "The provided example transcript is completely generic and fails to demonstrate why this complex architecture is better than a single zero-shot prompt.",
+        "would_star": false,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": true,
+        "confidence_0_to_10": 9,
+        "what_would_make_me_more_likely_to_engage": "Show an example where the graph or vector memory tiers actually drive emergent, non-obvious behavior that a basic chat prompt couldn't reproduce."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "qwen3-coder:480b",
+      "archetype": "AI researcher",
+      "archetype_idx": 1,
+      "elapsed_seconds": 5.43,
+      "raw_response": "{\n  \"archetype\": \"AI researcher\",\n  \"first_impression\": \"This is a well-packaged, opinionated starter kit for multi-agent simulations that lowers the barrier to entry for domain-specific modeling.\",\n  \"biggest_strength\": \"The YAML-first configuration and deterministic architect CLI enable reproducible, version-controlled simulation designs without requiring deep infra expertise.\",\n  \"biggest_weakness\": \"It doesn't introduce novel research contributions — it's an assembly of existing tools with a focus on usability rather than innovation.\",\n  \"would_star\": false,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 8,\n  \"what_would_make_me_more_likely_to_engage\": \"A clear research contribution around simulation fidelity, validation against real-world outcomes, or novel memory architectures would make this more compelling for academic engagement.\"\n}",
+      "parsed_judgment": {
+        "archetype": "AI researcher",
+        "first_impression": "This is a well-packaged, opinionated starter kit for multi-agent simulations that lowers the barrier to entry for domain-specific modeling.",
+        "biggest_strength": "The YAML-first configuration and deterministic architect CLI enable reproducible, version-controlled simulation designs without requiring deep infra expertise.",
+        "biggest_weakness": "It doesn't introduce novel research contributions — it's an assembly of existing tools with a focus on usability rather than innovation.",
+        "would_star": false,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "A clear research contribution around simulation fidelity, validation against real-world outcomes, or novel memory architectures would make this more compelling for academic engagement."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "gpt-oss:120b",
+      "archetype": "Indie hacker",
+      "archetype_idx": 2,
+      "elapsed_seconds": 5.97,
+      "raw_response": "{\n  \"archetype\": \"Indie hacker\",\n  \"first_impression\": \"A fairly heavyweight, opinionated starter kit for multi‑agent simulations that promises a YAML‑first, Docker‑compose setup.\",\n  \"biggest_strength\": \"Provides a ready‑made CLI architect and concrete sales‑pipeline template that actually produces a realistic transcript.\",\n  \"biggest_weakness\": \"Too many moving parts (Docker, multiple DBs, Camel‑AI/OASIS) for a solo founder who just wants a quick, low‑friction tool.\",\n  \"would_star\": false,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": true,\n  \"confidence_0_to_10\": 7,\n  \"what_would_make_me_more_likely_to_engage\": \"If it could run as a single‑file Python script with optional in‑memory backends and no Docker/DB setup, it would fit my fast‑track workflow.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Indie hacker",
+        "first_impression": "A fairly heavyweight, opinionated starter kit for multi‑agent simulations that promises a YAML‑first, Docker‑compose setup.",
+        "biggest_strength": "Provides a ready‑made CLI architect and concrete sales‑pipeline template that actually produces a realistic transcript.",
+        "biggest_weakness": "Too many moving parts (Docker, multiple DBs, Camel‑AI/OASIS) for a solo founder who just wants a quick, low‑friction tool.",
+        "would_star": false,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": true,
+        "confidence_0_to_10": 7,
+        "what_would_make_me_more_likely_to_engage": "If it could run as a single‑file Python script with optional in‑memory backends and no Docker/DB setup, it would fit my fast‑track workflow."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    }
+  ],
+  "summary": {
+    "would_star_count": 0,
+    "would_share_count": 1,
+    "would_tell_network_count": 1,
+    "would_NOT_engage_count": 2,
+    "schema_validation_failures": 0,
+    "passing_archetypes_count": 0,
+    "average_confidence": 8.0,
+    "run_passed": false
+  }
+}

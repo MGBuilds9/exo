@@ -187,8 +187,44 @@ TURN 4  it_director (prospect-technical): "Before we move forward, I need
 ```
 
 Full transcript: [`examples/sales-pipeline-rehearsal/`](./examples/sales-pipeline-rehearsal/).
-Each prospect surfaces objections specific to their function. The `deal_momentum`
-signal trends down (this is a discovery call, not a close).
+Each prospect surfaces objections specific to their function.
+
+## Why this isn't just LLM roleplay
+
+The same template (`templates/sales-pipeline/`) run three times against
+the same prospects produces three different conversations with measurable
+behavioral variance. Per-actor `deal_momentum` deltas across 3 independent
+runs:
+
+| Actor | Run 1 (start→end) | Run 2 | Run 3 |
+|---|---|---|---|
+| `vp_operations` | 4.0→6.5 | 4.0→5.0 | 3.0→5.0 |
+| `cfo` | 3.0→5.0 | 3.0→5.0 | 3.0→5.0 |
+| `it_director` | 2.0→5.0 | 4.0→**3.5** ⬇ | 3.0→4.0 |
+
+| Actor | Cross-run spread | What it means |
+|---|---|---|
+| `cfo` | 0.0 | The CFO's response is structural — same objection arc every time. Pricing + lock-in. Predictable. |
+| `vp_operations` | 1.5 | Moderate — VP's enthusiasm shifts based on specific examples the founder happens to give. |
+| `it_director` | **3.5** | High variance — in Run 2 the IT Director actively pulled the deal *backwards* (-0.5). In Run 1 they ended up engaged. The persona's response is unstable; one specific phrasing of "security architecture" makes or breaks the call. |
+
+And the actual final turns from each run diverge concretely:
+
+- **Run 1**: IT Director asks about "joint encryption key arrangement and container deployment specifics"
+- **Run 2**: IT Director demands "NIST 800-171 compliance evidence" and stalls
+- **Run 3**: IT Director "won't sign off on technical integration until full security documentation review"
+
+This is the simulation property exo provides: **the same setup explores
+different conversational paths, surfacing which actors are stable risks
+vs which are highly path-dependent.** Run it 5–10 times for a deal that
+matters; the actors that have high variance are the ones to prepare
+hardest for.
+
+This is not what you get from a single GPT prompt asking it to "roleplay
+a sales call." Each actor has its own persona, model, and turn-by-turn
+state; the variance is structural, not stylistic.
+
+[Full transcripts of all 3 runs](./examples/sales-pipeline-rehearsal/).
 
 ## Examples included
 
