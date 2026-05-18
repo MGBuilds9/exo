@@ -233,8 +233,18 @@ TURN 4  it_director (prospect-technical): "Before we move forward, I need
 [... 16 more turns ...]
 ```
 
-Full transcript: [`examples/sales-pipeline-rehearsal/`](./examples/sales-pipeline-rehearsal/).
-Each prospect surfaces objections specific to their function.
+Full transcript: [`examples/sales-pipeline-rehearsal/`](./examples/sales-pipeline-rehearsal/) — 21 turns, 4 actors, ~140s real wallclock against Ollama Cloud qwen3-coder:480b. The repository ships THREE independent runs of the same template:
+
+- `transcript.jsonl` — Run 1 (20 turns)
+- `transcript-run-2.jsonl` — Run 2 (20 turns)
+- `transcript-run-3.jsonl` — Run 3 (20 turns)
+
+Each ~140 seconds. ~$0.02 in tokens per run. Reproducible: see the
+"Reproducibility" section below for the exact commands.
+
+Each prospect surfaces objections specific to their function. The
+cross-run variance section above quantifies what's different between
+runs.
 
 ## Why this isn't just LLM roleplay
 
