@@ -2,10 +2,10 @@
 
 # exo
 
-**A 600-line Python wrapper that runs multi-actor LLM conversations from a YAML file.**
-**With a deterministic CLI that scans your machine and picks concrete LLM/storage backends from what you actually have.**
+**Multi-actor LLM simulation engine. YAML-driven, local-first, vendor-neutral.**
+**`exo doctor` scans your hardware + services; `exo architect` designs a sim in 12 questions; `exo run` drives the conversation.**
 
-*v0.1 — designed for 3–12 actor rehearsal sims. Plausible role-play with measurable variance, not calibrated predictions.*
+*v0.1 — designed for 3–12 actor rehearsal sims. Apache 2.0.*
 
 [![Docker](https://img.shields.io/badge/Docker-compose%20up-2496ED?style=flat-square&logo=docker&logoColor=white)](#quickstart)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](./LICENSE)
@@ -403,6 +403,52 @@ diff <(jq -r .signals run-a/transcript.jsonl) \
 ```
 
 Same template, three different conversations, measurable cross-run variance.
+
+## Features
+
+- **Hardware-aware design.** `exo doctor` probes localhost (Ollama, LM Studio, Qdrant, Neo4j, Postgres, Docker, Claude CLI, env-var cloud accounts) plus any IP you supply (homelab, NAS), then recommends concrete backends for *your* machine — not generic defaults.
+- **Per-actor LLM routing.** Each actor in `domain.yaml` picks its own model: `actor.model: claude-oauth` / `ollama-cloud/<model>` / `local-ollama/<model>`. Frontier for the hard role, local for the cheap ones. No code changes to swap.
+- **YAML-first config.** One file declares actors, personas, memory tier, scenario, signals. No Python orchestration code to write.
+- **Cross-run variance evidence.** Three independent runs of the same template produce measurably different conversations with per-actor signal trajectories — proves the sim isn't deterministic single-prompt roleplay.
+- **Profile-gated memory tiers.** Qdrant / Neo4j / Postgres wired in `compose.yaml` as opt-in profiles. Default `docker compose up` starts only the runner; `--profile graph` adds Neo4j when you actually need it.
+- **Determinism where it matters.** The architect's recommendation logic is rule-based (not LLM-in-the-loop). Same answers → same `domain.yaml`. Backed by [`tests/test_architect_determinism.py`](tests/test_architect_determinism.py) (7 unit tests, run in CI).
+- **Local-only path.** `templates/sales-pipeline/domain-local.yaml` is pre-configured for local Ollama. Zero data leaves your machine — no `sed` substitution required.
+
+## Roadmap
+
+**v0.1 (current):**
+- ✅ Hardware-aware architect + doctor CLI
+- ✅ Turn-loop runtime with LLM router (Ollama Cloud + local Ollama; Claude OAuth drafted)
+- ✅ Signal extraction + cross-run variance reporting
+- ✅ One polished template (sales-pipeline) + two reference experiments (Mirofish E1+E2)
+- ✅ Profile-gated memory tier scaffold (no runtime read/write yet)
+- ✅ CI + determinism tests + Apache 2.0
+
+**v0.2 (planned):**
+- Memory tier wiring in the runtime (vector retrieval, graph entity lookup, structured-record persistence)
+- 5 more templates: healthcare-triage, wedding-vendor-coordination, incident-response, social-media-reaction, market-dynamics
+- Web UI at `:5050` (currently a health stub)
+- CAMEL-AI integration as an opt-in runtime alternative
+- `claude-oauth` LLM backend battle-tested
+- Asciinema cast / GIF for the README
+
+**v0.3+:**
+- Calibration tooling: compare simulated signals against actual outcome data (sales transcripts, real meeting minutes) where users have ground-truth
+- Larger-scale simulations (50+ actors) with concurrency control to stay under LLM rate limits
+- Plugin system for custom signal extractors and persona generators
+
+## Acknowledgements
+
+exo stands on the shoulders of:
+
+- **[CAMEL-AI](https://github.com/camel-ai/camel)** — the agent-loop pattern that inspired exo's runtime (planned v0.2 integration as an opt-in)
+- **[OASIS](https://github.com/camel-ai/oasis)** — the social-media-simulation pattern. If you want OASIS-style Twitter/Reddit modeling specifically, use it directly — exo is a more generic substrate.
+- **[MiroFish-Offline](https://github.com/nikmcfly/MiroFish-Offline)** — a domain-specific multi-agent simulator that demonstrated the value of OASIS-style sim for non-social domains. exo's E1 reference experiment was built against Mirofish's surviving graph.
+- **[Qdrant](https://qdrant.tech/)**, **[Neo4j](https://neo4j.com/)**, **[PostgreSQL](https://www.postgresql.org/)** — the memory-tier substrate
+- **[Ollama](https://ollama.com/)** + **[Ollama Cloud](https://ollama.com/cloud)** — local + cloud LLM inference; the local-first thesis depends on these
+- **[Claude Code](https://www.anthropic.com/)** — the OAuth-first inference path
+
+If you've shipped one of these projects: thank you. exo is a thin layer above your work.
 
 ## License
 
