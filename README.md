@@ -25,7 +25,7 @@
 
 `exo` is an opinionated starter kit for multi-agent simulation engines. It bundles:
 
-- **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured). The canonical hybrid stack from the [2026 agent-memory guide](./docs/memory-architecture.md).
+- **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured). The canonical hybrid stack from the [2026 agent-memory guide](./docs/memory-architecture.md). **All three are optional and lazy-started** — a simple 4-actor chat sim runs with zero databases. The DBs only spin up when your `domain.yaml` declares a memory tier that needs them.
 - **LLM router** — Routes requests between Claude OAuth (frontier), Ollama Cloud (cloud OSS), and local Ollama / BERTHA / llama-swap (local OSS). No API keys baked in.
 - **Multi-agent runtime** — Built on [CAMEL-AI](https://github.com/camel-ai/camel) and [OASIS](https://github.com/camel-ai/oasis). Same engine that powers Mirofish.
 - **`exo architect`** — Interactive CLI that walks you through the 12 design decisions for a new multi-agent simulation: actors, ontology, scenarios, memory tier, LLM tier. Outputs a complete `domain.yaml` + ready-to-run docker setup.
@@ -46,9 +46,21 @@ If you spend any time on AI Twitter / dev YouTube / homelab Reddit, you've proba
 
 `exo` is opinionated about three things and unopinionated about everything else:
 
-1. **The memory tiers are non-negotiable.** Vector + Graph + Structured. Most real agents need all three.
+1. **The memory tiers are catalogued, not mandatory.** Vector + Graph + Structured are available. You pick which your sim needs in YAML. Small sims run with zero databases. Memory is pay-as-you-go, not baked in.
 2. **The configuration is YAML.** Not Python, not JSON, not a web UI. Edit one file; run.
 3. **The bundle is local-first.** It runs on a laptop. It runs on a homelab. It runs against Ollama Cloud or against your local llama-swap. It does not require an OpenAI key. If you want frontier intelligence, plug Claude OAuth or Ollama Cloud; if you don't, run qwen2.5 locally and accept the quality tradeoff.
+
+## What's the actual contribution?
+
+Honest answer: exo doesn't invent multi-agent simulation. CAMEL-AI and OASIS already do that excellently. The contribution is **the deterministic architect step plus the YAML-first config plus the actor-model decoupling that lets every actor run on a different LLM tier without code changes.**
+
+Put more concretely:
+
+- Existing tools require you to design the simulation in code. exo lets you design it in 12 questions through a CLI that emits a versionable YAML spec. The recommendation engine is rule-based — no LLM-in-the-loop deciding your architecture, which means deterministic, reproducible, and testable design decisions.
+- Existing tools assume one LLM per simulation. exo's `actor.model` field is per-actor: you can have a senior-VP actor running Claude OAuth (frontier intelligence for the decision-maker) while three skeptical-employee actors run qwen2.5 locally (cheap, fast, slightly less coherent — which is also more realistic for the role).
+- Existing tools bundle the multi-agent runtime with a specific memory backend choice. exo's memory tier is declared in YAML and only the layers your sim needs get instantiated.
+
+That decoupling is the value-add. It's not novel research; it's an opinionated assembly that closes the gap between "I want a sim of X" and "I have a transcript of X."
 
 ## Quickstart
 

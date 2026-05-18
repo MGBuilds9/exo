@@ -2,6 +2,26 @@
 
 Five minutes from clone to first transcript.
 
+## Fastest path (zero databases)
+
+For simple multi-actor chat sims, you don't need Qdrant / Neo4j / Postgres.
+The DBs are optional and only matter when your sim declares a memory tier.
+
+```bash
+git clone https://github.com/<your-org>/exo.git
+cd exo
+pip install -r requirements.txt
+export OLLAMA_API_KEY=<your-key>     # or set LOCAL_OLLAMA_BASE_URL
+./exo run templates/sales-pipeline/domain.yaml
+```
+
+That's it. Three commands, no Docker needed for the basic path.
+
+## Full path (with memory tiers)
+
+For sims that use vector retrieval / graph relationships / structured records,
+spin up the database stack:
+
 ## 0. Prereqs
 
 - Docker + Docker Compose

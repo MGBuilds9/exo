@@ -22,6 +22,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except (AttributeError, OSError):
+    pass
+
 import requests
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -175,9 +181,26 @@ def render_prompt(template: str, archetype: dict, artifact_bundle: str) -> str:
     )
 
 
+def _find_binary(name: str) -> str:
+    """Locate a CLI binary across .cmd/.exe extensions (Windows-friendly)."""
+    import shutil
+    for candidate in (name, f"{name}.cmd", f"{name}.exe", f"{name}.bat"):
+        path = shutil.which(candidate)
+        if path:
+            return path
+    raise FileNotFoundError(f"could not find {name} in PATH (tried .cmd/.exe/.bat)")
+
+
 def call_codex(prompt: str, timeout: int = 240) -> str:
+    """Pipe prompt via stdin to avoid Windows 8191-char arg limit."""
+    try:
+        codex_bin = _find_binary("codex")
+    except FileNotFoundError as e:
+        return f"[CODEX ERROR: {e}]"
+    # `codex exec -` reads instructions from stdin
     proc = subprocess.run(
-        ["codex", "exec", prompt],
+        [codex_bin, "exec", "-"],
+        input=prompt,
         capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="replace",
     )
     if proc.returncode != 0:
@@ -186,8 +209,15 @@ def call_codex(prompt: str, timeout: int = 240) -> str:
 
 
 def call_gemini(prompt: str, timeout: int = 240) -> str:
+    """Pipe prompt via stdin; gemini -p appends stdin if both given, or accepts stdin alone."""
+    try:
+        gemini_bin = _find_binary("gemini")
+    except FileNotFoundError as e:
+        return f"[GEMINI ERROR: {e}]"
+    # Empty -p with stdin works per gemini docs
     proc = subprocess.run(
-        ["gemini", "--approval-mode", "plan", "-p", prompt, "-o", "text"],
+        [gemini_bin, "--approval-mode", "plan", "-o", "text", "-p", "Read the input on stdin and respond per its instructions."],
+        input=prompt,
         capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="replace",
     )
     if proc.returncode != 0:
@@ -195,25 +225,55 @@ def call_gemini(prompt: str, timeout: int = 240) -> str:
     return proc.stdout
 
 
-def call_ollama_cloud(prompt: str, model: str, timeout: int = 240) -> str:
+def _ollama_request(prompt: str, model: str, timeout: int, extra_options: dict | None = None) -> tuple[int, dict]:
     key = os.environ.get("OLLAMA_API_KEY") or os.environ.get("OLLAMA_CLOUD_API_KEY", "")
     if not key:
-        return "[OLLAMA ERROR: no OLLAMA_API_KEY in env]"
-    url = "https://ollama.com/api/chat"
+        return 0, {"error": "no OLLAMA_API_KEY"}
+    options = {"temperature": 0.4, "num_predict": 2000, "num_ctx": 32768}
+    options.update(extra_options or {})
     body = {
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "stream": False,
-        "options": {"temperature": 0.4, "num_predict": 1500},
+        "options": options,
     }
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    r = requests.post("https://ollama.com/api/chat", headers=headers, json=body, timeout=timeout)
+    if r.status_code != 200:
+        return r.status_code, {"error": r.text[:1500]}
+    return 200, r.json()
+
+
+def call_ollama_cloud(prompt: str, model: str, timeout: int = 240) -> str:
+    """Call Ollama Cloud. Retry once with 'no thinking' suffix if first returns empty content
+    (some thinking-mode models like nemotron-3-super swallow output on structured-output prompts)."""
     try:
-        r = requests.post(url, headers=headers, json=body, timeout=timeout)
-        if r.status_code != 200:
-            return f"[OLLAMA ERROR status={r.status_code}] {r.text[:1000]}"
-        return r.json().get("message", {}).get("content", "")
+        status, data = _ollama_request(prompt, model, timeout)
     except Exception as e:
         return f"[OLLAMA EXCEPTION {type(e).__name__}: {e}]"
+    if status != 200:
+        return f"[OLLAMA ERROR status={status}] {data.get('error','')}"
+    content = data.get("message", {}).get("content", "")
+    if content.strip():
+        return content
+
+    # Retry with explicit no-thinking instruction appended
+    retry_prompt = prompt + (
+        "\n\n---\nIMPORTANT FINAL INSTRUCTION: respond ONLY with the JSON object. "
+        "Do NOT include any thinking, planning, or preamble. "
+        "Your entire response must be exactly one JSON object matching the schema. "
+        "Start your response with `{` and end with `}`."
+    )
+    try:
+        status2, data2 = _ollama_request(retry_prompt, model, timeout, extra_options={"temperature": 0.2})
+    except Exception as e:
+        return f"[OLLAMA RETRY EXCEPTION {type(e).__name__}: {e}] | first attempt empty"
+    if status2 != 200:
+        return f"[OLLAMA RETRY ERROR status={status2}] {data2.get('error','')} | first attempt empty"
+    content2 = data2.get("message", {}).get("content", "")
+    if content2.strip():
+        return content2
+    return f"[OLLAMA EMPTY CONTENT after retry] thinking: {data2.get('message',{}).get('thinking','')[:500]}"
 
 
 def dispatch_one_judge(voice: dict, archetype: dict, prompt: str) -> dict:
