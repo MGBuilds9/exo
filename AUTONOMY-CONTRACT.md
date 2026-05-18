@@ -53,18 +53,33 @@ reject ("if this looks like another LangChain wrapper, say so").
 
 Each council run uses four model voices, with the 4th rotating per run:
 
-| Run | Voice 1 | Voice 2 | Voice 3 | Voice 4 (Ollama Cloud) |
+| Run | Voice 1 | Voice 2 | Voice 3 (Ollama Cloud) | Voice 4 (Ollama Cloud) |
 |---|---|---|---|---|
-| 1 | Codex CLI (gpt-5.5) | Gemini CLI (gemini-2.5-pro) | Claude (synthesis only) | **DeepSeek-v4-pro** |
-| 2 | Codex CLI (gpt-5.5) | Gemini CLI (gemini-2.5-pro) | Claude (synthesis only) | **Kimi-k2-thinking** |
-| 3 | Codex CLI (gpt-5.5) | Gemini CLI (gemini-2.5-pro) | Claude (synthesis only) | **Qwen3-coder:480b** |
+| 1 | Codex CLI (gpt-5.5) | Gemini CLI (gemini-2.5-pro) | **nemotron-3-super** | **qwen3-coder:480b** |
+| 2 | Codex CLI (gpt-5.5) | Gemini CLI (gemini-2.5-pro) | **gpt-oss:120b** | **nemotron-3-super** |
+| 3 | Codex CLI (gpt-5.5) | Gemini CLI (gemini-2.5-pro) | **qwen3-coder:480b** | **gpt-oss:120b** |
 
-If a run's counter resets (counter goes to 0), the rotation continues —
-Run 4 uses DeepSeek again, Run 5 uses Kimi, etc.
+[PRE-RUN-1 EDIT 2026-05-18: original draft listed "Claude (synthesis only)"
+as Voice 3, which contradicted Claude's no-judge role. Replaced with a 2nd
+Ollama Cloud voice. Also substituted DeepSeek-v4-pro and Kimi-k2-thinking
+with nemotron-3-super / gpt-oss:120b / qwen3-coder:480b (verified callable
+from this Ollama Cloud account; deepseek-v4 and kimi-k2 returned 403 in
+Council #1 testing). No runs have executed; drift-detection unaffected.]
 
-Each model is given ONE of the four archetypes per run, assigned by a
-deterministic hash of the run-number + judge-index so I can't pick which
-model gets which archetype to skew results.
+Claude is NOT a judge. Claude does mechanical aggregation only — JSON
+validation, pass/fail counting, schema enforcement. The 4 archetype
+judgments come from 4 distinct external LLM voices.
+
+If a run's counter resets, rotation continues — Run 4 = Run 1 config, etc.
+
+Archetype-to-voice assignment per run is deterministic:
+- Voice 1 → archetype `(run_number) mod 4`
+- Voice 2 → archetype `(run_number + 1) mod 4`
+- Voice 3 → archetype `(run_number + 2) mod 4`
+- Voice 4 → archetype `(run_number + 3) mod 4`
+
+(Archetype order is fixed: 0=Senior staff engineer, 1=AI researcher,
+2=Indie hacker, 3=Homelab self-hoster.)
 
 ### 3.3 Fresh sessions
 
