@@ -1,0 +1,48 @@
+name: mirofish-recreate-rollout-meeting
+domain_ref: ./domain.yaml
+description: |
+  All-hands meeting where MDM Group Inc. leadership announces the production
+  rollout of KrewPact as the field/office workflow layer over ERPNext.
+  This is the actual scenario Mirofish's construction-domain entities were
+  generated to react to (per the surviving RELATION facts in Neo4j).
+
+trigger: |
+  Michael opens the meeting: "Effective next Monday, KrewPact goes live as
+  our daily workflow platform for projects, field operations, estimating,
+  and inventory. ERPNext stays as the system of record for finance and
+  accounting. Field teams will see KrewPact on their phones first thing
+  Monday morning. Office teams: your existing reports stay, but daily
+  task management moves to KrewPact. We're committed — this isn't a pilot.
+  Questions, concerns, blockers — let me hear them now."
+
+initial_context: |
+  This is a simulated all-hands meeting at MDM Group Inc., a construction
+  operations firm. Leadership is announcing the KrewPact rollout. Each
+  stakeholder will react from their functional perspective. The conversation
+  is meant to surface real adoption concerns before launch.
+
+rounds: 5
+
+exit_conditions:
+  max_turns: 35
+  max_minutes: 30
+
+signals:
+  - name: sentiment
+    type: numeric
+    scale: 0..10
+    description: Actor's current emotional state about the rollout (0=hostile, 10=enthusiastic)
+
+  - name: trust
+    type: numeric
+    scale: 0..10
+    description: Actor's trust in leadership's claims about the transition
+
+  - name: adoption_likelihood
+    type: numeric
+    scale: 0..10
+    description: Actor's self-reported likelihood to use KrewPact as primary tool day-1
+
+output:
+  format: jsonl
+  directory: ./runs/
