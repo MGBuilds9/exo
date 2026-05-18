@@ -1,0 +1,116 @@
+{
+  "run_number": 1,
+  "timestamp": "2026-05-18T09:32:10.805983+00:00",
+  "contract_sha": "732e940d7a27fc1fe0b73ca4cac714cab4118ae5a89e7992218cc77796f1d505",
+  "sealed_prompts_sha": "e0ce0622564fb391d83a95513a68c445119be9153d38fff01c45bf60fa4939af",
+  "variant": 1,
+  "voices": [
+    {
+      "engine": "codex",
+      "model": "gpt-5.5"
+    },
+    {
+      "engine": "gemini",
+      "model": "gemini-2.5-pro"
+    },
+    {
+      "engine": "ollama",
+      "model": "nemotron-3-super"
+    },
+    {
+      "engine": "ollama",
+      "model": "qwen3-coder:480b"
+    }
+  ],
+  "judgments": [
+    {
+      "voice_engine": "codex",
+      "voice_model": "gpt-5.5",
+      "archetype": "AI researcher",
+      "archetype_idx": 1,
+      "elapsed_seconds": 13.78,
+      "raw_response": "SUCCESS: The process with PID 2868 (child process of PID 24632) has been terminated.\nSUCCESS: The process with PID 24632 (child process of PID 27012) has been terminated.\nSUCCESS: The process with PID 27012 (child process of PID 35868) has been terminated.\nSUCCESS: The process with PID 35868 (child process of PID 32804) has been terminated.\nSUCCESS: The process with PID 32556 (child process of PID 36756) has been terminated.\nSUCCESS: The process with PID 36756 (child process of PID 32804) has been terminated.\n{\"archetype\":\"AI researcher\",\"first_impression\":\"This reads like a pragmatic multi-agent simulation starter kit, not a research artifact with a clearly stated novel algorithmic or empirical contribution.\",\"biggest_strength\":\"The YAML-first workflow, concrete templates, and example transcript make the intended user experience unusually legible for an infrastructure project.\",\"biggest_weakness\":\"The core claims about simulation fidelity, memory architecture necessity, and domain transfer are asserted rather than evaluated, formalized, or supported with citation-quality evidence.\",\"would_star\":false,\"would_share\":false,\"would_tell_network\":false,\"would_NOT_engage\":true,\"confidence_0_to_10\":8,\"what_would_make_me_more_likely_to_engage\":\"I would need a crisp research contribution, baselines against CAMEL/OASIS/MiroFish-style setups, and empirical evidence that the architect-generated simulations improve calibration or decision quality beyond plausible transcript generation.\"}\n",
+      "parsed_judgment": {
+        "archetype": "AI researcher",
+        "first_impression": "This reads like a pragmatic multi-agent simulation starter kit, not a research artifact with a clearly stated novel algorithmic or empirical contribution.",
+        "biggest_strength": "The YAML-first workflow, concrete templates, and example transcript make the intended user experience unusually legible for an infrastructure project.",
+        "biggest_weakness": "The core claims about simulation fidelity, memory architecture necessity, and domain transfer are asserted rather than evaluated, formalized, or supported with citation-quality evidence.",
+        "would_star": false,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": true,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "I would need a crisp research contribution, baselines against CAMEL/OASIS/MiroFish-style setups, and empirical evidence that the architect-generated simulations improve calibration or decision quality beyond plausible transcript generation."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "gemini",
+      "voice_model": "gemini-2.5-pro",
+      "archetype": "Indie hacker",
+      "archetype_idx": 2,
+      "elapsed_seconds": 27.05,
+      "raw_response": "{\n  \"archetype\": \"Indie hacker\",\n  \"first_impression\": \"Finally, someone wrapped all this multi-agent research-paper BS into a 5-minute docker-compose quickstart I can actually use to prep for my next launch.\",\n  \"biggest_strength\": \"The exo architect CLI and copy-paste templates that get you from zero to a running simulation in exactly five commands with zero Python to write.\",\n  \"biggest_weakness\": \"Running Neo4j, Postgres, and Qdrant in a single local docker-compose just to simulate a 4-person chat is massive infrastructure overkill.\",\n  \"would_star\": true,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 9,\n  \"what_would_make_me_more_likely_to_engage\": \"Rip out the heavy enterprise databases and use local SQLite + Chroma/DuckDB so it runs instantly on my Macbook Air without melting my battery.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Indie hacker",
+        "first_impression": "Finally, someone wrapped all this multi-agent research-paper BS into a 5-minute docker-compose quickstart I can actually use to prep for my next launch.",
+        "biggest_strength": "The exo architect CLI and copy-paste templates that get you from zero to a running simulation in exactly five commands with zero Python to write.",
+        "biggest_weakness": "Running Neo4j, Postgres, and Qdrant in a single local docker-compose just to simulate a 4-person chat is massive infrastructure overkill.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 9,
+        "what_would_make_me_more_likely_to_engage": "Rip out the heavy enterprise databases and use local SQLite + Chroma/DuckDB so it runs instantly on my Macbook Air without melting my battery."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "nemotron-3-super",
+      "archetype": "Homelab self-hoster",
+      "archetype_idx": 3,
+      "elapsed_seconds": 13.62,
+      "raw_response": "[OLLAMA EMPTY CONTENT] full response: {\"model\": \"nemotron-3-super\", \"created_at\": \"2026-05-18T09:32:01.445135948Z\", \"message\": {\"role\": \"assistant\", \"content\": \"\", \"thinking\": \"We are in the role of a Homelab self-hoster: runs Proxmox cluster + GPU in the basement, refuses to send prompts to OpenAI, cares about docker-compose simplicity, local-first defaults, AGPL/MIT-friendly licensing, and 'I can fork this and run forever'. Skeptical of anything that requires a cloud-provider account.\\n\\nWe are to evaluate the artifact bundle (the exo project) and decide:\\n- would_star: true/false\\n- would_share: true/false\\n- would_tell_network: true/false\\n- would_NOT_engage: true/false (if we would not engage at all)\\n\\nWe must output a JSON object with the specified schema.\\n\\nLet's break down the artifact:\\n\\n1. The project is called \\\"exo\\\", a multi-agent simulation engine starter kit.\\n2. It is opinionated about:\\n   - Memory tiers: Qdrant (vector) + Neo4j (graph) + Postgres (structured) - non-negotiable.\\n   - Configuration: YAML-first.\\n   - Local-first: runs on laptop/homelab, can use Ollama Cloud or local Ollama, or Claude OAuth (but note: Claude OAuth requires Claude Code and is a frontier model via Anthropic, which might be considered cloud? However, the project says it does not require an OpenAI key and you can run locally with Ollama).\\n\\n3. Licensing: AGPL-3.0 (as seen in the badge and mentioned in the License section). This is a strong copyleft license. For a homelab self-hoster who cares about AGPL/MIT-friendl",
+      "parsed_judgment": null,
+      "schema_valid": false,
+      "schema_errors": [
+        "could not parse JSON from response"
+      ]
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "qwen3-coder:480b",
+      "archetype": "Senior staff engineer",
+      "archetype_idx": 0,
+      "elapsed_seconds": 10.11,
+      "raw_response": "{\n  \"archetype\": \"Senior staff engineer\",\n  \"first_impression\": \"This is a well-packaged, opinionated starter kit for multi-agent simulations that actually ships a working setup.\",\n  \"biggest_strength\": \"The YAML-first config and architect CLI drastically lower the barrier to running domain-specific simulations without locking you into a vendor.\",\n  \"biggest_weakness\": \"It's v0.1 experimental with minimal templates, and the reliance on multiple external DBs (Neo4j, Qdrant, Postgres) raises operational complexity for day-2 ops.\",\n  \"would_star\": true,\n  \"would_share\": false,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 8,\n  \"what_would_make_me_more_likely_to_engage\": \"A production-grade roadmap, clearer observability story, and fewer mandatory external dependencies would make this viable beyond research/homelab use.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "This is a well-packaged, opinionated starter kit for multi-agent simulations that actually ships a working setup.",
+        "biggest_strength": "The YAML-first config and architect CLI drastically lower the barrier to running domain-specific simulations without locking you into a vendor.",
+        "biggest_weakness": "It's v0.1 experimental with minimal templates, and the reliance on multiple external DBs (Neo4j, Qdrant, Postgres) raises operational complexity for day-2 ops.",
+        "would_star": true,
+        "would_share": false,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "A production-grade roadmap, clearer observability story, and fewer mandatory external dependencies would make this viable beyond research/homelab use."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    }
+  ],
+  "summary": {
+    "would_star_count": 2,
+    "would_share_count": 1,
+    "would_tell_network_count": 2,
+    "would_NOT_engage_count": 1,
+    "schema_validation_failures": 1,
+    "passing_archetypes_count": 1,
+    "average_confidence": 8.33,
+    "run_passed": false
+  }
+}

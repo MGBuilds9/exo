@@ -8,7 +8,7 @@ For simple multi-actor chat sims, you don't need Qdrant / Neo4j / Postgres.
 The DBs are optional and only matter when your sim declares a memory tier.
 
 ```bash
-git clone https://github.com/<your-org>/exo.git
+git clone https://github.com/MGBuilds9/exo.git
 cd exo
 pip install -r requirements.txt
 export OLLAMA_API_KEY=<your-key>     # or set LOCAL_OLLAMA_BASE_URL
@@ -34,7 +34,7 @@ spin up the database stack:
 ## 1. Clone
 
 ```bash
-git clone https://github.com/<your-org>/exo.git
+git clone https://github.com/MGBuilds9/exo.git
 cd exo
 cp .env.example .env
 # Edit .env — set ONE of OLLAMA_CLOUD_API_KEY, LOCAL_OLLAMA_BASE_URL, or leave Claude OAuth defaults

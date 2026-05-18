@@ -20,7 +20,7 @@ def health() -> dict:
 def root() -> dict:
     return {
         "message": "exo runner is up. Use the `exo` CLI for v0.1; web UI in v0.2.",
-        "docs": "https://github.com/<your-org>/exo",
+        "docs": "https://github.com/MGBuilds9/exo",
     }
 
 

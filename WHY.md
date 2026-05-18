@@ -40,7 +40,7 @@ Everything else — the runtime, the agent loop, the embeddings — is delegated
 
 - **Not a chatbot framework.** This is for simulating populations of agents, not deploying one assistant.
 - **Not a LangChain killer.** LangChain is for production agents that serve users. exo is for *rehearsal* — simulating what would happen so you can prepare.
-- **Not vendor lock-in.** AGPL-3.0. Runs on your laptop. Runs on your homelab. Plug whichever LLM you want. Take your YAML config and run it elsewhere if you outgrow the bundle.
+- **Not vendor lock-in.** Apache 2.0. Runs on your laptop. Runs on your homelab. Plug whichever LLM you want. Take your YAML config and run it elsewhere if you outgrow the bundle.
 - **Not magic.** Multi-agent simulation produces plausible synthesis, not ground truth. Treat transcripts as hypotheses to stress-test in reality, not as predictions to act on directly.
 
 ## Who exo is for

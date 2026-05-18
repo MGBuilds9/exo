@@ -6,7 +6,7 @@
 **Designed in 12 questions. Running in 30 minutes. Yours forever.**
 
 [![Docker](https://img.shields.io/badge/Docker-compose%20up-2496ED?style=flat-square&logo=docker&logoColor=white)](#quickstart)
-[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue?style=flat-square)](./LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](./LICENSE)
 [![Status: experimental](https://img.shields.io/badge/status-experimental-orange?style=flat-square)]()
 
 </div>
@@ -66,7 +66,7 @@ That decoupling is the value-add. It's not novel research; it's an opinionated a
 
 ```bash
 # 1. Clone + start the stack
-git clone https://github.com/<your-org>/exo.git
+git clone https://github.com/MGBuilds9/exo.git
 cd exo
 docker compose up -d
 
@@ -153,6 +153,43 @@ scenario:
 
 You commit that file. You run `exo run`. You get a transcript. You compare against reality next week.
 
+## What a run actually looks like
+
+Real 20-turn output from `exo run templates/sales-pipeline/domain.yaml`,
+using qwen3-coder:480b via Ollama Cloud (~140s, ~$0.02 in tokens):
+
+```
+TURN 1  founder (seller): Hi everyone, thanks for taking the time to meet again!
+  I'm really excited to dive deeper into how our multi-agent simulation platform
+  can help your estimating and project management teams prepare for complex
+  stakeholder interactions...
+  signals → prospect_interest=5.0  trust=4.0
+
+TURN 2  vp_operations (prospect-decider): "Thanks for following up. Look, I'll
+  be direct - I've seen three AI demos that sounded great but never delivered.
+  My team's time is money, especially during bid season. You mentioned
+  communication patterns - show me the workflow where this actually saves us
+  time..."
+  signals → prospect_interest=5.0  trust=3.0  deal_momentum=4.0
+
+TURN 3  cfo (prospect-financial): "Before we dive into workflows, I'd like to
+  understand the financial structure. What does licensing look like - per seat,
+  per project, or annual subscription? I've done our internal build-vs-buy
+  analysis already..."
+  signals → prospect_interest=5.0  trust=4.0  deal_momentum=3.0
+
+TURN 4  it_director (prospect-technical): "Before we move forward, I need
+  specifics on technical architecture. You mentioned on-prem deployment - what
+  about Docker compatibility? Kubernetes support? Air-gapped environments?"
+  signals → prospect_interest=4.0  trust=4.0  deal_momentum=3.0
+
+[... 16 more turns ...]
+```
+
+Full transcript: [`examples/sales-pipeline-rehearsal/`](./examples/sales-pipeline-rehearsal/).
+Each prospect surfaces objections specific to their function. The `deal_momentum`
+signal trends down (this is a discovery call, not a close).
+
 ## Examples included
 
 | Template | What it simulates | Time to first run |
@@ -191,7 +228,7 @@ If you've used [MiroFish-Offline](https://github.com/nikmcfly/MiroFish-Offline),
 
 ## License
 
-AGPL-3.0. Build on it. If you ship a SaaS, share the SaaS code.
+Apache 2.0. Build on it. Fork it. Ship a commercial product on top — that's fine.
 
 ## Status
 

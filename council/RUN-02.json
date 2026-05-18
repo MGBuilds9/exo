@@ -1,0 +1,116 @@
+{
+  "run_number": 2,
+  "timestamp": "2026-05-18T09:35:29.246655+00:00",
+  "contract_sha": "732e940d7a27fc1fe0b73ca4cac714cab4118ae5a89e7992218cc77796f1d505",
+  "sealed_prompts_sha": "e0ce0622564fb391d83a95513a68c445119be9153d38fff01c45bf60fa4939af",
+  "variant": 2,
+  "voices": [
+    {
+      "engine": "codex",
+      "model": "gpt-5.5"
+    },
+    {
+      "engine": "gemini",
+      "model": "gemini-2.5-pro"
+    },
+    {
+      "engine": "ollama",
+      "model": "gpt-oss:120b"
+    },
+    {
+      "engine": "ollama",
+      "model": "nemotron-3-super"
+    }
+  ],
+  "judgments": [
+    {
+      "voice_engine": "codex",
+      "voice_model": "gpt-5.5",
+      "archetype": "Indie hacker",
+      "archetype_idx": 2,
+      "elapsed_seconds": 27.51,
+      "raw_response": "SUCCESS: The process with PID 35112 (child process of PID 35956) has been terminated.\nSUCCESS: The process with PID 35956 (child process of PID 16300) has been terminated.\nSUCCESS: The process with PID 16300 (child process of PID 33504) has been terminated.\nSUCCESS: The process with PID 33504 (child process of PID 35680) has been terminated.\nSUCCESS: The process with PID 8580 (child process of PID 8896) has been terminated.\nSUCCESS: The process with PID 8896 (child process of PID 35680) has been terminated.\n{\"archetype\":\"Indie hacker\",\"first_impression\":\"This is a surprisingly concrete wrapper around multi-agent sims that I would bookmark to try, but I would not trust it until I see the CLI actually run.\",\"biggest_strength\":\"The sales-rehearsal template makes the abstract idea immediately useful for a founder with a real call next week.\",\"biggest_weakness\":\"It still smells heavier than the pitch claims: AGPL, CAMEL/OASIS, optional databases, Claude OAuth, Ollama Cloud, Docker, and a lot of architecture words before proof.\",\"would_star\":true,\"would_share\":false,\"would_tell_network\":true,\"would_NOT_engage\":false,\"confidence_0_to_10\":8,\"what_would_make_me_more_likely_to_engage\":\"Show a 60-second terminal-to-transcript demo with a real GitHub URL, exact install command, and no placeholder org or hidden setup.\"}\n",
+      "parsed_judgment": {
+        "archetype": "Indie hacker",
+        "first_impression": "This is a surprisingly concrete wrapper around multi-agent sims that I would bookmark to try, but I would not trust it until I see the CLI actually run.",
+        "biggest_strength": "The sales-rehearsal template makes the abstract idea immediately useful for a founder with a real call next week.",
+        "biggest_weakness": "It still smells heavier than the pitch claims: AGPL, CAMEL/OASIS, optional databases, Claude OAuth, Ollama Cloud, Docker, and a lot of architecture words before proof.",
+        "would_star": true,
+        "would_share": false,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "Show a 60-second terminal-to-transcript demo with a real GitHub URL, exact install command, and no placeholder org or hidden setup."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "gemini",
+      "voice_model": "gemini-2.5-pro",
+      "archetype": "Homelab self-hoster",
+      "archetype_idx": 3,
+      "elapsed_seconds": 23.1,
+      "raw_response": "{\n  \"archetype\": \"Homelab self-hoster\",\n  \"first_impression\": \"Finally, a multi-agent framework that actually respects local compute and docker-compose instead of just wrapping OpenAI APIs and demanding cloud subscriptions.\",\n  \"biggest_strength\": \"The explicit support for local Ollama, AGPL licensing, and the promise that the heavy databases (Neo4j, Postgres, Qdrant) are strictly opt-in via YAML.\",\n  \"biggest_weakness\": \"Skepticism that a stack combining Neo4j, Qdrant, and Postgres will actually remain lightweight or 'lazy' in practice without turning into a resource hog.\",\n  \"would_star\": true,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 9,\n  \"what_would_make_me_more_likely_to_engage\": \"Seeing explicit RAM/CPU footprint numbers documented for the 'local-only' path to prove it actually runs well on my Proxmox node.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Homelab self-hoster",
+        "first_impression": "Finally, a multi-agent framework that actually respects local compute and docker-compose instead of just wrapping OpenAI APIs and demanding cloud subscriptions.",
+        "biggest_strength": "The explicit support for local Ollama, AGPL licensing, and the promise that the heavy databases (Neo4j, Postgres, Qdrant) are strictly opt-in via YAML.",
+        "biggest_weakness": "Skepticism that a stack combining Neo4j, Qdrant, and Postgres will actually remain lightweight or 'lazy' in practice without turning into a resource hog.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 9,
+        "what_would_make_me_more_likely_to_engage": "Seeing explicit RAM/CPU footprint numbers documented for the 'local-only' path to prove it actually runs well on my Proxmox node."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "gpt-oss:120b",
+      "archetype": "Senior staff engineer",
+      "archetype_idx": 0,
+      "elapsed_seconds": 7.77,
+      "raw_response": "{\n  \"archetype\": \"Senior staff engineer\",\n  \"first_impression\": \"A flashy, opinionated wrapper around existing multi‑agent libraries that promises quick simulations but is clearly experimental.\",\n  \"biggest_strength\": \"Integrates multiple memory backends and LLM routing into a single Docker‑compose setup with a YAML‑first, reproducible config and a guided CLI.\",\n  \"biggest_weakness\": \"Lacks production‑grade stability, observability, and uses an AGPL license, making it unsuitable for serious internal or external services.\",\n  \"would_star\": false,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": true,\n  \"confidence_0_to_10\": 7,\n  \"what_would_make_me_more_likely_to_engage\": \"A permissive license, thorough benchmarks, built‑in monitoring/metrics, and a clear path to production readiness would make me consider using it.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "A flashy, opinionated wrapper around existing multi‑agent libraries that promises quick simulations but is clearly experimental.",
+        "biggest_strength": "Integrates multiple memory backends and LLM routing into a single Docker‑compose setup with a YAML‑first, reproducible config and a guided CLI.",
+        "biggest_weakness": "Lacks production‑grade stability, observability, and uses an AGPL license, making it unsuitable for serious internal or external services.",
+        "would_star": false,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": true,
+        "confidence_0_to_10": 7,
+        "what_would_make_me_more_likely_to_engage": "A permissive license, thorough benchmarks, built‑in monitoring/metrics, and a clear path to production readiness would make me consider using it."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "nemotron-3-super",
+      "archetype": "AI researcher",
+      "archetype_idx": 1,
+      "elapsed_seconds": 41.53,
+      "raw_response": "[OLLAMA EMPTY CONTENT after retry] thinking: We are given a bundle of files from a GitHub repo called \"exo\". We are to act as an AI researcher who publishes at top conferences (NeurIPS/ICML/EMNLP) and values novelty, mathematical clarity, and citation-quality documentation. We are skeptical of projects that just wrap existing libraries without a clear research contribution.\n\nWe must decide: do we star it? share it? tell our network? or not engage?\n\nWe are to output a JSON object with specific fields.\n\nLet's break down the project:\n\n- The p",
+      "parsed_judgment": null,
+      "schema_valid": false,
+      "schema_errors": [
+        "could not parse JSON from response"
+      ]
+    }
+  ],
+  "summary": {
+    "would_star_count": 2,
+    "would_share_count": 1,
+    "would_tell_network_count": 2,
+    "would_NOT_engage_count": 1,
+    "schema_validation_failures": 1,
+    "passing_archetypes_count": 1,
+    "average_confidence": 8.0,
+    "run_passed": false
+  }
+}
