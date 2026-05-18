@@ -1,0 +1,116 @@
+{
+  "run_number": 4,
+  "timestamp": "2026-05-18T09:47:25.856952+00:00",
+  "contract_sha": "732e940d7a27fc1fe0b73ca4cac714cab4118ae5a89e7992218cc77796f1d505",
+  "sealed_prompts_sha": "e0ce0622564fb391d83a95513a68c445119be9153d38fff01c45bf60fa4939af",
+  "variant": 1,
+  "voices": [
+    {
+      "engine": "codex",
+      "model": "gpt-5.5"
+    },
+    {
+      "engine": "gemini",
+      "model": "gemini-2.5-pro"
+    },
+    {
+      "engine": "ollama",
+      "model": "nemotron-3-super"
+    },
+    {
+      "engine": "ollama",
+      "model": "qwen3-coder:480b"
+    }
+  ],
+  "judgments": [
+    {
+      "voice_engine": "codex",
+      "voice_model": "gpt-5.5",
+      "archetype": "Senior staff engineer",
+      "archetype_idx": 0,
+      "elapsed_seconds": 22.68,
+      "raw_response": "SUCCESS: The process with PID 31424 (child process of PID 13268) has been terminated.\nSUCCESS: The process with PID 13268 (child process of PID 34404) has been terminated.\nSUCCESS: The process with PID 34404 (child process of PID 35352) has been terminated.\nSUCCESS: The process with PID 35352 (child process of PID 22960) has been terminated.\nSUCCESS: The process with PID 32464 (child process of PID 32532) has been terminated.\nSUCCESS: The process with PID 32532 (child process of PID 22960) has been terminated.\n{\n  \"archetype\": \"Senior staff engineer\",\n  \"first_impression\": \"This is a coherent and usefully scoped starter-kit pitch, but the bundle reads more like a strong README than proven infrastructure.\",\n  \"biggest_strength\": \"The clearest value is the deterministic YAML-first architect flow with per-actor model routing and an honest admission that this is assembly, not novel research.\",\n  \"biggest_weakness\": \"I do not see enough evidence of implementation depth, tests, failure handling, observability, reproducibility, or day-2 operations to trust the stack beyond a demo.\",\n  \"would_star\": true,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 7,\n  \"what_would_make_me_more_likely_to_engage\": \"Show the actual code paths, compose files, test coverage, run reproducibility, failure modes, and a brutally honest operations guide for what breaks after the first transcript.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "This is a coherent and usefully scoped starter-kit pitch, but the bundle reads more like a strong README than proven infrastructure.",
+        "biggest_strength": "The clearest value is the deterministic YAML-first architect flow with per-actor model routing and an honest admission that this is assembly, not novel research.",
+        "biggest_weakness": "I do not see enough evidence of implementation depth, tests, failure handling, observability, reproducibility, or day-2 operations to trust the stack beyond a demo.",
+        "would_star": true,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 7,
+        "what_would_make_me_more_likely_to_engage": "Show the actual code paths, compose files, test coverage, run reproducibility, failure modes, and a brutally honest operations guide for what breaks after the first transcript."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "gemini",
+      "voice_model": "gemini-2.5-pro",
+      "archetype": "AI researcher",
+      "archetype_idx": 1,
+      "elapsed_seconds": 16.09,
+      "raw_response": "{\n  \"archetype\": \"AI researcher\",\n  \"first_impression\": \"This is purely an engineering wrapper around CAMEL-AI and OASIS; it introduces zero algorithmic novelty or theoretical advancements in multi-agent systems.\",\n  \"biggest_strength\": \"The declarative YAML configuration provides a convenient, reproducible software engineering harness for running baseline multi-agent simulations.\",\n  \"biggest_weakness\": \"The project explicitly admits it contains no novel research, offering no new mathematical models, agent architectures, or rigorous empirical benchmarks.\",\n  \"would_star\": false,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": true,\n  \"confidence_0_to_10\": 10,\n  \"what_would_make_me_more_likely_to_engage\": \"A novel algorithmic contribution to multi-agent theory, accompanied by rigorous empirical evaluation and mathematical clarity, rather than just a configuration CLI.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "AI researcher",
+        "first_impression": "This is purely an engineering wrapper around CAMEL-AI and OASIS; it introduces zero algorithmic novelty or theoretical advancements in multi-agent systems.",
+        "biggest_strength": "The declarative YAML configuration provides a convenient, reproducible software engineering harness for running baseline multi-agent simulations.",
+        "biggest_weakness": "The project explicitly admits it contains no novel research, offering no new mathematical models, agent architectures, or rigorous empirical benchmarks.",
+        "would_star": false,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": true,
+        "confidence_0_to_10": 10,
+        "what_would_make_me_more_likely_to_engage": "A novel algorithmic contribution to multi-agent theory, accompanied by rigorous empirical evaluation and mathematical clarity, rather than just a configuration CLI."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "nemotron-3-super",
+      "archetype": "Indie hacker",
+      "archetype_idx": 2,
+      "elapsed_seconds": 49.96,
+      "raw_response": "[OLLAMA EMPTY CONTENT after retry] thinking: We are to respond as an Indie hacker (solo founder shipping fast, values copy-pasteable quickstarts, README-driven development, low friction, allergic to enterprise wrappers, kubernetes-first tooling, and projects with 12 dependencies before 'hello world').\n\nWe have read the artifact bundle (the README.md, Quickstart.md, WHY.md, and the template files).\n\nWe must output a JSON object with the following keys:\n- archetype: \"Indie hacker\"\n- first_impression: one sentence\n- biggest_strength: one sent",
+      "parsed_judgment": null,
+      "schema_valid": false,
+      "schema_errors": [
+        "could not parse JSON from response"
+      ]
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "qwen3-coder:480b",
+      "archetype": "Homelab self-hoster",
+      "archetype_idx": 3,
+      "elapsed_seconds": 4.5,
+      "raw_response": "{\n  \"archetype\": \"Homelab self-hoster\",\n  \"first_impression\": \"This looks like a serious attempt at a local-first, docker-compose friendly multi-agent simulation kit.\",\n  \"biggest_strength\": \"The YAML-first config and lazy database loading make it actually usable for self-hosters without burning resources.\",\n  \"biggest_weakness\": \"It's still early (v0.1) and assumes too much comfort with cloud LLMs like Claude and Ollama Cloud for my taste.\",\n  \"would_star\": true,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 8,\n  \"what_would_make_me_more_likely_to_engage\": \"A fully local path using only llama.cpp or koboldcpp with zero mandatory cloud dependencies.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Homelab self-hoster",
+        "first_impression": "This looks like a serious attempt at a local-first, docker-compose friendly multi-agent simulation kit.",
+        "biggest_strength": "The YAML-first config and lazy database loading make it actually usable for self-hosters without burning resources.",
+        "biggest_weakness": "It's still early (v0.1) and assumes too much comfort with cloud LLMs like Claude and Ollama Cloud for my taste.",
+        "would_star": true,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "A fully local path using only llama.cpp or koboldcpp with zero mandatory cloud dependencies."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    }
+  ],
+  "summary": {
+    "would_star_count": 2,
+    "would_share_count": 0,
+    "would_tell_network_count": 0,
+    "would_NOT_engage_count": 1,
+    "schema_validation_failures": 1,
+    "passing_archetypes_count": 0,
+    "average_confidence": 8.33,
+    "run_passed": false
+  }
+}

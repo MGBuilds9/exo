@@ -160,10 +160,54 @@ def stub_actors(scale: str, default_model: str, system_kind: str) -> list[dict]:
 
 def run(*, name: str | None, out_dir: str | None, non_interactive: bool) -> None:
     console.print(Panel.fit(
-        "[bold]exo architect[/bold] — design a multi-agent simulation in 12 questions.\n"
-        "Output is a [cyan]domain.yaml[/cyan] you can edit, version-control, and run with [cyan]exo run[/cyan].",
+        "[bold]exo architect[/bold] — design a multi-agent simulation tailored to YOUR machine.\n"
+        "Step 1: scan your hardware + services + accounts.\n"
+        "Step 2: 12 questions about the simulation.\n"
+        "Output: a [cyan]domain.yaml[/cyan] that uses what you actually have, not generic defaults.",
         border_style="cyan",
     ))
+
+    # === Step 1: Hardware-aware preflight ===
+    from exo_runtime.doctor import run_doctor, recommend_from_doctor
+
+    extra_hosts: list[str] = []
+    user_cloud_accounts: list[str] = []
+
+    if not non_interactive:
+        console.print("\n[bold cyan]Step 1.[/bold cyan] Scanning your machine for hardware + services...")
+        # Initial probe of localhost only
+        initial = run_doctor(extra_hosts=None)
+        for line in initial.summary_lines:
+            console.print(f"  {line}")
+
+        # Ask about other devices
+        other = Prompt.ask(
+            "\n[bold cyan]Q-pre-1.[/bold cyan] Any other machines I should probe? (homelab IP, NAS, Proxmox node — comma-separated, or blank)",
+            default="",
+        )
+        extra_hosts = [h.strip() for h in other.split(",") if h.strip()]
+
+        if extra_hosts:
+            console.print(f"\nProbing {extra_hosts}...")
+            full = run_doctor(extra_hosts=extra_hosts)
+            for line in full.summary_lines[len(initial.summary_lines):]:
+                console.print(f"  {line}")
+        else:
+            full = initial
+
+        # Ask about cloud accounts not in env vars
+        more_cloud = Prompt.ask(
+            "\n[bold cyan]Q-pre-2.[/bold cyan] Any cloud accounts not in env vars? (e.g., 'Vercel team', 'Modal', 'Fly.io' — comma-separated, or blank)",
+            default="",
+        )
+        user_cloud_accounts = [c.strip() for c in more_cloud.split(",") if c.strip()]
+
+        doctor_report = full
+    else:
+        # Non-interactive: scan localhost only, no probing prompts
+        doctor_report = run_doctor(extra_hosts=None)
+
+    doctor_recs = recommend_from_doctor(doctor_report)
 
     # === Q1: Name ===
     if not name:
@@ -237,16 +281,29 @@ def run(*, name: str | None, out_dir: str | None, non_interactive: bool) -> None
     else:
         output_format = Prompt.ask("\n[bold cyan]Q12.[/bold cyan] Transcript format", choices=["jsonl", "yaml", "both"], default="jsonl")
 
-    # === Build domain.yaml ===
+    # === Build domain.yaml — using doctor recommendations to pick concrete backends ===
     memory_spec = recommend_memory_tier(memory_need)
-    default_model = recommend_default_model(llm_pref)
+    # Override generic memory backend hints with what we actually detected
+    if memory_spec["tier"] != "none":
+        if "vector" in memory_spec["tier"] and doctor_recs.get("vector_store"):
+            memory_spec["vector_backend"] = doctor_recs["vector_store"]
+        if "graph" in memory_spec["tier"] and doctor_recs.get("graph_store"):
+            memory_spec["graph_backend"] = doctor_recs["graph_store"]
+        if "sql" in memory_spec["tier"] and doctor_recs.get("sql_store"):
+            memory_spec["sql_backend"] = doctor_recs["sql_store"]
+
+    # Pick the actor default model from the doctor's recommendation, NOT the generic question.
+    # The user's question 6 (LLM preference) is now a HINT, not the authoritative choice —
+    # doctor sees what's actually available.
+    default_model = doctor_recs.get("primary_llm") or recommend_default_model(llm_pref)
+    fallback_model = doctor_recs.get("fallback_llm")
     actors = stub_actors(scale, default_model, system_kind)
 
     domain = {
         "name": name,
         "purpose": purpose,
         "created": datetime.now(timezone.utc).isoformat(),
-        "created_by": "exo-architect v0.1.0",
+        "created_by": "exo-architect v0.1.0 (hardware-aware)",
         "system_kind": system_kind,
         "custom_kind_description": custom_kind_desc,
         "scale": scale,
@@ -254,10 +311,21 @@ def run(*, name: str | None, out_dir: str | None, non_interactive: bool) -> None
         "actors": actors,
         "runtime": {
             "default_model": default_model,
+            "fallback_model": fallback_model,
             "llm_preference": llm_pref,
             "temperature": temperature,
             "parallel_agents": min(4, len(actors)),
             "log_level": "INFO",
+        },
+        "machine_profile": {
+            # Persist a snapshot of WHY these picks were made — auditable later
+            "scanned_at": doctor_report.timestamp,
+            "os": f"{doctor_report.hardware.os} {doctor_report.hardware.os_release}",
+            "ram_gb": doctor_report.hardware.ram_total_gb,
+            "gpu": doctor_report.hardware.gpu_name,
+            "extra_hosts_probed": extra_hosts,
+            "extra_cloud_accounts": user_cloud_accounts,
+            "doctor_notes": doctor_recs.get("notes", []),
         },
     }
 

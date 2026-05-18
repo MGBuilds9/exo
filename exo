@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 import click
 
-from cli import architect_cmd, run_cmd, report_cmd
+from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd
 
 VERSION = "0.1.0"
 
@@ -61,6 +61,14 @@ def run_command(domain_yaml: str, scenario: str | None, rounds: int | None, out:
 def report_command(run_dir: str) -> None:
     """Generate a human-readable summary of a completed run."""
     report_cmd.run(run_dir=run_dir)
+
+
+@main.command("doctor")
+@click.option("--host", "extra_hosts", multiple=True, help="Additional host(s) to probe (e.g., your homelab IP). Repeatable.")
+@click.option("--json", "as_json", is_flag=True, help="Emit machine-readable JSON instead of pretty output.")
+def doctor_command(extra_hosts: tuple[str, ...], as_json: bool) -> None:
+    """Scan local hardware + services + cloud accounts; recommend a personalized stack."""
+    doctor_cmd.run(extra_hosts=list(extra_hosts), as_json=as_json)
 
 
 if __name__ == "__main__":

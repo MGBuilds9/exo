@@ -1,0 +1,125 @@
+{
+  "run_number": 5,
+  "timestamp": "2026-05-18T15:06:51.184834+00:00",
+  "contract_sha": "1854521522ca883564b44ab49f36e4aeae763f742d59958eed565a6b81a00e23",
+  "sealed_prompts_sha": "c68836a31ae7048e72d3e7d70c3e527549f60d67e6f492186273ca0821f36db6",
+  "variant": 2,
+  "voices": [
+    {
+      "engine": "codex",
+      "model": "gpt-5.5"
+    },
+    {
+      "engine": "gemini",
+      "model": "gemini-2.5-pro"
+    },
+    {
+      "engine": "ollama",
+      "model": "gpt-oss:120b"
+    },
+    {
+      "engine": "ollama",
+      "model": "nemotron-3-super"
+    }
+  ],
+  "judgments": [
+    {
+      "voice_engine": "codex",
+      "voice_model": "gpt-5.5",
+      "archetype": "Open-source maintainer evaluating for adoption",
+      "archetype_idx": 1,
+      "elapsed_seconds": 22.88,
+      "raw_response": "SUCCESS: The process with PID 32784 (child process of PID 33700) has been terminated.\nSUCCESS: The process with PID 33700 (child process of PID 23680) has been terminated.\nSUCCESS: The process with PID 23680 (child process of PID 33332) has been terminated.\nSUCCESS: The process with PID 33332 (child process of PID 33248) has been terminated.\nSUCCESS: The process with PID 11640 (child process of PID 35748) has been terminated.\nSUCCESS: The process with PID 35748 (child process of PID 33248) has been terminated.\n{\n  \"archetype\": \"Open-source maintainer evaluating for adoption\",\n  \"first_impression\": \"This is unusually well-positioned for an early agent-infra repo, but I would still assume the README is ahead of the implementation until I see the compose path and examples actually run.\",\n  \"biggest_strength\": \"The value proposition is crisp: YAML-first multi-agent simulations with per-actor models, optional memory tiers, and a worked sales example that makes the concept concrete quickly.\",\n  \"biggest_weakness\": \"The day-2 and scale story is thin, and several big claims such as lazy-started databases, deterministic architect output, and structural variance need stronger proof than docs and sample transcripts.\",\n  \"would_star\": true,\n  \"would_share\": false,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 7,\n  \"what_would_make_me_more_likely_to_engage\": \"A reproducible `docker compose up && exo run` demo with CI-backed examples, architecture diagrams, failure-mode docs, and benchmarks across local and cloud models would move this from interesting to adoptable.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Open-source maintainer evaluating for adoption",
+        "first_impression": "This is unusually well-positioned for an early agent-infra repo, but I would still assume the README is ahead of the implementation until I see the compose path and examples actually run.",
+        "biggest_strength": "The value proposition is crisp: YAML-first multi-agent simulations with per-actor models, optional memory tiers, and a worked sales example that makes the concept concrete quickly.",
+        "biggest_weakness": "The day-2 and scale story is thin, and several big claims such as lazy-started databases, deterministic architect output, and structural variance need stronger proof than docs and sample transcripts.",
+        "would_star": true,
+        "would_share": false,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 7,
+        "what_would_make_me_more_likely_to_engage": "A reproducible `docker compose up && exo run` demo with CI-backed examples, architecture diagrams, failure-mode docs, and benchmarks across local and cloud models would move this from interesting to adoptable."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "gemini",
+      "voice_model": "gemini-2.5-pro",
+      "archetype": "Indie hacker",
+      "archetype_idx": 2,
+      "elapsed_seconds": 16.37,
+      "raw_response": "{\n  \"archetype\": \"Indie hacker\",\n  \"first_impression\": \"Finally, a multi-agent framework that doesn't require a PhD in LangChain and actually runs locally in five minutes with a simple docker-compose.\",\n  \"biggest_strength\": \"The `exo architect` CLI and YAML-driven config that completely decouple the simulation logic from heavy Python boilerplate.\",\n  \"biggest_weakness\": \"The built-in templates lean a bit heavy into enterprise B2B like sales and incident response rather than indie use cases like validating SaaS ideas.\",\n  \"would_star\": true,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 9,\n  \"what_would_make_me_more_likely_to_engage\": \"Adding a template specifically for validating new SaaS ideas or simulating Product Hunt launch dynamics.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Indie hacker",
+        "first_impression": "Finally, a multi-agent framework that doesn't require a PhD in LangChain and actually runs locally in five minutes with a simple docker-compose.",
+        "biggest_strength": "The `exo architect` CLI and YAML-driven config that completely decouple the simulation logic from heavy Python boilerplate.",
+        "biggest_weakness": "The built-in templates lean a bit heavy into enterprise B2B like sales and incident response rather than indie use cases like validating SaaS ideas.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 9,
+        "what_would_make_me_more_likely_to_engage": "Adding a template specifically for validating new SaaS ideas or simulating Product Hunt launch dynamics."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "gpt-oss:120b",
+      "archetype": "Homelab self-hoster",
+      "archetype_idx": 3,
+      "elapsed_seconds": 6.14,
+      "raw_response": "{\n  \"archetype\": \"Homelab self-hoster\",\n  \"first_impression\": \"A fairly ambitious multi‑agent simulation kit that tries to be one‑click but drags in a lot of heavy services.\",\n  \"biggest_strength\": \"The YAML‑first, per‑actor model selection and ready‑made domain templates make it easy to prototype a simulation.\",\n  \"biggest_weakness\": \"Heavy optional stack (Qdrant, Neo4j, Postgres) and default reliance on cloud LLM APIs make it far from the pure local‑first simplicity I prefer.\",\n  \"would_star\": false,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": true,\n  \"confidence_0_to_10\": 7,\n  \"what_would_make_me_more_likely_to_engage\": \"A leaner, truly local‑only version with optional DBs removed and an MIT‑style license would win me over.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Homelab self-hoster",
+        "first_impression": "A fairly ambitious multi‑agent simulation kit that tries to be one‑click but drags in a lot of heavy services.",
+        "biggest_strength": "The YAML‑first, per‑actor model selection and ready‑made domain templates make it easy to prototype a simulation.",
+        "biggest_weakness": "Heavy optional stack (Qdrant, Neo4j, Postgres) and default reliance on cloud LLM APIs make it far from the pure local‑first simplicity I prefer.",
+        "would_star": false,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": true,
+        "confidence_0_to_10": 7,
+        "what_would_make_me_more_likely_to_engage": "A leaner, truly local‑only version with optional DBs removed and an MIT‑style license would win me over."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "nemotron-3-super",
+      "archetype": "Senior staff engineer",
+      "archetype_idx": 0,
+      "elapsed_seconds": 12.68,
+      "raw_response": "{\n  \"archetype\": \"Senior staff engineer\",\n  \"first_impression\": \"The README is exceptionally clear and well-structured, immediately conveying the problem, solution, and trade-offs without hype, while the project's experimental status and reliance on existing battle-tested libraries inspire cautious optimism.\",\n  \"biggest_strength\": \"The opinionated YAML-first approach combined with the `exo architect` CLI genuinely reduces the barrier to entry for multi-agent simulation experimentation, allowing a functional setup in minutes without deep framework expertise.\",\n  \"biggest_weakness\": \"Despite claims of optional databases, the operational complexity of managing three potential stateful services (even if latent) and the lack of clear failure modes or observability for the LLM router layer could become significant pain points in day-to-day use beyond trivial demos.\",\n  \"would_star\": true,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 8,\n  \"what_would_make_me_more_likely_to_engage\": \"Evidence of successful use in non-trivial, repeated scenarios (e.g., weekly team rehearsals for real stakeholder meetings) with concrete feedback on the stability of the YAML-driven configuration and the practicality of the optional database toggles.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "The README is exceptionally clear and well-structured, immediately conveying the problem, solution, and trade-offs without hype, while the project's experimental status and reliance on existing battle-tested libraries inspire cautious optimism.",
+        "biggest_strength": "The opinionated YAML-first approach combined with the `exo architect` CLI genuinely reduces the barrier to entry for multi-agent simulation experimentation, allowing a functional setup in minutes without deep framework expertise.",
+        "biggest_weakness": "Despite claims of optional databases, the operational complexity of managing three potential stateful services (even if latent) and the lack of clear failure modes or observability for the LLM router layer could become significant pain points in day-to-day use beyond trivial demos.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "Evidence of successful use in non-trivial, repeated scenarios (e.g., weekly team rehearsals for real stakeholder meetings) with concrete feedback on the stability of the YAML-driven configuration and the practicality of the optional database toggles."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    }
+  ],
+  "summary": {
+    "would_star_count": 3,
+    "would_share_count": 2,
+    "would_tell_network_count": 3,
+    "would_NOT_engage_count": 1,
+    "schema_validation_failures": 0,
+    "passing_archetypes_count": 2,
+    "average_confidence": 7.75,
+    "run_passed": false
+  }
+}

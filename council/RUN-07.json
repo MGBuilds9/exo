@@ -1,0 +1,125 @@
+{
+  "run_number": 7,
+  "timestamp": "2026-05-18T15:10:48.566485+00:00",
+  "contract_sha": "1854521522ca883564b44ab49f36e4aeae763f742d59958eed565a6b81a00e23",
+  "sealed_prompts_sha": "c68836a31ae7048e72d3e7d70c3e527549f60d67e6f492186273ca0821f36db6",
+  "variant": 1,
+  "voices": [
+    {
+      "engine": "codex",
+      "model": "gpt-5.5"
+    },
+    {
+      "engine": "gemini",
+      "model": "gemini-2.5-pro"
+    },
+    {
+      "engine": "ollama",
+      "model": "nemotron-3-super"
+    },
+    {
+      "engine": "ollama",
+      "model": "qwen3-coder:480b"
+    }
+  ],
+  "judgments": [
+    {
+      "voice_engine": "codex",
+      "voice_model": "gpt-5.5",
+      "archetype": "Homelab self-hoster",
+      "archetype_idx": 3,
+      "elapsed_seconds": 16.14,
+      "raw_response": "SUCCESS: The process with PID 27216 (child process of PID 11340) has been terminated.\nSUCCESS: The process with PID 11340 (child process of PID 18188) has been terminated.\nSUCCESS: The process with PID 33228 (child process of PID 26872) has been terminated.\nSUCCESS: The process with PID 26872 (child process of PID 32040) has been terminated.\nSUCCESS: The process with PID 32040 (child process of PID 24992) has been terminated.\nSUCCESS: The process with PID 24992 (child process of PID 18188) has been terminated.\n{\"archetype\":\"Homelab self-hoster\",\"first_impression\":\"This looks like the rare AI project pitch that actually understands local-first homelab deployment instead of treating self-hosting as an afterthought.\",\"biggest_strength\":\"YAML-first simulations, optional memory services, local Ollama support, Docker Compose, and Apache 2.0 make it plausibly forkable and runnable long-term.\",\"biggest_weakness\":\"The artifact still defaults several actors to Claude OAuth or Ollama Cloud, so the local-first story needs a no-cloud template that works without sed edits or provider accounts.\",\"would_star\":true,\"would_share\":false,\"would_tell_network\":true,\"would_NOT_engage\":false,\"confidence_0_to_10\":7,\"what_would_make_me_more_likely_to_engage\":\"A verified docker-compose local-only quickstart with all actors on local Ollama, sample hardware requirements, and proof that Qdrant/Neo4j/Postgres truly lazy-start only when declared would push me from interested to actively recommending it.\"}\n",
+      "parsed_judgment": {
+        "archetype": "Homelab self-hoster",
+        "first_impression": "This looks like the rare AI project pitch that actually understands local-first homelab deployment instead of treating self-hosting as an afterthought.",
+        "biggest_strength": "YAML-first simulations, optional memory services, local Ollama support, Docker Compose, and Apache 2.0 make it plausibly forkable and runnable long-term.",
+        "biggest_weakness": "The artifact still defaults several actors to Claude OAuth or Ollama Cloud, so the local-first story needs a no-cloud template that works without sed edits or provider accounts.",
+        "would_star": true,
+        "would_share": false,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 7,
+        "what_would_make_me_more_likely_to_engage": "A verified docker-compose local-only quickstart with all actors on local Ollama, sample hardware requirements, and proof that Qdrant/Neo4j/Postgres truly lazy-start only when declared would push me from interested to actively recommending it."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "gemini",
+      "voice_model": "gemini-2.5-pro",
+      "archetype": "Senior staff engineer",
+      "archetype_idx": 0,
+      "elapsed_seconds": 29.04,
+      "raw_response": "{\n  \"archetype\": \"Senior staff engineer\",\n  \"first_impression\": \"I appreciate the anti-hype honesty and the move to declarative YAML over imperative Python spaghetti, but casually throwing three stateful databases into a docker-compose bundle for 'memory' is a glaring operational red flag.\",\n  \"biggest_strength\": \"Treating the simulation topology and actor-model routing as versionable data via YAML, completely avoiding the unmaintainable LangChain-style code-first approach.\",\n  \"biggest_weakness\": \"Normalizing a complex Qdrant, Neo4j, and Postgres trio for memory, which introduces massive Day-2 ops complexity for what is ultimately an experimental rehearsal tool.\",\n  \"would_star\": true,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 9,\n  \"what_would_make_me_more_likely_to_engage\": \"Rip out the heavy three-tier database bundle in favor of embedded alternatives like SQLite or DuckDB for local runs, and add OpenTelemetry hooks for tracing the actual agent loops.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "I appreciate the anti-hype honesty and the move to declarative YAML over imperative Python spaghetti, but casually throwing three stateful databases into a docker-compose bundle for 'memory' is a glaring operational red flag.",
+        "biggest_strength": "Treating the simulation topology and actor-model routing as versionable data via YAML, completely avoiding the unmaintainable LangChain-style code-first approach.",
+        "biggest_weakness": "Normalizing a complex Qdrant, Neo4j, and Postgres trio for memory, which introduces massive Day-2 ops complexity for what is ultimately an experimental rehearsal tool.",
+        "would_star": true,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 9,
+        "what_would_make_me_more_likely_to_engage": "Rip out the heavy three-tier database bundle in favor of embedded alternatives like SQLite or DuckDB for local runs, and add OpenTelemetry hooks for tracing the actual agent loops."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "nemotron-3-super",
+      "archetype": "Open-source maintainer evaluating for adoption",
+      "archetype_idx": 1,
+      "elapsed_seconds": 8.56,
+      "raw_response": "{\n  \"archetype\": \"Open-source maintainer evaluating for adoption\",\n  \"first_impression\": \"exo presents itself as an opinionated, batteries-included kit for quickly spinning up domain-specific multi-agent simulations with a strong focus on lowering the barrier to entry via guided setup and YAML configuration.\",\n  \"biggest_strength\": \"The combination of the interactive `exo architect` CLI, optional modular architecture (databases/LLMs only when needed), and clear, runnable examples makes it exceptionally easy to go from zero to a working simulation in under 10 minutes.\",\n  \"biggest_weakness\": \"While the core concept is solid, the project is still very early (v0.1.0) and leans heavily on specific third-party services (Ollama Cloud, Claude OAuth) for LLM access, which may introduce friction or cost for users seeking fully local, air-gapped setups.\",\n  \"would_star\": true,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 8,\n  \"what_would_make_me_more_likely_to_engage\": \"More evidence of community adoption, diverse real-world use cases beyond the provided templates, and clearer guidance for production-like deployments or extensibility (e.g., adding custom memory backends).\"\n}",
+      "parsed_judgment": {
+        "archetype": "Open-source maintainer evaluating for adoption",
+        "first_impression": "exo presents itself as an opinionated, batteries-included kit for quickly spinning up domain-specific multi-agent simulations with a strong focus on lowering the barrier to entry via guided setup and YAML configuration.",
+        "biggest_strength": "The combination of the interactive `exo architect` CLI, optional modular architecture (databases/LLMs only when needed), and clear, runnable examples makes it exceptionally easy to go from zero to a working simulation in under 10 minutes.",
+        "biggest_weakness": "While the core concept is solid, the project is still very early (v0.1.0) and leans heavily on specific third-party services (Ollama Cloud, Claude OAuth) for LLM access, which may introduce friction or cost for users seeking fully local, air-gapped setups.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "More evidence of community adoption, diverse real-world use cases beyond the provided templates, and clearer guidance for production-like deployments or extensibility (e.g., adding custom memory backends)."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "qwen3-coder:480b",
+      "archetype": "Indie hacker",
+      "archetype_idx": 2,
+      "elapsed_seconds": 9.44,
+      "raw_response": "{\n  \"archetype\": \"Indie hacker\",\n  \"first_impression\": \"This looks like a solid, opinionated starter kit for multi-agent simulations with a strong local-first, YAML-driven approach.\",\n  \"biggest_strength\": \"The deterministic CLI architect that generates versionable YAML configs is a huge win for reproducibility and ease of use.\",\n  \"biggest_weakness\": \"The dependency on multiple external libraries and databases makes it feel heavier than needed for quick indie projects.\",\n  \"would_star\": true,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 8,\n  \"what_would_make_me_more_likely_to_engage\": \"If it had fewer mandatory dependencies and a truly minimal mode that ran with just one lightweight LLM and no databases.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Indie hacker",
+        "first_impression": "This looks like a solid, opinionated starter kit for multi-agent simulations with a strong local-first, YAML-driven approach.",
+        "biggest_strength": "The deterministic CLI architect that generates versionable YAML configs is a huge win for reproducibility and ease of use.",
+        "biggest_weakness": "The dependency on multiple external libraries and databases makes it feel heavier than needed for quick indie projects.",
+        "would_star": true,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "If it had fewer mandatory dependencies and a truly minimal mode that ran with just one lightweight LLM and no databases."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    }
+  ],
+  "summary": {
+    "would_star_count": 4,
+    "would_share_count": 1,
+    "would_tell_network_count": 2,
+    "would_NOT_engage_count": 0,
+    "schema_validation_failures": 0,
+    "passing_archetypes_count": 1,
+    "average_confidence": 8.0,
+    "run_passed": false
+  }
+}

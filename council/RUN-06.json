@@ -1,0 +1,125 @@
+{
+  "run_number": 6,
+  "timestamp": "2026-05-18T15:08:33.143333+00:00",
+  "contract_sha": "1854521522ca883564b44ab49f36e4aeae763f742d59958eed565a6b81a00e23",
+  "sealed_prompts_sha": "c68836a31ae7048e72d3e7d70c3e527549f60d67e6f492186273ca0821f36db6",
+  "variant": 3,
+  "voices": [
+    {
+      "engine": "codex",
+      "model": "gpt-5.5"
+    },
+    {
+      "engine": "gemini",
+      "model": "gemini-2.5-pro"
+    },
+    {
+      "engine": "ollama",
+      "model": "qwen3-coder:480b"
+    },
+    {
+      "engine": "ollama",
+      "model": "gpt-oss:120b"
+    }
+  ],
+  "judgments": [
+    {
+      "voice_engine": "codex",
+      "voice_model": "gpt-5.5",
+      "archetype": "Indie hacker",
+      "archetype_idx": 2,
+      "elapsed_seconds": 19.24,
+      "raw_response": "SUCCESS: The process with PID 6088 (child process of PID 36728) has been terminated.\nSUCCESS: The process with PID 36728 (child process of PID 35048) has been terminated.\nSUCCESS: The process with PID 35048 (child process of PID 10168) has been terminated.\nSUCCESS: The process with PID 10168 (child process of PID 33772) has been terminated.\nSUCCESS: The process with PID 26724 (child process of PID 36620) has been terminated.\nSUCCESS: The process with PID 36620 (child process of PID 33772) has been terminated.\n{\n  \"archetype\": \"Indie hacker\",\n  \"first_impression\": \"Compelling idea and positioning, but it still reads more like a strong product pitch than a proven copy-pasteable tool.\",\n  \"biggest_strength\": \"The sales-rehearsal use case is concrete, revenue-adjacent, and immediately relevant to a solo founder.\",\n  \"biggest_weakness\": \"The example output feels too close to generic LLM roleplay to fully substantiate the README's stronger simulation and variance claims.\",\n  \"would_star\": true,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 8,\n  \"what_would_make_me_more_likely_to_engage\": \"Show a minimal install that really runs in under five minutes plus full multi-run transcripts proving variance, with no Docker or database path required for the first win.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Indie hacker",
+        "first_impression": "Compelling idea and positioning, but it still reads more like a strong product pitch than a proven copy-pasteable tool.",
+        "biggest_strength": "The sales-rehearsal use case is concrete, revenue-adjacent, and immediately relevant to a solo founder.",
+        "biggest_weakness": "The example output feels too close to generic LLM roleplay to fully substantiate the README's stronger simulation and variance claims.",
+        "would_star": true,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "Show a minimal install that really runs in under five minutes plus full multi-run transcripts proving variance, with no Docker or database path required for the first win."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "gemini",
+      "voice_model": "gemini-2.5-pro",
+      "archetype": "Homelab self-hoster",
+      "archetype_idx": 3,
+      "elapsed_seconds": 23.68,
+      "raw_response": "```json\n{\n  \"archetype\": \"Homelab self-hoster\",\n  \"first_impression\": \"Finally, an AI tool that actually respects local-first execution and doesn't assume I want to pipe all my data to OpenAI.\",\n  \"biggest_strength\": \"The decoupling of the LLM router per actor and the explicit support for local Ollama via dead-simple declarative YAML configuration.\",\n  \"biggest_weakness\": \"The docker-compose setup assumes Ollama is running separately on the host rather than providing a GPU-passthrough container profile for a true all-in-one local stack.\",\n  \"would_star\": true,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 9,\n  \"what_would_make_me_more_likely_to_engage\": \"Include a docker-compose override for NVIDIA/AMD GPU passthrough that bundles the local inference container directly alongside the memory tier.\"\n}\n```\n",
+      "parsed_judgment": {
+        "archetype": "Homelab self-hoster",
+        "first_impression": "Finally, an AI tool that actually respects local-first execution and doesn't assume I want to pipe all my data to OpenAI.",
+        "biggest_strength": "The decoupling of the LLM router per actor and the explicit support for local Ollama via dead-simple declarative YAML configuration.",
+        "biggest_weakness": "The docker-compose setup assumes Ollama is running separately on the host rather than providing a GPU-passthrough container profile for a true all-in-one local stack.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 9,
+        "what_would_make_me_more_likely_to_engage": "Include a docker-compose override for NVIDIA/AMD GPU passthrough that bundles the local inference container directly alongside the memory tier."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "qwen3-coder:480b",
+      "archetype": "Senior staff engineer",
+      "archetype_idx": 0,
+      "elapsed_seconds": 7.61,
+      "raw_response": "{\n  \"archetype\": \"Senior staff engineer\",\n  \"first_impression\": \"This is a well-packaged, opinionated starter kit for multi-agent simulations that actually delivers on its promise of getting you from idea to running simulation in 30 minutes.\",\n  \"biggest_strength\": \"The deterministic `exo architect` CLI that generates versionable YAML configs is a game-changer for reproducibility and collaboration.\",\n  \"biggest_weakness\": \"The project is still experimental (v0.1) and lacks production-hardened tooling, which limits its use beyond research or rehearsal.\",\n  \"would_star\": true,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 9,\n  \"what_would_make_me_more_likely_to_engage\": \"A clear roadmap toward production-grade stability, especially around error handling, observability, and support for larger-scale simulations.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "This is a well-packaged, opinionated starter kit for multi-agent simulations that actually delivers on its promise of getting you from idea to running simulation in 30 minutes.",
+        "biggest_strength": "The deterministic `exo architect` CLI that generates versionable YAML configs is a game-changer for reproducibility and collaboration.",
+        "biggest_weakness": "The project is still experimental (v0.1) and lacks production-hardened tooling, which limits its use beyond research or rehearsal.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 9,
+        "what_would_make_me_more_likely_to_engage": "A clear roadmap toward production-grade stability, especially around error handling, observability, and support for larger-scale simulations."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "gpt-oss:120b",
+      "archetype": "Open-source maintainer evaluating for adoption",
+      "archetype_idx": 1,
+      "elapsed_seconds": 11.33,
+      "raw_response": "{\n  \"archetype\": \"Open-source maintainer evaluating for adoption\",\n  \"first_impression\": \"A well‑documented, Apache‑licensed starter kit that lets you spin up domain‑specific multi‑agent simulations via a 12‑question CLI.\",\n  \"biggest_strength\": \"The deterministic `exo architect` CLI plus YAML‑first config makes building and version‑controlling simulations extremely low‑friction.\",\n  \"biggest_weakness\": \"It’s still at v0.1.0 experimental status with limited governance and no production‑grade scaling guidance.\",\n  \"would_star\": true,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 7,\n  \"what_would_make_me_more_likely_to_engage\": \"A stable 1.0 release with CI‑tested pipelines, clear scaling benchmarks, and a transparent maintainer roadmap would convince me to adopt it more broadly.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Open-source maintainer evaluating for adoption",
+        "first_impression": "A well‑documented, Apache‑licensed starter kit that lets you spin up domain‑specific multi‑agent simulations via a 12‑question CLI.",
+        "biggest_strength": "The deterministic `exo architect` CLI plus YAML‑first config makes building and version‑controlling simulations extremely low‑friction.",
+        "biggest_weakness": "It’s still at v0.1.0 experimental status with limited governance and no production‑grade scaling guidance.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 7,
+        "what_would_make_me_more_likely_to_engage": "A stable 1.0 release with CI‑tested pipelines, clear scaling benchmarks, and a transparent maintainer roadmap would convince me to adopt it more broadly."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    }
+  ],
+  "summary": {
+    "would_star_count": 4,
+    "would_share_count": 3,
+    "would_tell_network_count": 3,
+    "would_NOT_engage_count": 0,
+    "schema_validation_failures": 0,
+    "passing_archetypes_count": 3,
+    "average_confidence": 8.25,
+    "run_passed": false
+  }
+}

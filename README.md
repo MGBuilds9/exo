@@ -159,6 +159,40 @@ exo report --run latest            # text report
 
 That's the whole experience. Five commands. One YAML file to edit.
 
+## The actual differentiator: it knows YOUR machine
+
+Every other multi-agent framework (CAMEL, OASIS, LangChain, CrewAI) assumes you'll wire your own LLM endpoint, your own vector store, your own embedding model. They give you a config to fill in. **exo asks what you have and builds the config for you.**
+
+```bash
+./exo doctor
+```
+
+Scans:
+- CPU cores, RAM, GPU (filtered for real GPUs, not virtual display adapters)
+- Disk space across all your drives
+- Running services on `localhost`: Ollama, LM Studio, Qdrant, Neo4j, Postgres, SearXNG, Docker daemon
+- Optional: any IP you give it (`--host 192.168.0.19`) — probes your homelab too
+- CLIs in PATH: Claude Code, Ollama, Docker
+- Cloud account env vars: `OLLAMA_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, etc.
+
+Then **recommends a personalized stack**:
+
+```
+Recommendations based on what you actually have
+─────────────────────────────────────────────────
+primary LLM:    claude-oauth                                  ← detected Claude Code CLI
+fallback LLM:   ollama-cloud/qwen3-coder:480b                 ← detected OLLAMA_API_KEY
+embedding:      ollama/bge-m3:latest                          ← already loaded locally
+vector store:   chroma-embedded                               ← no Qdrant; zero-ops alternative
+graph store:    neo4j-local                                   ← detected at localhost:7474
+sql store:      sqlite-embedded                               ← no Postgres; fine for personal sims
+hosting:        local-docker                                  ← Docker running
+```
+
+When you run `exo architect`, this report flows into the design. The `domain.yaml` it generates has `actor.model: claude-oauth` (because you have it) — not a generic placeholder you have to swap. A snapshot of WHY these picks were made is persisted in `domain.yaml`'s `machine_profile` section for audit.
+
+This is what makes exo different from "another Docker compose with three vendor wrappers."
+
 ## The architect (the value-add)
 
 The `exo architect` CLI is the part you'll actually use the most. It's twelve questions:

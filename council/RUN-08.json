@@ -1,0 +1,116 @@
+{
+  "run_number": 8,
+  "timestamp": "2026-05-18T15:12:34.092002+00:00",
+  "contract_sha": "1854521522ca883564b44ab49f36e4aeae763f742d59958eed565a6b81a00e23",
+  "sealed_prompts_sha": "c68836a31ae7048e72d3e7d70c3e527549f60d67e6f492186273ca0821f36db6",
+  "variant": 2,
+  "voices": [
+    {
+      "engine": "codex",
+      "model": "gpt-5.5"
+    },
+    {
+      "engine": "gemini",
+      "model": "gemini-2.5-pro"
+    },
+    {
+      "engine": "ollama",
+      "model": "gpt-oss:120b"
+    },
+    {
+      "engine": "ollama",
+      "model": "nemotron-3-super"
+    }
+  ],
+  "judgments": [
+    {
+      "voice_engine": "codex",
+      "voice_model": "gpt-5.5",
+      "archetype": "Senior staff engineer",
+      "archetype_idx": 0,
+      "elapsed_seconds": 17.38,
+      "raw_response": "SUCCESS: The process with PID 5676 (child process of PID 35656) has been terminated.\nSUCCESS: The process with PID 35656 (child process of PID 36620) has been terminated.\nSUCCESS: The process with PID 36620 (child process of PID 25552) has been terminated.\nSUCCESS: The process with PID 25552 (child process of PID 26724) has been terminated.\nSUCCESS: The process with PID 25100 (child process of PID 25960) has been terminated.\nSUCCESS: The process with PID 25960 (child process of PID 26724) has been terminated.\n{\n  \"archetype\": \"Senior staff engineer\",\n  \"first_impression\": \"This is a polished wrapper around LLM roleplay with good packaging, but the README overclaims simulation value before showing validation.\",\n  \"biggest_strength\": \"The YAML-first, local-first, optional-memory-tier framing is pragmatic and immediately understandable.\",\n  \"biggest_weakness\": \"It does not prove that its outputs are meaningfully predictive or calibrated versus just plausible multi-agent transcript generation.\",\n  \"would_star\": false,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": true,\n  \"confidence_0_to_10\": 8,\n  \"what_would_make_me_more_likely_to_engage\": \"Show a brutally honest eval: repeated sims versus real-world outcomes, failure cases, observability, and exactly what the engine does beyond prompt orchestration.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "This is a polished wrapper around LLM roleplay with good packaging, but the README overclaims simulation value before showing validation.",
+        "biggest_strength": "The YAML-first, local-first, optional-memory-tier framing is pragmatic and immediately understandable.",
+        "biggest_weakness": "It does not prove that its outputs are meaningfully predictive or calibrated versus just plausible multi-agent transcript generation.",
+        "would_star": false,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": true,
+        "confidence_0_to_10": 8,
+        "what_would_make_me_more_likely_to_engage": "Show a brutally honest eval: repeated sims versus real-world outcomes, failure cases, observability, and exactly what the engine does beyond prompt orchestration."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "gemini",
+      "voice_model": "gemini-2.5-pro",
+      "archetype": "Open-source maintainer evaluating for adoption",
+      "archetype_idx": 1,
+      "elapsed_seconds": 15.29,
+      "raw_response": "{\n  \"archetype\": \"Open-source maintainer evaluating for adoption\",\n  \"first_impression\": \"Finally, an agent framework that focuses on the configuration DX and local deployment instead of trying to reinvent the underlying runtime.\",\n  \"biggest_strength\": \"The declarative YAML configuration coupled with the ability to mix frontier and local LLMs per-actor without writing Python.\",\n  \"biggest_weakness\": \"It's ultimately a thin orchestration layer over CAMEL/OASIS, meaning upstream breaking changes or limitations will hit hard.\",\n  \"would_star\": true,\n  \"would_share\": true,\n  \"would_tell_network\": true,\n  \"would_NOT_engage\": false,\n  \"confidence_0_to_10\": 9,\n  \"what_would_make_me_more_likely_to_engage\": \"Seeing a concrete plan for how versioning and schema migrations for the domain.yaml will be handled as the project matures.\"\n}\n",
+      "parsed_judgment": {
+        "archetype": "Open-source maintainer evaluating for adoption",
+        "first_impression": "Finally, an agent framework that focuses on the configuration DX and local deployment instead of trying to reinvent the underlying runtime.",
+        "biggest_strength": "The declarative YAML configuration coupled with the ability to mix frontier and local LLMs per-actor without writing Python.",
+        "biggest_weakness": "It's ultimately a thin orchestration layer over CAMEL/OASIS, meaning upstream breaking changes or limitations will hit hard.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "would_NOT_engage": false,
+        "confidence_0_to_10": 9,
+        "what_would_make_me_more_likely_to_engage": "Seeing a concrete plan for how versioning and schema migrations for the domain.yaml will be handled as the project matures."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "gpt-oss:120b",
+      "archetype": "Indie hacker",
+      "archetype_idx": 2,
+      "elapsed_seconds": 8.77,
+      "raw_response": "{\n  \"archetype\": \"Indie hacker\",\n  \"first_impression\": \"A fairly heavyweight opinionated bundle for multi‑agent simulations that promises a quick YAML‑first start but pulls in many moving parts.\",\n  \"biggest_strength\": \"Provides a ready‑made, deterministic CLI architect and per‑actor LLM routing that lets you spin up domain‑specific simulations with minimal code.\",\n  \"biggest_weakness\": \"Relies on multiple external services (Claude, Ollama Cloud, Docker‑compose DBs) and a stack of libraries, making the “copy‑paste quickstart” less frictionless than advertised.\",\n  \"would_star\": false,\n  \"would_share\": false,\n  \"would_tell_network\": false,\n  \"would_NOT_engage\": true,\n  \"confidence_0_to_10\": 6,\n  \"what_would_make_me_more_likely_to_engage\": \"A single‑binary, zero‑dependency version that runs locally with a default LLM and no Docker or external API requirements.\"\n}",
+      "parsed_judgment": {
+        "archetype": "Indie hacker",
+        "first_impression": "A fairly heavyweight opinionated bundle for multi‑agent simulations that promises a quick YAML‑first start but pulls in many moving parts.",
+        "biggest_strength": "Provides a ready‑made, deterministic CLI architect and per‑actor LLM routing that lets you spin up domain‑specific simulations with minimal code.",
+        "biggest_weakness": "Relies on multiple external services (Claude, Ollama Cloud, Docker‑compose DBs) and a stack of libraries, making the “copy‑paste quickstart” less frictionless than advertised.",
+        "would_star": false,
+        "would_share": false,
+        "would_tell_network": false,
+        "would_NOT_engage": true,
+        "confidence_0_to_10": 6,
+        "what_would_make_me_more_likely_to_engage": "A single‑binary, zero‑dependency version that runs locally with a default LLM and no Docker or external API requirements."
+      },
+      "schema_valid": true,
+      "schema_errors": []
+    },
+    {
+      "voice_engine": "ollama",
+      "voice_model": "nemotron-3-super",
+      "archetype": "Homelab self-hoster",
+      "archetype_idx": 3,
+      "elapsed_seconds": 24.62,
+      "raw_response": "[OLLAMA EMPTY CONTENT after retry] thinking: We are to return a JSON object with the specified fields.\n We are acting as a Homelab self-hoster who runs a Proxmox cluster + GPU in the basement, refuses to send prompts to OpenAI, cares about docker-compose simplicity, local-first defaults, AGPL/MIT-friendly licensing, and the ability to fork and run forever. Skeptical of anything requiring a cloud provider account.\n\n Let's analyze the provided artifact bundle (the README and other files) to determine our reaction.\n\n Key points from the READM",
+      "parsed_judgment": null,
+      "schema_valid": false,
+      "schema_errors": [
+        "could not parse JSON from response"
+      ]
+    }
+  ],
+  "summary": {
+    "would_star_count": 1,
+    "would_share_count": 1,
+    "would_tell_network_count": 1,
+    "would_NOT_engage_count": 2,
+    "schema_validation_failures": 1,
+    "passing_archetypes_count": 1,
+    "average_confidence": 7.67,
+    "run_passed": false
+  }
+}
