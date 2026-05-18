@@ -2,8 +2,10 @@
 
 # exo
 
-**Multi-agent simulation engines for any domain.**
-**Designed in 12 questions. Running in 30 minutes. Yours forever.**
+**A 600-line Python wrapper that runs multi-actor LLM conversations from a YAML file.**
+**With a deterministic CLI that scans your machine and picks concrete LLM/storage backends from what you actually have.**
+
+*v0.1 — designed for 3–12 actor rehearsal sims. Plausible role-play with measurable variance, not calibrated predictions.*
 
 [![Docker](https://img.shields.io/badge/Docker-compose%20up-2496ED?style=flat-square&logo=docker&logoColor=white)](#quickstart)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](./LICENSE)
@@ -25,8 +27,8 @@
 
 `exo` is an opinionated starter kit for multi-agent simulation engines. It bundles:
 
-- **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured), the canonical hybrid stack from the [2026 agent-memory guide](./docs/memory-architecture.md). **Strictly opt-in via compose profiles**: `docker compose up` starts only the exo-runner. Use `--profile vector`, `--profile graph`, `--profile sql`, or `--profile all` when your sim's `domain.yaml` declares a memory tier that needs them. The DBs are not running unless you ask for them — period.
-- **LLM router** — Routes requests between Claude OAuth (frontier), Ollama Cloud (cloud OSS), and local Ollama / BERTHA / llama-swap (local OSS). No API keys baked in.
+- **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured) defined in `compose.yaml` as profile-gated services. **You opt them in manually**: `docker compose --profile graph up` will start Neo4j alongside the runner. There is no auto-detection from `domain.yaml`; if you declare a memory tier, you also pass the matching profile flag at start time. (v0.2 may automate this; v0.1 is manual.)
+- **LLM router** — Routes requests between Claude OAuth (frontier), Ollama Cloud (cloud OSS), and local Ollama / BERTHA / llama-swap (local OSS). Pick one of these in your environment — you supply the credentials (`OLLAMA_API_KEY`, Claude Code OAuth login, or a local Ollama at `LOCAL_OLLAMA_BASE_URL`). exo does not ship any keys; you choose which provider you trust.
 - **Multi-agent runtime** — A vendor-neutral turn-loop in pure Python (~600 lines). Each turn, each actor speaks once via its configured LLM; conversation state is the shared context. Not built on CAMEL-AI or OASIS in v0.1, though the design is informed by what those projects do well. v0.2 will add CAMEL-AI integration as an opt-in runtime.
 - **`exo architect`** — Interactive CLI that walks you through the 12 design decisions for a new multi-agent simulation: actors, ontology, scenarios, memory tier, LLM tier. Outputs a complete `domain.yaml` + ready-to-run docker setup.
 - **Template library** — Pre-built simulations for common domains: social-media reaction, sales pipeline, wedding-vendor coordination, healthcare triage, construction stakeholder, software incident response.
@@ -306,7 +308,13 @@ Each prospect surfaces objections specific to their function. The
 cross-run variance section above quantifies what's different between
 runs.
 
-## Why this isn't just LLM roleplay
+## What this is and isn't
+
+**Is:** a deterministic CLI (the architect + doctor) that picks concrete backends for your machine, plus a turn-loop runtime that drives multi-actor LLM conversations from YAML. Self-reported per-actor signals (sentiment / trust / etc.) come from the actors themselves at each turn — they're plausible role-play artifacts, not predictions calibrated against ground truth. Designed for 3–12 actor simulations; >20 actors per sim is untested.
+
+**Isn't:** a production-grade multi-agent system, a calibrated prediction engine, or a replacement for OASIS/CAMEL-AI for social-media simulation specifically. The runtime is ~600 lines of Python — a turn-loop, an LLM router, a signal extractor. The value is the bundle + the architect, not the runtime sophistication.
+
+## Cross-run variance — what the simulator does that a single prompt doesn't
 
 The same template (`templates/sales-pipeline/`) run three times against
 the same prospects produces three different conversations with measurable
@@ -332,14 +340,11 @@ And the actual final turns from each run diverge concretely:
 - **Run 3**: IT Director "won't sign off on technical integration until full security documentation review"
 
 This is the simulation property exo provides: **the same setup explores
-different conversational paths, surfacing which actors are stable risks
-vs which are highly path-dependent.** Run it 5–10 times for a deal that
-matters; the actors that have high variance are the ones to prepare
-hardest for.
+different conversational paths, surfacing which actors are stable vs which
+are highly path-dependent.** Run it 5–10 times for a rehearsal that
+matters; the high-variance actors are the ones to prepare hardest for.
 
-This is not what you get from a single GPT prompt asking it to "roleplay
-a sales call." Each actor has its own persona, model, and turn-by-turn
-state; the variance is structural, not stylistic.
+**Honest framing**: each actor self-reports its signal values at each turn. These are LLM outputs, not measurements of an external ground truth. The variance is real (you can verify by running it yourself); the *calibration* against actual stakeholder behavior is unproven. Treat outputs as rehearsal hypotheses to stress-test in reality, not as predictions to act on directly.
 
 [Full transcripts of all 3 runs](./examples/sales-pipeline-rehearsal/).
 

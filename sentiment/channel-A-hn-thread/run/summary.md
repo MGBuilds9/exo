@@ -8,21 +8,21 @@ E1 Mirofish recreate transcript).
 
 - **Total turns**: 24
 - **Actors**: 8
-- **Started**: 2026-05-18T21:33:25.901094+00:00
-- **Ended**: 2026-05-18T21:37:05.897737+00:00
+- **Started**: 2026-05-18T21:56:48.895440+00:00
+- **Ended**: 2026-05-18T21:57:02.158399+00:00
 
 ## Per-actor signal averages
 
 | Actor | Turns | upvote_likelihood | would_clone | comment_quality |
 |---|---|---|---|---|
-| rust_evangelist | 3 | 3.0 | 2.0 | 7.3 |
-| ai_cynic | 3 | 5.7 | 4.5 | 7.3 |
-| indie_hacker_hn | 3 | 7.3 | 8.0 | 6.2 |
-| faang_staff_eng | 3 | 4.0 | 3.0 | 7.0 |
+| rust_evangelist | 3 | — | — | — |
+| ai_cynic | 3 | — | — | — |
+| indie_hacker_hn | 3 | — | — | — |
+| faang_staff_eng | 3 | — | — | — |
 | ai_optimist | 3 | — | — | — |
-| mlops_veteran | 3 | — | 4.0 | — |
-| oss_maintainer_hn | 3 | 6.5 | 6.0 | 8.0 |
-| security_eng_hn | 3 | 5.3 | 4.7 | 7.0 |
+| mlops_veteran | 3 | — | — | — |
+| oss_maintainer_hn | 3 | — | — | — |
+| security_eng_hn | 3 | — | — | — |
 
 ## Trigger
 

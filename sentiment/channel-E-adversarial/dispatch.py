@@ -31,7 +31,7 @@ except (AttributeError, OSError):
     pass
 
 ROOT = Path(__file__).resolve().parent.parent.parent
-BUNDLE = (ROOT / "sentiment" / "ARTIFACT-BUNDLE-rc1.txt").read_text(encoding="utf-8")
+BUNDLE = (ROOT / "sentiment" / "ARTIFACT-BUNDLE-rc2.txt").read_text(encoding="utf-8")
 
 
 ADVERSARIAL_PROMPT = """You are an adversarial reviewer. Your job is NOT to validate this artifact. Your job is to FIND FAILURES in it.

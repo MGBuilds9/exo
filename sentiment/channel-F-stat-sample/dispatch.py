@@ -26,7 +26,7 @@ except (AttributeError, OSError):
     pass
 
 ROOT = Path(__file__).resolve().parent.parent.parent
-BUNDLE = (ROOT / "sentiment" / "ARTIFACT-BUNDLE-rc1.txt").read_text(encoding="utf-8")
+BUNDLE = (ROOT / "sentiment" / "ARTIFACT-BUNDLE-rc2.txt").read_text(encoding="utf-8")
 
 
 ARCHETYPES = [

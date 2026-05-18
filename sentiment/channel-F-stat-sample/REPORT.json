@@ -2,99 +2,14 @@
   "results": [
     {
       "archetype": "Senior staff engineer",
-      "sample_index": 0,
-      "temperature": 0.3,
-      "elapsed_seconds": 8.88,
-      "parsed": {
-        "archetype": "Senior staff engineer",
-        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations with strong local-first and YAML-driven design principles.",
-        "biggest_strength": "The deterministic architect CLI that generates versionable YAML configs is a smart approach to making multi-agent simulation accessible without sacrificing reproducibility.",
-        "biggest_weakness": "The project is labeled as experimental and lacks clear production readiness signals, which raises concerns about reliability and long-term support.",
-        "would_star": true,
-        "would_share": true,
-        "would_tell_network": false,
-        "confidence_0_to_10": 8
-      },
-      "raw_excerpt": null
-    },
-    {
-      "archetype": "Senior staff engineer",
-      "sample_index": 1,
-      "temperature": 0.4,
-      "elapsed_seconds": 9.05,
-      "parsed": {
-        "archetype": "Senior staff engineer",
-        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations with strong local-first and YAML-driven design principles.",
-        "biggest_strength": "The deterministic architect CLI that generates versionable YAML configs is a smart approach to making multi-agent simulation accessible without sacrificing reproducibility.",
-        "biggest_weakness": "The reliance on multiple external dependencies (CAMEL-AI, OASIS, etc.) without clear abstraction boundaries raises concerns about long-term maintainability and debuggability.",
-        "would_star": true,
-        "would_share": true,
-        "would_tell_network": false,
-        "confidence_0_to_10": 8
-      },
-      "raw_excerpt": null
-    },
-    {
-      "archetype": "Senior staff engineer",
-      "sample_index": 3,
-      "temperature": 0.6000000000000001,
-      "elapsed_seconds": 13.8,
-      "parsed": {
-        "archetype": "Senior staff engineer",
-        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations that actually addresses the gap between research and practical deployment.",
-        "biggest_strength": "The YAML-first configuration and deterministic architect CLI enable reproducible, versionable simulation setups without requiring deep infra expertise.",
-        "biggest_weakness": "The reliance on multiple external dependencies (CAMEL-AI, OASIS, etc.) without clear abstraction could lead to maintenance headaches down the line.",
-        "would_star": true,
-        "would_share": true,
-        "would_tell_network": true,
-        "confidence_0_to_10": 8
-      },
-      "raw_excerpt": null
-    },
-    {
-      "archetype": "Senior staff engineer",
       "sample_index": 2,
       "temperature": 0.5,
-      "elapsed_seconds": 14.22,
+      "elapsed_seconds": 3.69,
       "parsed": {
         "archetype": "Senior staff engineer",
-        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations with strong local-first and YAML-driven design principles.",
-        "biggest_strength": "The deterministic architect CLI that generates versionable YAML configs is a smart approach to making multi-agent simulation accessible without sacrificing reproducibility.",
-        "biggest_weakness": "The project is still experimental and lacks evidence of real-world adoption or production usage, which raises questions about long-term maintainability and edge-case robustness.",
-        "would_star": true,
-        "would_share": false,
-        "would_tell_network": false,
-        "confidence_0_to_10": 8
-      },
-      "raw_excerpt": null
-    },
-    {
-      "archetype": "Senior staff engineer",
-      "sample_index": 4,
-      "temperature": 0.7,
-      "elapsed_seconds": 10.18,
-      "parsed": {
-        "archetype": "Senior staff engineer",
-        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations with strong local-first and YAML-driven design principles.",
-        "biggest_strength": "The deterministic architect CLI that generates versionable YAML configs is a smart approach to making multi-agent simulation accessible without sacrificing reproducibility.",
-        "biggest_weakness": "The reliance on multiple external dependencies (CAMEL-AI, OASIS, Qdrant, Neo4j, Postgres) without clear abstraction layers raises concerns about maintainability and operational complexity in production environments.",
-        "would_star": true,
-        "would_share": false,
-        "would_tell_network": false,
-        "confidence_0_to_10": 8
-      },
-      "raw_excerpt": null
-    },
-    {
-      "archetype": "Open-source maintainer evaluating for adoption",
-      "sample_index": 0,
-      "temperature": 0.3,
-      "elapsed_seconds": 10.12,
-      "parsed": {
-        "archetype": "Open-source maintainer evaluating for adoption",
         "first_impression": "This is a well-packaged, opinionated starter kit for multi-agent simulations that addresses a real gap in the ecosystem.",
-        "biggest_strength": "The YAML-first configuration and deterministic architect CLI make it easy to version, diff, and reproduce simulations.",
-        "biggest_weakness": "The project is still experimental and lacks extensive documentation or community signals beyond the README.",
+        "biggest_strength": "The deterministic architect CLI and YAML-first configuration make it easy to version, diff, and share simulation designs.",
+        "biggest_weakness": "The project is still experimental and lacks a web UI, which may limit adoption for less technical users.",
         "would_star": true,
         "would_share": true,
         "would_tell_network": true,
@@ -103,15 +18,49 @@
       "raw_excerpt": null
     },
     {
-      "archetype": "Open-source maintainer evaluating for adoption",
-      "sample_index": 2,
-      "temperature": 0.5,
-      "elapsed_seconds": 14.96,
+      "archetype": "Senior staff engineer",
+      "sample_index": 3,
+      "temperature": 0.6000000000000001,
+      "elapsed_seconds": 4.51,
       "parsed": {
-        "archetype": "Open-source maintainer evaluating for adoption",
-        "first_impression": "Impressive depth and clarity for a project tackling a complex domain with strong opinions and good documentation.",
-        "biggest_strength": "The deterministic architect CLI and YAML-first configuration make it highly approachable and reproducible for domain-specific simulations.",
-        "biggest_weakness": "The experimental status and lack of community signals (stars, forks, issues) raise concerns about long-term maintenance and adoption.",
+        "archetype": "Senior staff engineer",
+        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations with a strong focus on local-first, YAML-driven configuration and modular memory tiers.",
+        "biggest_strength": "The deterministic architect CLI that generates versionable YAML configs is a smart approach to making multi-agent simulation accessible without sacrificing reproducibility or configurability.",
+        "biggest_weakness": "The project is labeled as experimental and lacks clear production readiness signals, which raises concerns about long-term maintainability and operational robustness.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": false,
+        "confidence_0_to_10": 8
+      },
+      "raw_excerpt": null
+    },
+    {
+      "archetype": "Senior staff engineer",
+      "sample_index": 1,
+      "temperature": 0.4,
+      "elapsed_seconds": 7.16,
+      "parsed": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "This looks like a well-thought-out, opinionated starter kit for multi-agent simulations with a strong focus on local-first, YAML-driven configuration and modular memory tiers.",
+        "biggest_strength": "The deterministic architect CLI that generates versionable YAML configs is a smart approach to making multi-agent simulation accessible without sacrificing reproducibility or testability.",
+        "biggest_weakness": "The project is labeled as experimental and lacks a web UI (planned for v0.2), which may limit its appeal to less technical users despite its strong DevOps story.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "confidence_0_to_10": 8
+      },
+      "raw_excerpt": null
+    },
+    {
+      "archetype": "Senior staff engineer",
+      "sample_index": 0,
+      "temperature": 0.3,
+      "elapsed_seconds": 8.87,
+      "parsed": {
+        "archetype": "Senior staff engineer",
+        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations with strong local-first and YAML-driven design principles.",
+        "biggest_strength": "The deterministic architect CLI that generates versionable YAML configs is a smart approach to making multi-agent simulation accessible without sacrificing reproducibility or configurability.",
+        "biggest_weakness": "The project is still experimental and lacks real-world adoption signals; the value-add over existing frameworks like CAMEL-AI or OASIS may not yet justify switching for many teams.",
         "would_star": true,
         "would_share": false,
         "would_tell_network": false,
@@ -120,15 +69,15 @@
       "raw_excerpt": null
     },
     {
-      "archetype": "Open-source maintainer evaluating for adoption",
-      "sample_index": 1,
-      "temperature": 0.4,
-      "elapsed_seconds": 15.58,
+      "archetype": "Senior staff engineer",
+      "sample_index": 4,
+      "temperature": 0.7,
+      "elapsed_seconds": 7.23,
       "parsed": {
-        "archetype": "Open-source maintainer evaluating for adoption",
-        "first_impression": "This is a well-packaged, opinionated multi-agent simulation toolkit that lowers the barrier to entry for domain-specific simulations.",
-        "biggest_strength": "The YAML-first configuration and deterministic architect CLI make it easy to version, diff, and reproduce simulation setups.",
-        "biggest_weakness": "The project is marked as experimental with limited documentation beyond the README and quickstart guide.",
+        "archetype": "Senior staff engineer",
+        "first_impression": "This is a well-packaged, opinionated starter kit for multi-agent simulations that respects simplicity and local-first principles.",
+        "biggest_strength": "The deterministic architect CLI and YAML-first config make it easy to version, diff, and share simulation designs without touching code.",
+        "biggest_weakness": "The project is still experimental and lacks real-world adoption signals beyond the author's own experiments.",
         "would_star": true,
         "would_share": true,
         "would_tell_network": true,
@@ -138,14 +87,31 @@
     },
     {
       "archetype": "Open-source maintainer evaluating for adoption",
-      "sample_index": 4,
-      "temperature": 0.7,
-      "elapsed_seconds": 20.39,
+      "sample_index": 0,
+      "temperature": 0.3,
+      "elapsed_seconds": 11.61,
       "parsed": {
         "archetype": "Open-source maintainer evaluating for adoption",
-        "first_impression": "Impressive depth and clarity in documentation, with a strong focus on local-first, reproducible multi-agent simulations.",
-        "biggest_strength": "The deterministic architect CLI and YAML-first configuration make it highly accessible and reproducible for domain-specific simulations.",
-        "biggest_weakness": "The project is labeled as experimental and lacks clear community or contribution signals, which raises concerns about long-term maintenance.",
+        "first_impression": "Impressive depth and clarity for an experimental project — the README is unusually thorough and honest about scope/limitations.",
+        "biggest_strength": "The deterministic architect CLI that generates YAML configs is a game-changer for reproducibility and ease of use in simulation design.",
+        "biggest_weakness": "The project is labeled 'experimental' with no clear roadmap or governance structure, raising concerns about long-term viability.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "confidence_0_to_10": 8
+      },
+      "raw_excerpt": null
+    },
+    {
+      "archetype": "Open-source maintainer evaluating for adoption",
+      "sample_index": 1,
+      "temperature": 0.4,
+      "elapsed_seconds": 9.98,
+      "parsed": {
+        "archetype": "Open-source maintainer evaluating for adoption",
+        "first_impression": "This is a well-structured, opinionated multi-agent simulation toolkit with strong local-first and YAML-driven design principles.",
+        "biggest_strength": "The deterministic architect CLI that generates versionable YAML configs lowers the barrier to entry significantly while maintaining reproducibility.",
+        "biggest_weakness": "The project is labeled as experimental and lacks clear community or governance signals beyond the LICENSE and basic setup.",
         "would_star": true,
         "would_share": true,
         "would_tell_network": true,
@@ -157,12 +123,12 @@
       "archetype": "Open-source maintainer evaluating for adoption",
       "sample_index": 3,
       "temperature": 0.6000000000000001,
-      "elapsed_seconds": 20.66,
+      "elapsed_seconds": 14.1,
       "parsed": {
         "archetype": "Open-source maintainer evaluating for adoption",
-        "first_impression": "This is a well-packaged, opinionated multi-agent simulation toolkit that lowers the barrier to entry for domain-specific simulations.",
-        "biggest_strength": "The YAML-driven configuration and deterministic architect CLI make simulation design reproducible and accessible without requiring deep AI/ML expertise.",
-        "biggest_weakness": "The experimental status and limited documentation beyond the README may raise concerns about long-term maintainability and community adoption.",
+        "first_impression": "This is a well-structured, opinionated multi-agent simulation toolkit with strong local-first and YAML-driven design principles.",
+        "biggest_strength": "The deterministic architect CLI that generates versionable YAML configs makes simulation setup reproducible and accessible.",
+        "biggest_weakness": "The project is still experimental and lacks comprehensive documentation beyond the README, which may hinder adoption by serious users.",
         "would_star": true,
         "would_share": true,
         "would_tell_network": true,
@@ -171,15 +137,32 @@
       "raw_excerpt": null
     },
     {
-      "archetype": "Indie hacker",
-      "sample_index": 1,
-      "temperature": 0.4,
-      "elapsed_seconds": 14.32,
+      "archetype": "Open-source maintainer evaluating for adoption",
+      "sample_index": 2,
+      "temperature": 0.5,
+      "elapsed_seconds": 16.85,
       "parsed": {
-        "archetype": "Indie hacker",
-        "first_impression": "This looks like a well-designed, opinionated starter kit for multi-agent simulations with a focus on local-first, low-dependency setup.",
-        "biggest_strength": "The YAML-first configuration and deterministic CLI architect make it easy to version, diff, and reproduce simulations without writing code.",
-        "biggest_weakness": "The experimental status and reliance on multiple external LLM frameworks might deter some users seeking stability or simplicity.",
+        "archetype": "Open-source maintainer evaluating for adoption",
+        "first_impression": "Impressive depth and clarity for an experimental project — the architectural opinions are well-justified and the local-first, YAML-driven approach is compelling.",
+        "biggest_strength": "The deterministic architect CLI and YAML-first configuration make simulation design accessible, reproducible, and versionable — a major gap-filler in the multi-agent space.",
+        "biggest_weakness": "The project is still experimental with limited community signals (stars, forks, contributors) which raises concerns about long-term maintenance and adoption risk.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "confidence_0_to_10": 8
+      },
+      "raw_excerpt": null
+    },
+    {
+      "archetype": "Open-source maintainer evaluating for adoption",
+      "sample_index": 4,
+      "temperature": 0.7,
+      "elapsed_seconds": 16.28,
+      "parsed": {
+        "archetype": "Open-source maintainer evaluating for adoption",
+        "first_impression": "Impressive depth and clarity for an experimental project — the README is unusually thorough and honest about limitations.",
+        "biggest_strength": "Strong local-first, YAML-driven design with clear separation of concerns and excellent quickstart experience.",
+        "biggest_weakness": "Still experimental with limited community signals (stars, forks, contributors) and no web UI until v0.2.",
         "would_star": true,
         "would_share": true,
         "would_tell_network": true,
@@ -191,12 +174,29 @@
       "archetype": "Indie hacker",
       "sample_index": 0,
       "temperature": 0.3,
-      "elapsed_seconds": 15.7,
+      "elapsed_seconds": 15.9,
       "parsed": {
         "archetype": "Indie hacker",
-        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations with a strong focus on local-first, low-dependency setup.",
-        "biggest_strength": "The YAML-first configuration and deterministic CLI architect make it easy to spin up domain-specific simulations without writing code.",
-        "biggest_weakness": "The reliance on multiple external dependencies (CAMEL-AI, OASIS) and complex Docker setups might introduce friction for truly solo indie hackers.",
+        "first_impression": "This looks like a well-designed, opinionated starter kit for multi-agent simulations that prioritizes local-first, low-dependency setups.",
+        "biggest_strength": "The YAML-first configuration and deterministic CLI architect make it easy to version, diff, and reproduce simulations without touching code.",
+        "biggest_weakness": "The experimental status and lack of a web UI in v0.1 might deter some users who want a more polished or stable experience.",
+        "would_star": true,
+        "would_share": true,
+        "would_tell_network": true,
+        "confidence_0_to_10": 8
+      },
+      "raw_excerpt": null
+    },
+    {
+      "archetype": "Indie hacker",
+      "sample_index": 1,
+      "temperature": 0.4,
+      "elapsed_seconds": 13.39,
+      "parsed": {
+        "archetype": "Indie hacker",
+        "first_impression": "This looks like a well-designed, opinionated starter kit for multi-agent simulations that prioritizes local-first, low-dependency setup.",
+        "biggest_strength": "The YAML-first configuration and deterministic CLI architect make it easy to version, diff, and share simulation setups without touching code.",
+        "biggest_weakness": "The README is dense and could benefit from clearer scoping of what problems it actually solves versus what it delegates to existing tools.",
         "would_star": true,
         "would_share": true,
         "would_tell_network": true,
@@ -208,12 +208,12 @@
       "archetype": "Indie hacker",
       "sample_index": 2,
       "temperature": 0.5,
-      "elapsed_seconds": 16.46,
+      "elapsed_seconds": 13.02,
       "parsed": {
         "archetype": "Indie hacker",
-        "first_impression": "This looks like a well-structured, opinionated starter kit for multi-agent simulations with strong YAML-based configuration and low-friction local setup.",
-        "biggest_strength": "The deterministic CLI architect and YAML-first config make it easy to version, diff, and share simulation setups without touching code.",
-        "biggest_weakness": "The reliance on multiple external dependencies like Docker, Qdrant, Neo4j, and Postgres could add complexity for truly minimal setups.",
+        "first_impression": "This looks like a well-designed, opinionated starter kit for multi-agent simulations with a strong focus on local development and minimal friction.",
+        "biggest_strength": "The YAML-first configuration and deterministic CLI architect make it easy to version, diff, and share simulation setups without touching code.",
+        "biggest_weakness": "The experimental status and lack of a web UI in v0.1 might deter some users who want a more polished or stable experience.",
         "would_star": true,
         "would_share": true,
         "would_tell_network": true,
@@ -225,29 +225,12 @@
       "archetype": "Indie hacker",
       "sample_index": 3,
       "temperature": 0.6000000000000001,
-      "elapsed_seconds": 17.17,
+      "elapsed_seconds": 10.95,
       "parsed": {
         "archetype": "Indie hacker",
-        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations with a strong focus on local-first, low-dependency setup.",
-        "biggest_strength": "The deterministic architect CLI that generates YAML configs in 12 questions is a game-changer for rapid domain-specific simulation setup.",
-        "biggest_weakness": "The reliance on multiple external dependencies like CAMEL-AI and OASIS makes it less of a standalone tool and more of an assembly layer.",
-        "would_star": true,
-        "would_share": true,
-        "would_tell_network": true,
-        "confidence_0_to_10": 8
-      },
-      "raw_excerpt": null
-    },
-    {
-      "archetype": "Indie hacker",
-      "sample_index": 4,
-      "temperature": 0.7,
-      "elapsed_seconds": 19.16,
-      "parsed": {
-        "archetype": "Indie hacker",
-        "first_impression": "This looks like a well-packaged, opinionated starter kit for multi-agent simulations with a strong focus on local-first, low-dependency setup.",
-        "biggest_strength": "The deterministic CLI-driven setup (`exo architect`) that generates YAML configs makes it incredibly easy to get started without deep AI/ML knowledge.",
-        "biggest_weakness": "The reliance on multiple external dependencies (CAMEL-AI, OASIS, etc.) under the hood might introduce complexity despite the surface-level simplicity.",
+        "first_impression": "This looks like a well-designed, opinionated starter kit for multi-agent simulations with a strong focus on local-first development and minimal dependencies.",
+        "biggest_strength": "The YAML-first configuration and deterministic CLI architect make it easy to version, diff, and share simulation setups without writing code.",
+        "biggest_weakness": "The project is still experimental and lacks a web UI (planned for v0.2), which might limit accessibility for some users.",
         "would_star": true,
         "would_share": true,
         "would_tell_network": true,
@@ -259,16 +242,26 @@
       "archetype": "Homelab self-hoster",
       "sample_index": 0,
       "temperature": 0.3,
-      "elapsed_seconds": 22.19,
+      "elapsed_seconds": 5.21,
       "parsed": {
-        "archetype": "Homelab self-hoster",
-        "first_impression": "This is a well-structured, local-first multi-agent simulation toolkit that respects my infrastructure preferences.",
-        "biggest_strength": "The YAML-driven configuration and strict opt-in for memory tiers aligns perfectly with lightweight, reproducible self-hosting.",
-        "biggest_weakness": "The dependency on Ollama Cloud or Claude OAuth still introduces some vendor coupling, even if optional.",
+        "error": "you (mkgbuilds) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade (ref: 09c1e206-6d0d-42c8-bfd1-2707deb1ed5c)"
+      },
+      "raw_excerpt": null
+    },
+    {
+      "archetype": "Indie hacker",
+      "sample_index": 4,
+      "temperature": 0.7,
+      "elapsed_seconds": 10.85,
+      "parsed": {
+        "archetype": "Indie hacker",
+        "first_impression": "This looks like a well-designed, opinionated starter kit for multi-agent simulations that prioritizes local-first development and YAML configuration.",
+        "biggest_strength": "The deterministic architect CLI and YAML-first approach make it easy to version, diff, and share simulation configurations without touching code.",
+        "biggest_weakness": "The dependency on Docker and multiple database services (Qdrant, Neo4j, Postgres) even when optional may introduce friction for truly minimal setups.",
         "would_star": true,
         "would_share": true,
         "would_tell_network": true,
-        "confidence_0_to_10": 9
+        "confidence_0_to_10": 8
       },
       "raw_excerpt": null
     },
@@ -276,16 +269,9 @@
       "archetype": "Homelab self-hoster",
       "sample_index": 1,
       "temperature": 0.4,
-      "elapsed_seconds": 13.84,
+      "elapsed_seconds": 5.36,
       "parsed": {
-        "archetype": "Homelab self-hoster",
-        "first_impression": "This looks like a well-architected, local-first multi-agent simulation toolkit with strong Docker support and flexible LLM routing.",
-        "biggest_strength": "The YAML-driven configuration and deterministic architect CLI make it easy to version, reproduce, and customize simulations without touching code.",
-        "biggest_weakness": "The experimental status and dependency on less common tools like Neo4j may deter some homelab users who prefer simpler stacks.",
-        "would_star": true,
-        "would_share": true,
-        "would_tell_network": true,
-        "confidence_0_to_10": 8
+        "error": "you (mkgbuilds) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade (ref: 01f29cdb-01ef-4354-8001-b83cb1f7ef3d)"
       },
       "raw_excerpt": null
     },
@@ -293,16 +279,9 @@
       "archetype": "Homelab self-hoster",
       "sample_index": 2,
       "temperature": 0.5,
-      "elapsed_seconds": 15.94,
+      "elapsed_seconds": 1.03,
       "parsed": {
-        "archetype": "Homelab self-hoster",
-        "first_impression": "This is a well-structured, local-first multi-agent simulation toolkit that respects my infra preferences.",
-        "biggest_strength": "The YAML-driven configuration and modular memory architecture make it highly adaptable and version-control friendly.",
-        "biggest_weakness": "The dependency on specific LLM endpoints may limit flexibility in air-gapped or fully local environments.",
-        "would_star": true,
-        "would_share": true,
-        "would_tell_network": true,
-        "confidence_0_to_10": 8
+        "error": "you (mkgbuilds) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade (ref: 56c9803f-6f57-4706-abfb-ec72d847b858)"
       },
       "raw_excerpt": null
     },
@@ -310,16 +289,9 @@
       "archetype": "Homelab self-hoster",
       "sample_index": 3,
       "temperature": 0.6000000000000001,
-      "elapsed_seconds": 17.51,
+      "elapsed_seconds": 0.98,
       "parsed": {
-        "archetype": "Homelab self-hoster",
-        "first_impression": "This is a well-architected, local-first multi-agent simulation toolkit that respects my infrastructure preferences and licensing values.",
-        "biggest_strength": "The YAML-driven configuration with deterministic CLI-based setup makes it easy to version, reproduce, and share simulations without vendor lock-in.",
-        "biggest_weakness": "The dependency on specific LLM endpoints like Claude OAuth may limit full offline usability for some homelab environments.",
-        "would_star": true,
-        "would_share": true,
-        "would_tell_network": true,
-        "confidence_0_to_10": 9
+        "error": "you (mkgbuilds) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade (ref: 501199d7-0a7e-4c7e-b321-4312c6568ebe)"
       },
       "raw_excerpt": null
     },
@@ -327,16 +299,9 @@
       "archetype": "Homelab self-hoster",
       "sample_index": 4,
       "temperature": 0.7,
-      "elapsed_seconds": 18.18,
+      "elapsed_seconds": 0.89,
       "parsed": {
-        "archetype": "Homelab self-hoster",
-        "first_impression": "This looks like a well-architected, local-first multi-agent simulation toolkit with strong Docker and YAML-based configurability.",
-        "biggest_strength": "The strict separation of concerns via YAML configs and optional Docker profiles makes it highly adaptable for homelab environments without vendor lock-in.",
-        "biggest_weakness": "The reliance on external LLMs (even if local) may limit full autonomy and introduces latency or dependency on model availability.",
-        "would_star": true,
-        "would_share": true,
-        "would_tell_network": true,
-        "confidence_0_to_10": 9
+        "error": "you (mkgbuilds) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade (ref: f728711f-b768-40ad-a1ac-80d5fbe8957e)"
       },
       "raw_excerpt": null
     }
@@ -345,16 +310,16 @@
     "Senior staff engineer": {
       "n": 5,
       "stars": 5,
-      "shares": 3,
-      "tells": 1,
-      "full": 1
+      "shares": 4,
+      "tells": 3,
+      "full": 3
     },
     "Open-source maintainer evaluating for adoption": {
       "n": 5,
       "stars": 5,
-      "shares": 4,
-      "tells": 4,
-      "full": 4
+      "shares": 5,
+      "tells": 5,
+      "full": 5
     },
     "Indie hacker": {
       "n": 5,
@@ -365,19 +330,19 @@
     },
     "Homelab self-hoster": {
       "n": 5,
-      "stars": 5,
-      "shares": 5,
-      "tells": 5,
-      "full": 5
+      "stars": 0,
+      "shares": 0,
+      "tells": 0,
+      "full": 0
     }
   },
   "summary": {
     "parsed_count": 20,
-    "star_count": 20,
-    "share_count": 17,
-    "tell_count": 15,
-    "full_pass_count": 15,
-    "avg_confidence": 8.15,
+    "star_count": 15,
+    "share_count": 14,
+    "tell_count": 13,
+    "full_pass_count": 13,
+    "avg_confidence": 6.0,
     "passed": false
   }
 }

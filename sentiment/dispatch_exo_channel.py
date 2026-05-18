@@ -2,7 +2,7 @@
 """Dispatch an exo-based sentiment channel.
 
 Takes a channel directory containing domain.yaml + scenario.yaml,
-injects the ARTIFACT-BUNDLE-rc1.txt into the scenario's initial_context,
+injects the ARTIFACT-BUNDLE-rc2.txt into the scenario's initial_context,
 swaps actor models to ollama-cloud/qwen3-coder:480b, runs exo, writes
 report.
 
@@ -24,7 +24,7 @@ except (AttributeError, OSError):
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-BUNDLE = (ROOT / "sentiment" / "ARTIFACT-BUNDLE-rc1.txt").read_text(encoding="utf-8")
+BUNDLE = (ROOT / "sentiment" / "ARTIFACT-BUNDLE-rc2.txt").read_text(encoding="utf-8")
 
 
 def prepare_runtime(channel_dir: Path) -> Path:

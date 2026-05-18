@@ -30,7 +30,7 @@
 
 - **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured), the canonical hybrid stack from the [2026 agent-memory guide](./docs/memory-architecture.md). **Strictly opt-in via compose profiles**: `docker compose up` starts only the exo-runner. Use `--profile vector`, `--profile graph`, `--profile sql`, or `--profile all` when your sim's `domain.yaml` declares a memory tier that needs them. The DBs are not running unless you ask for them — period.
 - **LLM router** — Routes requests between Claude OAuth (frontier), Ollama Cloud (cloud OSS), and local Ollama / BERTHA / llama-swap (local OSS). No API keys baked in.
-- **Multi-agent runtime** — Built on [CAMEL-AI](https://github.com/camel-ai/camel) and [OASIS](https://github.com/camel-ai/oasis). Same engine that powers Mirofish.
+- **Multi-agent runtime** — A vendor-neutral turn-loop in pure Python (~600 lines). Each turn, each actor speaks once via its configured LLM; conversation state is the shared context. Not built on CAMEL-AI or OASIS in v0.1, though the design is informed by what those projects do well. v0.2 will add CAMEL-AI integration as an opt-in runtime.
 - **`exo architect`** — Interactive CLI that walks you through the 12 design decisions for a new multi-agent simulation: actors, ontology, scenarios, memory tier, LLM tier. Outputs a complete `domain.yaml` + ready-to-run docker setup.
 - **Template library** — Pre-built simulations for common domains: social-media reaction, sales pipeline, wedding-vendor coordination, healthcare triage, construction stakeholder, software incident response.
 - **YAML-first config** — Every aspect of a simulation (actors, personas, scenarios, memory routing, output schemas) is declared in one file. No hidden Python. Version it. Diff it. Share it.
@@ -144,7 +144,7 @@ Want frontier-model output instead of local? Drop the `sed`, set
 # 1. Clone + start the stack
 git clone https://github.com/MGBuilds9/exo.git
 cd exo
-docker compose up -d
+docker compose up -d            # runner only; DBs are opt-in via --profile
 
 # 2. Pick an example, or design a new one
 exo architect              # 12-question walkthrough → ./my-sim/domain.yaml
@@ -156,8 +156,8 @@ cd my-sim
 exo run --config domain.yaml --scenario my-scenario.yaml
 
 # 4. Inspect outputs
-open http://localhost:5050/        # web UI: actor inspector + graph + transcripts
-exo report --run latest            # text report
+exo report sims/<your-sim>/run/    # text report
+# (web UI at localhost:5050 is a v0.2 deliverable; v0.1 is CLI-only)
 ```
 
 That's the whole experience. Five commands. One YAML file to edit.
@@ -172,10 +172,7 @@ Every other multi-agent framework (CAMEL, OASIS, LangChain, CrewAI) assumes you'
 
 Scans:
 - CPU cores, RAM, GPU (filtered for real GPUs, not virtual display adapters)
-- Disk space across all your drives
-- Running services on `localhost`: Ollama, LM Studio, Qdrant, Neo4j, Postgres, SearXNG, Docker daemon
-- Optional: any IP you give it (`--host 192.168.0.19`) — probes your homelab too
-- CLIs in PATH: 
+- Disk space acr
 
 [...truncated for bundle...]
 
@@ -244,32 +241,40 @@ If you build per
 
 Five minutes from clone to first transcript.
 
-## Fastest path (zero databases, fully local — no cloud accounts needed)
+## Fastest path (fully local — no Docker, no cloud, no API keys)
 
-For simple multi-actor chat sims, you don't need Docker, Qdrant, Neo4j,
-or Postgres. The DBs are optional and only matter when your sim declares
-a memory tier. The LLM can be a local Ollama model.
+For simple multi-actor chat sims, you do NOT need Docker, Qdrant, Neo4j,
+or Postgres. They're available via compose profiles but stay off unless
+you opt in.
+
+**Prereqs** (honest about what you need first):
+- Python 3.11+ installed
+- Ollama installed and running (`ollama serve`) — see [ollama.com](https://ollama.com/download)
+- A chat model pulled locally — `ollama pull qwen2.5:7b` (~4GB) or any model you have
+- On Windows: WSL2 or Git Bash for the `sed` step (or edit the YAML manually)
+
+If you have all of those: 4 commands, ~90 seconds:
 
 ```bash
-# Prereqs: Python 3.11+, Ollama running locally
-ollama pull qwen2.5:14b
-ollama serve &
-
-# Clone and run
 git clone https://github.com/MGBuilds9/exo.git
 cd exo
 pip install -r requirements.txt
 export LOCAL_OLLAMA_BASE_URL=http://localhost:11434/v1
 
-# Edit the template to use local-ollama instead of ollama-cloud:
-sed -i 's|ollama-cloud/qwen3-coder:480b|local-ollama/qwen2.5:14b|g' \
+# Edit the template to use local-ollama instead of ollama-cloud
+# (Or open templates/sales-pipeline/domain.yaml and replace the model
+#  strings manually — that's portable to Windows without sed)
+sed -i 's|ollama-cloud/qwen3-coder:480b|local-ollama/qwen2.5:7b|g' \
     templates/sales-pipeline/domain.yaml
 
 ./exo run templates/sales-pipeline/domain.yaml
 ```
 
-Four commands. No Docker. No cloud account. No API key. Your prompts
-and personas never leave your machine.
+Your prompts and personas never leave your machine.
+
+> **Honest scope note**: the "5-minute" headline above only holds if you already
+> have Python + Ollama + a pulled model. From a fresh machine, you're
+> ~15-30 min including model download. That's still good, just not "5 min."
 
 ## Full path (with memory tiers)
 
@@ -335,28 +340,7 @@ cd <your-name>
 **Change which LLM each actor uses** — edit `domain.yaml`:
 
 ```yaml
-actors:
-  - id: my_agent
-    persona: ...
-    model: ollama-cloud/qwen3-coder:480b   # ← change this
-```
-
-Supported: `claude-oauth`, `ollama-cloud/<model>`, `local-ollama/<model>`.
-
-**Change the trigger event** — edit `scenario.yaml` `trigger:` field.
-
-**Add a signal** — edit `scenario.yaml` `signals:` list. Actors will emit
-values for any signal you name.
-
-## When something breaks
-
-Most failures are LLM connectivity. Check:
-
-```bash
-# Ollama Cloud?
-curl -H "Authorization: Bearer $OLLAMA_CLOUD_API_KEY" https://ollama.com/api/tags
-
-#
+ac
 
 [...truncated for bundle...]
 

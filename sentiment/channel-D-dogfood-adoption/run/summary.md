@@ -8,21 +8,21 @@ walk away?
 
 - **Total turns**: 24
 - **Actors**: 8
-- **Started**: 2026-05-18T21:40:43.228823+00:00
-- **Ended**: 2026-05-18T21:43:43.660874+00:00
+- **Started**: 2026-05-18T21:57:24.404980+00:00
+- **Ended**: 2026-05-18T21:57:38.070148+00:00
 
 ## Per-actor signal averages
 
 | Actor | Turns | would_clone | would_recommend | comment_quality |
 |---|---|---|---|---|
-| rapid_evaluator | 3 | 7.2 | 3.7 | 8.0 |
-| thoughtful_evaluator | 3 | 7.0 | 5.3 | 8.0 |
-| skeptical_purchaser | 3 | 5.3 | 3.0 | 7.0 |
-| opportunistic_integrator | 3 | 7.0 | 6.0 | 8.0 |
-| research_engineer | 3 | 7.0 | 5.7 | 8.0 |
-| educator | 3 | 7.0 | 5.0 | 8.0 |
-| consulting_practitioner | 3 | 7.0 | 5.7 | 8.0 |
-| contributor_seeker | 3 | 5.0 | 7.0 | 7.7 |
+| rapid_evaluator | 3 | — | — | — |
+| thoughtful_evaluator | 3 | — | — | — |
+| skeptical_purchaser | 3 | — | — | — |
+| opportunistic_integrator | 3 | — | — | — |
+| research_engineer | 3 | — | — | — |
+| educator | 3 | — | — | — |
+| consulting_practitioner | 3 | — | — | — |
+| contributor_seeker | 3 | — | — | — |
 
 ## Trigger
 

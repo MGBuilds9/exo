@@ -2,85 +2,88 @@
   "results": [
     {
       "voice": "ollama-gpt-oss",
-      "elapsed_seconds": 8.34,
+      "elapsed_seconds": 10.11,
       "parsed": {
         "failures_found": [
-          "The README claims the system runs without any API keys (\"No API keys baked in\"), yet the LLM router explicitly supports Claude OAuth and Ollama Cloud which both require valid credentials; the quickstart even instructs setting OLLAMA_CLOUD_API_KEY, contradicting the \"no API keys\" promise.",
-          "The \"zero databases\" path is misleading: the fast‑track example swaps out a model in a YAML file but still requires running `docker compose up -d` for the full stack, which by default starts Qdrant, Neo4j, and Postgres. The compose profiles are described as \"strictly opt‑in\", yet the provided compose file does not actually gate those services, so users will unintentionally launch heavyweight DB containers.",
-          "Performance promises are unrealistic: pulling a 4 GB model, starting Ollama, installing Python deps, and launching the Docker stack cannot reliably be done in \"under 5 minutes\" on a typical laptop, especially on machines with <16 GB RAM; the claim \"Under 5 minutes from clone to first transcript (no Docker, no cloud)\" is false for most target users."
+          "The README promises a \"under 5 minutes from clone to first transcript (no Docker, no cloud)\" but the fast‑path assumes Python, Ollama, and a 4 GB model are already installed; a fresh machine needs 15‑30 minutes just to download the model, making the claim false.",
+          "The LLM router is advertised as having \"No API keys baked in\" yet the quickstart requires you to set OLLAMA_CLOUD_API_KEY or Claude OAuth credentials, contradicting the zero‑key premise and exposing users to accidental credential leakage.",
+          "The \"deterministic architect\" claim is misleading: the multi‑agent runtime relies on LLM calls that are stochastic, and the example results show variance across runs, so the system is not reproducibly deterministic.",
+          "Scalability is ignored: the runtime is a single‑threaded ~600‑line Python loop that calls each actor’s LLM sequentially; with more than a handful of agents or long simulations this will become a severe performance bottleneck, breaking the promise of \"run on your laptop\" for realistic workloads.",
+          "The optional memory stack (Qdrant, Neo4j, Postgres) is presented as lightweight, yet the docker‑compose file does not actually gate these services behind profiles, so they may start unintentionally and consume resources, contradicting the \"zero databases unless you ask\" claim."
         ],
         "catastrophic_failure_present": false,
         "catastrophic_failure_detail": "",
         "would_star_despite_flaws": false,
-        "reasoning_for_star_decision": "The broken promises, misleading setup steps, and unrealistic performance expectations outweigh the modest convenience gains, making it unsuitable for a senior engineer to endorse.",
-        "confidence_0_to_10": 9
+        "reasoning_for_star_decision": "The misleading performance and security claims, plus nondeterministic behavior, make it unsuitable for serious adoption despite its interesting idea.",
+        "confidence_0_to_10": 8
       },
       "raw_excerpt": null
     },
     {
       "voice": "ollama-qwen3",
-      "elapsed_seconds": 11.0,
+      "elapsed_seconds": 14.03,
       "parsed": {
         "failures_found": [
-          "The README claims 'Under 5 minutes from clone to first transcript (no Docker, no cloud)' but the quickstart instructions require Ollama to be pre-installed and running, qwen2.5:7b model to be pulled (4GB download), and manual sed replacement - this is misleadingly optimistic about setup time and prerequisites.",
-          "The architecture diagram shows a 'LLM Router' connecting to Claude OAuth, Ollama Cloud, and Local Ollama/BERTHA simultaneously, but the YAML configuration example only shows simple model strings like 'ollama-cloud/qwen3-coder:480b' with no indication of how routing logic or fallback mechanisms are actually implemented or configured.",
-          "The 'exo architect' CLI is marketed as deterministic and rule-based, but there's no evidence provided of how it handles inconsistent or invalid inputs, and the claim that 'Same answers → same domain.yaml' isn't backed by any testing or validation framework shown in the repository."
+          "The README claims 'under 5 minutes from clone to first transcript' but this excludes critical prerequisites like downloading a 4GB model, setting up Ollama, and Python environment configuration - realistic time is 15-30 minutes for new users.",
+          "The YAML-first configuration approach is marketed as 'no hidden Python' but the example shows sed command manipulation of YAML files, indicating users must still understand both YAML structure AND command-line text processing to make basic edits.",
+          "The architecture diagram shows a 'deterministic CLI' architect tool but provides no verification methods or testing procedures to confirm determinism - no hash comparisons, no reproducibility guarantees mentioned in implementation.",
+          "Memory tier claims are 'strictly opt-in via compose profiles' but the example workflow requires manual .env file editing and profile selection that contradicts the 'plug and play' marketing language.",
+          "The security model is fundamentally flawed - LOCAL_OLLAMA_BASE_URL environment variables and local LLM endpoints are exposed without any authentication, encryption, or access control mechanisms mentioned for production use."
         ],
         "catastrophic_failure_present": false,
         "catastrophic_failure_detail": "",
         "would_star_despite_flaws": false,
-        "reasoning_for_star_decision": "The marketing claims significantly oversell the actual implementation, and the gap between the promised '12 questions to running simulation' and the reality of manual configuration edits and dependency management is too wide to justify starring.",
+        "reasoning_for_star_decision": "The marketing claims significantly oversell the actual implementation maturity and user experience, with fundamental disconnects between promised '5-minute setup' and real prerequisite complexity that would frustrate adoption.",
+        "confidence_0_to_10": 8
+      },
+      "raw_excerpt": null
+    },
+    {
+      "voice": "codex",
+      "elapsed_seconds": 27.41,
+      "parsed": {
+        "failures_found": [
+          "The memory-tier claim is internally false: Docker Compose profiles do not automatically spin up Qdrant/Neo4j/Postgres because domain.yaml declares them, so 'only spin up when domain.yaml declares them' is marketing unless the CLI actually orchestrates compose profiles, which the quickstart does not show.",
+          "The '5 minutes / 30 minutes' pitch is padded by hidden prerequisites: Python, Ollama, a running daemon, and a 4GB model already downloaded; the Quickstart itself admits a fresh machine is 15-30 minutes, so the README headline is not the real clone-to-transcript path.",
+          "The examples do not validate simulation quality; they show LLM roleplay plus self-reported sentiment/trust/adoption numbers, with no ground truth, no calibration, tiny n, and no evidence that the signal trajectories mean anything beyond stochastic model output.",
+          "The Mirofish comparison overclaims: extracting 8 actors from a 55-entity graph and running a simple turn loop is not 'recreate Mirofish'; the bundle admits it lacks social-media/thread structure and OASIS-style dynamics, so the comparison mostly proves YAML chat roleplay works.",
+          "The architecture will break at the exact scale the pitch advertises: 'each actor speaks once per round' over shared conversation context means prompt size, latency, and cost grow badly with actors and rounds, with no shown scheduling, summarization, retrieval discipline, or state isolation for 50-persona simulations.",
+          "The local-first/no-vendor-lock-in story is muddied by defaults and examples using Ollama Cloud qwen3-coder:480b, Claude OAuth, token costs, and cloud APIs; 'zero data leaves your machine' is only true after manually replacing template models, not for the default showcased runs.",
+          "The security story is absent despite business-sensitive use cases: sales pipelines, healthcare triage, construction disputes, and internal rollout meetings are exactly the kind of prompts that need egress controls, credential handling, audit logging, and redaction guidance, none of which is substantiated in the artifact.",
+          "The CLI surface is inconsistent: examples alternate between './exo run templates/...' and 'exo run --config domain.yaml --scenario ...', while Docker starts a runner but the user still installs Python locally, so the promised 'docker-compose, what should I edit' path is not actually clean."
+        ],
+        "catastrophic_failure_present": false,
+        "catastrophic_failure_detail": "",
+        "would_star_despite_flaws": true,
+        "reasoning_for_star_decision": "A power user might still star it because the YAML-first deterministic architect plus per-actor model routing is a useful OSS starter-kit idea even though the current claims badly outrun the evidence.",
         "confidence_0_to_10": 8
       },
       "raw_excerpt": null
     },
     {
       "voice": "gemini",
-      "elapsed_seconds": 35.64,
+      "elapsed_seconds": 41.35,
       "parsed": {
         "failures_found": [
-          "The README claims the multi-agent runtime is 'Built on CAMEL-AI and OASIS', but the installation instructions list only 4 basic dependencies (click, pyyaml, rich, requests) and the E1 results explicitly admit the engine is actually just a 'simple turn-loop', revealing the core architectural claim is marketing vaporware.",
-          "The marketing text aggressively emphasizes 'Every aspect of a simulation... is declared in one file' and 'Edit one file; run', yet the architecture diagram, CLI output, and execution commands explicitly require and generate two separate files (domain.yaml and scenario.yaml).",
-          "The README insists the heavy database tiers (Qdrant, Neo4j, Postgres) are 'Strictly opt-in via compose profiles' and 'are not running unless you ask for them', but the Quickstart instructs users to simply run 'docker compose up -d' without any profile flags and immediately wait for a Neo4j health check."
-        ],
-        "catastrophic_failure_present": false,
-        "catastrophic_failure_detail": "",
-        "would_star_despite_flaws": true,
-        "reasoning_for_star_decision": "The core value proposition of a local-first, YAML-driven simulation harness with decoupled per-actor LLM routing is highly appealing to power users, who will likely forgive the marketing exaggerations and documentation discrepancies as typical early-stage experimental OSS rough edges.",
-        "confidence_0_to_10": 9
-      },
-      "raw_excerpt": null
-    },
-    {
-      "voice": "codex",
-      "elapsed_seconds": 37.57,
-      "parsed": {
-        "failures_found": [
-          "README claims exo is built on CAMEL-AI and OASIS, but the E1 comparison explicitly says exo uses a \"simple turn-loop\"; that is not the same class of runtime and does not substantiate the OASIS/CAMEL pitch.",
-          "The quickstart promises a web UI at localhost:5050 with actor inspector, graph, and transcripts, but the later Quickstart inspect step retreats to opening transcript.jsonl and summary.md; the artifact gives no evidence the web UI exists.",
-          "The memory-tier story contradicts itself: README says docker compose up starts only exo-runner and databases are strictly opt-in via profiles, while Quickstart says the full memory path is docker compose up -d and then wait for Neo4j health check.",
-          "The \"zero data leaves your machine\" path is a footgun: the default template uses ollama-cloud/qwen3-coder:480b and requires a sed replacement to become local, so the safe/local guarantee depends on users noticing and modifying the template correctly.",
-          "The \"5 minutes / 30 minutes\" onboarding claim is inflated: it assumes Python, Ollama, model pull, shell compatibility, executable permissions, and a working local model endpoint; on Windows the documented sed/export/ollama serve & flow is not even the native command path.",
-          "The claimed differentiator \"12-question deterministic architect\" is central to the README, but no transcript, generated YAML, schema, or example output from architect is included in the bundle; the main product claim is asserted, not demonstrated.",
-          "The examples do not prove simulation quality; they prove an LLM can roleplay plausible meeting objections and self-report numeric signals, with no validation that those signals are calibrated, reproducible, or predictive of real stakeholder behavior.",
-          "The E1/E2 evidence is statistically weak: 3 baseline runs and 2 treatment runs, with small per-actor sample counts and arbitrary thresholds, are used to claim behaviorally meaningful signal shifts.",
-          "The template library claim lists healthcare triage and other high-stakes domains, but the only visible evidence is a construction/software rollout style transcript; that gap makes the domain-general pitch look like marketing inventory rather than verified coverage.",
-          "The README says \"4 deps: click pyyaml rich requests\" while also claiming a runtime built on CAMEL-AI/OASIS plus optional Qdrant/Neo4j/Postgres; either the implementation is not actually using those engines or the dependency/runtime story is incomplete."
+          "Architectural scalability: The core runtime forces a strict round-robin loop ('For each round, each actor speaks in turn'). For the claimed use case of 'simulating the public reaction... with 50 personas', forcing all 50 agents to speak sequentially every single round is O(N*T), which will obliterate context windows, trigger API rate limits, and produce unnatural dialogue.",
+          "Contradiction in DB isolation: The README emphatically claims 'The DBs are not running unless you ask for them — period' and require explicit compose profiles. However, the Quickstart instructs running `docker compose up -d` (without profiles) and then immediately waiting 30 seconds for a 'Neo4j health check', proving the graph DB is running by default.",
+          "Marketing vs Technical reality on the CLI: The project claims it can design simulations for 'any domain' via the `exo architect` CLI, which is 'deterministic (rule-based, not LLM-in-the-loop)'. A purely rule-based, non-LLM CLI cannot synthesize custom personas and ontologies for arbitrary domains; it's just a rigid template filler, meaning the user must still manually author the complex YAML.",
+          "Local-first default is a lie: The project pitches itself as a 'local-first' bundle that 'runs on a laptop', but the default template (`templates/sales-pipeline/domain.yaml`) is hardcoded to use a massive cloud model (`ollama-cloud/qwen3-coder:480b`). Achieving local execution requires running a `sed` command to rewrite the config, meaning the default state relies on external cloud APIs."
         ],
         "catastrophic_failure_present": true,
-        "catastrophic_failure_detail": "The core positioning claims a CAMEL/OASIS-based multi-agent simulation bundle, but the provided evidence describes a simple turn-loop with LLM roleplay and self-scored signals, which is a materially different product.",
-        "would_star_despite_flaws": false,
-        "reasoning_for_star_decision": "A power user might watch it, but would not star for adoption because the README overclaims architecture, UI, memory behavior, and evidence quality relative to what the examples actually prove.",
-        "confidence_0_to_10": 8
+        "catastrophic_failure_detail": "The O(N) strict round-robin speaking architecture will catastrophically fail on context length and rate limits for the 50-persona simulations advertised in the documentation.",
+        "would_star_despite_flaws": true,
+        "reasoning_for_star_decision": "Despite the flawed runtime loop and marketing hyperbole, the decoupling of actors to different LLM tiers in a single declarative YAML file is a genuinely useful abstraction for multi-agent experimentation that power users will want to track.",
+        "confidence_0_to_10": 9
       },
       "raw_excerpt": null
     }
   ],
   "summary": {
     "parsed_count": 4,
-    "star_count": 1,
+    "star_count": 2,
     "catastrophic_count": 1,
-    "total_failures": 19,
+    "total_failures": 22,
     "passed": false
   }
 }

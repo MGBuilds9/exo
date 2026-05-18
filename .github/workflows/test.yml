@@ -1,0 +1,35 @@
+name: tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  determinism:
+    name: Architect determinism + import-smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run determinism test
+        run: python tests/test_architect_determinism.py
+      - name: Smoke test exo CLI entry point
+        run: |
+          python exo --version
+          python exo doctor --json > /tmp/doctor.json
+          test -s /tmp/doctor.json
+      - name: Smoke test architect non-interactive
+        run: |
+          mkdir -p /tmp/ci-sim
+          python exo architect --name ci-test --out /tmp/ci-sim --non-interactive
+          test -f /tmp/ci-sim/domain.yaml
+          test -f /tmp/ci-sim/scenario.yaml
+          python -c "import yaml; d = yaml.safe_load(open('/tmp/ci-sim/domain.yaml')); assert 'actors' in d and len(d['actors']) > 0"

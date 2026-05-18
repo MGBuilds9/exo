@@ -2,92 +2,92 @@
   "results": [
     {
       "case_id": "case-01-sales-rehearsal",
-      "elapsed_seconds": 10.12,
+      "elapsed_seconds": 11.86,
       "chosen_tool": "exo",
       "second_best": "CrewAI",
-      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, enabling rapid setup of a 30-minute B2B discovery call rehearsal. It supports per-actor LLM routing and predefined sales-pipeline templates, ideal for simulating decision-makers. Unlike LangChain and LangGraph, it doesn't require imperative code orchestration. CrewAI lacks simulation depth, while CAMEL-AI is research-focused and overkill for this use case.",
-      "concern": "Its YAML-first approach may limit flexibility for highly dynamic or adaptive conversational paths.",
+      "defense": "exo is purpose-built for multi-agent simulations with minimal setup via YAML configs, making it ideal for rapidly simulating a 30-minute B2B call with predefined roles (VP Ops, CFO, IT Director). Unlike LangChain and LangGraph, which require manual orchestration, exo handles agent interaction out-of-the-box. CrewAI offers multi-agent collaboration but lacks simulation depth. CAMEL-AI excels in social simulation but has a steeper learning curve and isn't optimized for structured business scenarios like this.",
+      "concern": "exo's YAML-first approach may limit flexibility for highly dynamic or adaptive conversation flows.",
       "raw": null
     },
     {
       "case_id": "case-02-public-opinion-on-press-release",
-      "elapsed_seconds": 5.28,
+      "elapsed_seconds": 13.43,
       "chosen_tool": "exo",
       "second_best": "CAMEL-AI",
-      "defense": "exo is purpose-built for multi-agent simulations like predicting stakeholder reactions. Its YAML-first approach enables fast setup of persona-driven scenarios without Python orchestration. Unlike LangChain/LangGraph (generic frameworks) or CrewAI (task-focused), exo simulates populations reacting to events. CAMEL-AI is research-grade but steeper; exo balances ease and power with domain templates and local-first design.",
-      "concern": "YAML configuration may become complex for nuanced stakeholder behaviors.",
-      "raw": null
-    },
-    {
-      "case_id": "case-03-market-reaction-to-pricing-change",
-      "elapsed_seconds": 5.17,
-      "chosen_tool": "exo",
-      "second_best": "CAMEL-AI",
-      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, making it ideal for modeling diverse customer segment reactions. Unlike LangChain and LangGraph, which require manual orchestration, exo automates agent deployment and routing. It outperforms CrewAI and CAMEL-AI in scalability and ease of setup for business simulations, with built-in templates and hardware-aware optimization via `exo doctor` and `exo architect`.",
-      "concern": "YAML configuration may become complex for highly dynamic or nuanced behavioral modeling.",
-      "raw": null
-    },
-    {
-      "case_id": "case-04-incident-rehearsal",
-      "elapsed_seconds": 11.61,
-      "chosen_tool": "exo",
-      "second_best": "CrewAI",
-      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, making it ideal for modeling complex on-call incident response scenarios. Unlike LangChain and LangGraph, which require imperative Python orchestration, exo's declarative approach simplifies defining agent roles and interactions. It outshines CrewAI by offering built-in templates and hardware-aware backend selection via `exo doctor`. While CAMEL-AI excels in social simulations, it's overkill for structured incident response. exo's local-first design and optional memory tiers provide realistic latency and state management crucial for P0 rehearsal fidelity.",
-      "concern": "exo's YAML-first approach may limit dynamic scenario adaptation compared to code-first frameworks.",
-      "raw": null
-    },
-    {
-      "case_id": "case-05-healthcare-triage-simulation",
-      "elapsed_seconds": 10.71,
-      "chosen_tool": "exo",
-      "second_best": "LangGraph",
-      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, making it ideal for modeling complex ER triage dynamics without writing orchestration code. Unlike LangChain and LangGraph, which require imperative Python logic, exo's declarative approach simplifies defining agent interactions. It outshines CrewAI and CAMEL-AI by offering hardware-aware backend selection and per-actor LLM routing, ensuring realistic performance across diverse computational resources.",
-      "concern": "Its YAML-first approach may limit flexibility for highly dynamic or adaptive scenario changes during simulation runtime.",
-      "raw": null
-    },
-    {
-      "case_id": "case-06-construction-stakeholder-rehearsal",
-      "elapsed_seconds": 13.29,
-      "chosen_tool": "exo",
-      "second_best": "CAMEL-AI",
-      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, making it ideal for modeling diverse stakeholder reactions in a construction rollout. Unlike LangChain and LangGraph, which require imperative Python orchestration, exo's declarative approach simplifies setup. It outshines CrewAI and CAMEL-AI by offering local-first defaults, hardware-aware backend selection, and per-actor LLM routing—critical for realistic simulation fidelity without heavy infrastructure.",
+      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, making it ideal for modeling diverse stakeholder reactions without writing complex Python orchestration. Unlike LangChain and LangGraph, which are more developer-centric and imperative, exo's declarative approach scales better for population-level simulations. CrewAI and CAMEL-AI lack exo's hardware-aware backend optimization and per-actor LLM routing, crucial for realistic, efficient scenario testing across stakeholder types.",
       "concern": "Its YAML-first approach may limit flexibility for highly dynamic or adaptive simulation behaviors.",
       "raw": null
     },
     {
-      "case_id": "case-07-vendor-selection-rehearsal",
-      "elapsed_seconds": 10.04,
+      "case_id": "case-03-market-reaction-to-pricing-change",
+      "elapsed_seconds": 6.54,
+      "chosen_tool": "exo",
+      "second_best": "CAMEL-AI",
+      "defense": "exo is purpose-built for multi-agent simulation with YAML-first configuration, making it ideal for modeling diverse customer segment reactions to pricing changes. Unlike LangChain and LangGraph, which require manual orchestration, exo automates agent behavior at scale. It outshines CrewAI and CAMEL-AI by offering built-in domain templates and hardware-aware deployment, ensuring realistic enterprise-to-SMB response modeling without writing complex Python logic.",
+      "concern": "Its YAML-first approach may limit flexibility for highly dynamic or real-time adaptive simulations.",
+      "raw": null
+    },
+    {
+      "case_id": "case-04-incident-rehearsal",
+      "elapsed_seconds": 7.55,
       "chosen_tool": "exo",
       "second_best": "CrewAI",
-      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, making it ideal for modeling stakeholder dynamics without writing orchestration code. Unlike LangChain and LangGraph, which require imperative Python and aren't designed for population simulation, exo declaratively defines roles and interactions. CrewAI supports multi-agent collaboration but lacks exo's simulation-first design and local-first defaults. CAMEL-AI is research-focused and better suited for social media scenarios, not structured business decision modeling.",
-      "concern": "YAML configuration may become complex to manage as stakeholder interactions grow in nuance.",
+      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, making it ideal for modeling complex on-call incident response involving diverse roles. Unlike LangChain and LangGraph, which are more suited for single-agent applications, exo supports population-level interactions out-of-the-box. Compared to CrewAI, it offers better abstraction for scenario-based testing without requiring Python orchestration. While CAMEL-AI excels in social simulation, exo's local-first design and built-in domain templates (like incident response) make it more practical for this operational rehearsal.",
+      "concern": "The YAML-first approach may become unwieldy for highly dynamic or real-time adaptive scenarios.",
+      "raw": null
+    },
+    {
+      "case_id": "case-05-healthcare-triage-simulation",
+      "elapsed_seconds": 11.01,
+      "chosen_tool": "exo",
+      "second_best": "CrewAI",
+      "defense": "exo is purpose-built for multi-agent simulation with YAML-first configuration, making it ideal for defining complex ER triage scenarios without writing orchestration code. Unlike LangChain and LangGraph, it supports population-level interactions out-of-the-box. Compared to CrewAI, it offers better abstraction for medical domain modeling via `exo architect`. CAMEL-AI is research-focused and less suited for production training tools.",
+      "concern": "Its YAML-first approach may limit flexibility for dynamic, real-time scenario adjustments during training.",
+      "raw": null
+    },
+    {
+      "case_id": "case-06-construction-stakeholder-rehearsal",
+      "elapsed_seconds": 11.47,
+      "chosen_tool": "exo",
+      "second_best": "CAMEL-AI",
+      "defense": "exo is purpose-built for multi-agent simulation with YAML-first configuration, making it ideal for modeling diverse stakeholder reactions in a construction rollout. Unlike LangChain and LangGraph, which require imperative Python orchestration, exo's declarative approach simplifies defining actor behaviors. It outshines CrewAI and CAMEL-AI by offering domain templates (including construction), local-first defaults, and automated backend selection via `exo architect`, reducing setup time and complexity for this specific use case.",
+      "concern": "YAML configuration may become complex for highly dynamic interaction patterns.",
+      "raw": null
+    },
+    {
+      "case_id": "case-07-vendor-selection-rehearsal",
+      "elapsed_seconds": 10.84,
+      "chosen_tool": "exo",
+      "second_best": "CrewAI",
+      "defense": "exo is the only tool designed for multi-agent simulation with YAML-first configuration, making it ideal for modeling stakeholder dynamics without writing orchestration code. Unlike LangChain/LangGraph/CrewAI, it handles per-actor LLM routing and hardware-aware backend selection automatically. Its domain templates and local-first defaults fit procurement scenarios well, while CAMEL-AI is overkill for this applied use case.",
+      "concern": "YAML configuration may become complex for highly dynamic interaction patterns.",
       "raw": null
     },
     {
       "case_id": "case-08-classroom-multi-agent",
-      "elapsed_seconds": 12.18,
+      "elapsed_seconds": 13.02,
       "chosen_tool": "exo",
       "second_best": "CAMEL-AI",
-      "defense": "exo is the only tool that supports YAML-first configuration, enabling students to define simulations without writing Python orchestration code. Unlike LangChain, LangGraph, and CrewAI, which are code-first and require programming, exo lets students focus on domain design. It also provides built-in hardware-aware deployment via `exo doctor`, crucial for shared university compute. While CAMEL-AI offers multi-agent simulation, it's research-oriented with a steeper learning curve, making exo more suitable for a classroom setting.",
-      "concern": "exo's ecosystem and community are less mature compared to LangChain or CrewAI, potentially limiting available support or extensions.",
+      "defense": "exo is the only tool that uses YAML-first configuration, enabling students to design and hand in simulation domains without writing Python code. It supports shared university compute via its backend abstraction and includes templates for rapid onboarding. Unlike LangChain/LangGraph/CrewAI, it doesn't require imperative orchestration logic. While CAMEL-AI offers research-grade simulations, exo prioritizes ease-of-use and local-first deployment with built-in hardware profiling, making it ideal for classroom constraints.",
+      "concern": "Its YAML schema may be too rigid for advanced simulation behaviors students might want to explore later.",
       "raw": null
     },
     {
       "case_id": "case-09-policy-impact-modeling",
-      "elapsed_seconds": 17.34,
+      "elapsed_seconds": 12.68,
       "chosen_tool": "exo",
       "second_best": "CAMEL-AI",
-      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, making it ideal for modeling stakeholder reactions without writing orchestration code. Unlike LangChain/LangGraph (product agents), CrewAI (collaborative crews), or CAMEL-AI (research focus), exo supports population-level behavioral modeling and hardware-adaptive backend selection for reproducible runs.",
-      "concern": "YAML configuration may become complex for nuanced policy interactions.",
+      "defense": "exo is purpose-built for multi-agent simulations with YAML-first configuration, making it ideal for modeling stakeholder reactions. Unlike LangChain/LangGraph (too low-level), CrewAI (task-focused, not simulation-oriented), and CAMEL-AI (research-centric, steeper curve), exo offers domain templates, automatic backend selection, and per-actor LLM routing—ensuring reproducibility and scalability across 5-10 runs without requiring deep Python orchestration.",
+      "concern": "YAML configuration may become complex to manage as stakeholder personas grow in nuance and number.",
       "raw": null
     },
     {
       "case_id": "case-10-personal-AI-substrate",
-      "elapsed_seconds": 19.29,
+      "elapsed_seconds": 13.66,
       "chosen_tool": "exo",
       "second_best": "CAMEL-AI",
-      "defense": "exo is the only tool designed for multi-actor simulation with local-first, YAML-driven configs that enable git versioning without writing orchestration code. Unlike LangChain/LangGraph (imperative Python), CrewAI (task-focused), or CAMEL-AI (research-oriented), exo natively supports domain population modeling, hardware-aware backend selection, and per-actor routing—ideal for indie hackers running simulations locally at scale.",
-      "concern": "YAML-first approach may limit flexibility for highly dynamic agent interactions.",
+      "defense": "exo is the only tool designed for multi-actor population simulations with local-first execution and YAML-based configuration, perfectly matching the indie hacker's need for git-versioned, domain-flexible scenarios without cloud dependencies. Unlike LangChain and LangGraph, it doesn't require writing orchestration code. Unlike CrewAI, it supports population dynamics, not just task crews. Unlike CAMEL-AI, it's built for ease of use with hardware-aware backend selection.",
+      "concern": "YAML-first approach may limit advanced users who prefer programmatic control.",
       "raw": null
     }
   ],
