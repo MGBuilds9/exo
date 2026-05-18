@@ -50,6 +50,53 @@ If you spend any time on AI Twitter / dev YouTube / homelab Reddit, you've proba
 2. **The configuration is YAML.** Not Python, not JSON, not a web UI. Edit one file; run.
 3. **The bundle is local-first.** It runs on a laptop. It runs on a homelab. It runs against Ollama Cloud or against your local llama-swap. It does not require an OpenAI key. If you want frontier intelligence, plug Claude OAuth or Ollama Cloud; if you don't, run qwen2.5 locally and accept the quality tradeoff.
 
+## Architecture (one diagram)
+
+```
+                  ┌──────────────────────────┐
+                  │      exo architect       │  ◄── 12-question walkthrough
+                  │  (deterministic CLI)     │      writes domain.yaml + scenario.yaml
+                  └────────────┬─────────────┘
+                               │
+                       domain.yaml + scenario.yaml
+                               │
+                               ▼
+              ┌────────────────────────────────────┐
+              │            exo run                 │
+              │   ┌─────────────────────────┐      │
+              │   │   Multi-actor loop      │      │
+              │   │ For each round, each    │      │
+              │   │ actor speaks in turn    │      │
+              │   └──────────┬──────────────┘      │
+              │              │                     │
+              │              ▼                     │
+              │   ┌─────────────────────────┐      │
+              │   │  LLM Router (per actor) │      │
+              │   └──┬───────────┬───────┬──┘      │
+              │      │           │       │         │
+              │      ▼           ▼       ▼         │
+              │  Claude     Ollama   Local         │
+              │  OAuth      Cloud    Ollama        │
+              │              API     /BERTHA       │
+              │                                    │
+              │   ┌─────────────────────────┐      │
+              │   │ Memory tiers (optional) │      │
+              │   │ Qdrant │ Neo4j │ Postgres│      │
+              │   │ vector │ graph │ structured│   │
+              │   └─────────────────────────┘      │
+              │                                    │
+              └─────────────┬──────────────────────┘
+                            │
+                            ▼
+                  transcript.jsonl + summary.md
+                  + signal trajectories per actor
+```
+
+Three things to notice:
+1. **The architect is deterministic** (rule-based, not LLM-in-the-loop). Same answers → same `domain.yaml`. Testable, diffable.
+2. **Each actor picks its own LLM** in YAML. Frontier for the hard role, local for the cheap ones. No code changes.
+3. **Memory tiers are optional** and only spin up when `domain.yaml` declares them. Simple chat sims don't load Qdrant/Neo4j/Postgres.
+
 ## What's the actual contribution?
 
 Honest answer: exo doesn't invent multi-agent simulation. CAMEL-AI and OASIS already do that excellently. The contribution is **the deterministic architect step plus the YAML-first config plus the actor-model decoupling that lets every actor run on a different LLM tier without code changes.**
@@ -261,6 +308,24 @@ Each one is a directory you `cp -r` and edit. Each one runs against the same sta
 - [Claude OAuth](https://www.anthropic.com/) — frontier inference via Claude Code
 
 If you've used [MiroFish-Offline](https://github.com/nikmcfly/MiroFish-Offline), exo is the generalization of its architecture: same engine, vendor-neutral, YAML-first, designed for any domain.
+
+## Reproducibility
+
+To verify the variance evidence in the section above:
+
+```bash
+git clone https://github.com/MGBuilds9/exo.git
+cd exo
+pip install -r requirements.txt
+export OLLAMA_API_KEY=<your-key>    # or LOCAL_OLLAMA_BASE_URL for fully local
+./exo run templates/sales-pipeline/domain.yaml --out run-a
+./exo run templates/sales-pipeline/domain.yaml --out run-b
+./exo run templates/sales-pipeline/domain.yaml --out run-c
+diff <(jq -r .signals run-a/transcript.jsonl) \
+     <(jq -r .signals run-b/transcript.jsonl)
+```
+
+Same template, three different conversations, measurable cross-run variance.
 
 ## License
 
