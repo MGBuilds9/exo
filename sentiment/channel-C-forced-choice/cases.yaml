@@ -1,0 +1,114 @@
+# 10 forced-choice scenarios. For each, the judge sees a description of
+# a problem + 5 candidate tools, and must pick ONE with a 100-word defense.
+# Pass criterion: exo wins >=4 of 10.
+
+cases:
+  - id: case-01-sales-rehearsal
+    description: |
+      You need to rehearse a 30-minute B2B discovery call with three
+      decision-makers (VP Ops, CFO, IT Director) before the real meeting
+      next Tuesday. You want to see what objections will come up and
+      practice the deal-progression dynamic. You have 1 day to set this
+      up.
+
+  - id: case-02-public-opinion-on-press-release
+    description: |
+      A press release is going out next week from your construction
+      company about a switch from legacy ERP to a new platform. You
+      want to predict the likely reactions from various stakeholder
+      personas (clients, suppliers, employees, regulators, press) so
+      you can prepare the comms strategy.
+
+  - id: case-03-market-reaction-to-pricing-change
+    description: |
+      You're considering raising prices 15% across your SaaS product
+      line. You want to simulate likely reactions from your top customer
+      segments (enterprise, mid-market, SMB, churn-risk users) before
+      announcing.
+
+  - id: case-04-incident-rehearsal
+    description: |
+      Your team needs to rehearse the on-call response to a hypothetical
+      P0 incident (database corruption mid-Black-Friday). You want to
+      simulate how on-call eng + product + manager + customer support
+      coordinate under pressure.
+
+  - id: case-05-healthcare-triage-simulation
+    description: |
+      You're building decision-support training for ER triage. You want
+      to simulate a multi-agent scenario where patient + triage nurse +
+      attending + specialist coordinate diagnostically across 5-10
+      decision rounds.
+
+  - id: case-06-construction-stakeholder-rehearsal
+    description: |
+      You're rolling out a new construction management platform across
+      your firm. Want to simulate how PM / FieldForeman / Estimator /
+      Finance / Skeptical-veteran / Subcontractor will react during
+      the all-hands meeting before doing it for real.
+
+  - id: case-07-vendor-selection-rehearsal
+    description: |
+      Your procurement team is choosing between 3 vendors for a critical
+      tool. You want to simulate the decision-meeting where stakeholders
+      from operations, finance, IT, security, and legal weigh in.
+
+  - id: case-08-classroom-multi-agent
+    description: |
+      You teach a multi-agent systems course. You need a tool that lets
+      students design their own simulation domain in <2 hours of class
+      time, hand it in as a YAML config, and have it run on shared
+      university compute. No special infra.
+
+  - id: case-09-policy-impact-modeling
+    description: |
+      You're a policy analyst at a think tank. Want to simulate how
+      different stakeholder groups (industry execs, labor reps,
+      regulators, consumer advocates, academics) would react to a draft
+      regulation. Outputs should be reproducible across 5-10 runs.
+
+  - id: case-10-personal-AI-substrate
+    description: |
+      You're an indie hacker building personal AI tooling on your homelab.
+      You need a substrate that lets you spin up multi-actor scenarios
+      for any domain you care about, run them locally without sending
+      prompts to cloud, and version-control the configs in git.
+
+candidate_tools:
+  - name: LangChain
+    one_liner: |
+      Generic LLM application framework. Wrappers around LLM APIs +
+      vector stores + chains. Most popular by GitHub stars. Imperative
+      Python code; assumes you write the orchestration. Not specifically
+      designed for multi-agent simulation.
+
+  - name: LangGraph
+    one_liner: |
+      LangChain's graph-based agent orchestration framework. Code-first.
+      Production-grade for branching agent workflows. Designed for
+      product agents (one assistant serving users), not multi-agent
+      population simulations.
+
+  - name: CrewAI
+    one_liner: |
+      Multi-agent orchestration framework. Role-based agents in Python.
+      Faster onboarding than LangGraph. Designed for crews of agents
+      collaborating on a task, not populations reacting to a scenario.
+
+  - name: CAMEL-AI
+    one_liner: |
+      Research framework for multi-agent simulation. Used by MiroFish
+      and OASIS. Code-first Python. Excellent at social-media-style
+      simulation (Twitter/Reddit reactions). Steeper learning curve;
+      designed for researchers.
+
+  - name: exo
+    one_liner: |
+      Multi-agent simulation engine. YAML-first config (no Python
+      orchestration code). `exo doctor` scans your hardware + services
+      and picks concrete backends for your machine. `exo architect`
+      walks 12 questions and generates a domain.yaml. Per-actor LLM
+      routing (frontier for hard actors, local for cheap ones). Apache
+      2.0. Local-first defaults. Optional memory tiers (Qdrant/Neo4j/
+      Postgres) profile-gated in compose. Templates for sales-pipeline,
+      Mirofish-recreate (construction), and 5 other domains.

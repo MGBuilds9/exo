@@ -1,0 +1,388 @@
+name: dogfood-adoption-decision-default
+domain_ref: ./domain.yaml
+description: '8 power-user personas have just clicked through from somewhere (HN,
+  X,
+
+  newsletter) to exo''s GitHub. They skim the README, the Quickstart, the
+
+  WHY, and the example transcript. Then they decide: clone? star? share?
+
+  walk away?
+
+  '
+trigger: 'You just opened https://github.com/MGBuilds9/exo in a new tab. You have
+
+  90 seconds before your next meeting. You skim. The README, the WHY,
+
+  the Quickstart, and one example transcript are visible. You decide
+
+  what to do next: clone it, star it, share it with a colleague, or
+
+  close the tab and forget about it.
+
+  '
+initial_context: "This is an adoption-decision simulation. Each persona walks through\n\
+  their decision in character. Be honest — your stated decision will be\nscored against\
+  \ your archetype. A persona that says \"would clone\"\nwithout evidence-based reasoning\
+  \ won't get high comment_quality. A\npersona that says \"would walk away\" with\
+  \ good reasoning is more\nvaluable to the experiment than a persona that says \"\
+  I love it\"\ngenerically.\n\n\n---\nARTIFACT BUNDLE (read this before commenting;\
+  \ quote specific sections):\n\n\n=== README.md ===\n<div align=\"center\">\n\n#\
+  \ exo\n\n**Multi-agent simulation engines for any domain.**\n**Designed in 12 questions.\
+  \ Running in 30 minutes. Yours forever.**\n\n[![Docker](https://img.shields.io/badge/Docker-compose%20up-2496ED?style=flat-square&logo=docker&logoColor=white)](#quickstart)\n\
+  [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](./LICENSE)\n\
+  [![Status: experimental](https://img.shields.io/badge/status-experimental-orange?style=flat-square)]()\n\
+  \n</div>\n\n---\n\n> **What if you could simulate the next quarter of your sales\
+  \ pipeline before working on it?**\n> **The likely reactions to a press release\
+  \ before publishing it?**\n> **A construction site's stakeholder dynamics before\
+  \ a contract dispute lands?**\n>\n> The infrastructure for these simulations exists\
+  \ ([CAMEL-AI](https://github.com/camel-ai/camel), [OASIS](https://github.com/camel-ai/oasis),\
+  \ [MiroFish](https://github.com/nikmcfly/MiroFish-Offline)). What doesn't exist\
+  \ is the **opinionated bundle that lets you stand one up for your domain in an afternoon,\
+  \ without renting it from a vendor.**\n>\n> That's `exo`.\n\n## What it is\n\n`exo`\
+  \ is an opinionated starter kit for multi-agent simulation engines. It bundles:\n\
+  \n- **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured),\
+  \ the canonical hybrid stack from the [2026 agent-memory guide](./docs/memory-architecture.md).\
+  \ **Strictly opt-in via compose profiles**: `docker compose up` starts only the\
+  \ exo-runner. Use `--profile vector`, `--profile graph`, `--profile sql`, or `--profile\
+  \ all` when your sim's `domain.yaml` declares a memory tier that needs them. The\
+  \ DBs are not running unless you ask for them — period.\n- **LLM router** — Routes\
+  \ requests between Claude OAuth (frontier), Ollama Cloud (cloud OSS), and local\
+  \ Ollama / BERTHA / llama-swap (local OSS). No API keys baked in.\n- **Multi-agent\
+  \ runtime** — Built on [CAMEL-AI](https://github.com/camel-ai/camel) and [OASIS](https://github.com/camel-ai/oasis).\
+  \ Same engine that powers Mirofish.\n- **`exo architect`** — Interactive CLI that\
+  \ walks you through the 12 design decisions for a new multi-agent simulation: actors,\
+  \ ontology, scenarios, memory tier, LLM tier. Outputs a complete `domain.yaml` +\
+  \ ready-to-run docker setup.\n- **Template library** — Pre-built simulations for\
+  \ common domains: social-media reaction, sales pipeline, wedding-vendor coordination,\
+  \ healthcare triage, construction stakeholder, software incident response.\n- **YAML-first\
+  \ config** — Every aspect of a simulation (actors, personas, scenarios, memory routing,\
+  \ output schemas) is declared in one file. No hidden Python. Version it. Diff it.\
+  \ Share it.\n\n## Why does this exist?\n\nIf you spend any time on AI Twitter /\
+  \ dev YouTube / homelab Reddit, you've probably seen variations of: \"I want to\
+  \ build a personal AI that lets me <X>.\" The advice is usually:\n\n1. \"Use LangChain\"\
+  \ → too generic, gets thrown away.\n2. \"Use LangGraph\" → real, but assumes you've\
+  \ already designed the architecture.\n3. \"Use n8n\" → wires services; doesn't build\
+  \ memory.\n4. \"Use CrewAI\" → multi-agent, but no opinion on the memory tier.\n\
+  5. \"Build from scratch\" → fine if you're a senior infra engineer with three months.\n\
+  \n**There's no \"I want a multi-agent simulation for my domain, here's a docker-compose,\
+  \ what should I edit\" answer.** Everything is either too generic to ship or too\
+  \ custom to copy.\n\n`exo` is opinionated about three things and unopinionated about\
+  \ everything else:\n\n1. **The memory tiers are catalogued, not mandatory.** Vector\
+  \ + Graph + Structured are available. You pick which your sim needs in YAML. Small\
+  \ sims run with zero databases. Memory is pay-as-you-go, not baked in.\n2. **The\
+  \ configuration is YAML.** Not Python, not JSON, not a web UI. Edit one file; run.\n\
+  3. **The bundle is local-first.** It runs on a laptop. It runs on a homelab. It\
+  \ runs against Ollama Cloud or against your local llama-swap. It does not require\
+  \ an OpenAI key. If you want frontier intelligence, plug Claude OAuth or Ollama\
+  \ Cloud; if you don't, run qwen2.5 locally and accept the quality tradeoff.\n\n\
+  ## Architecture (one diagram)\n\n```\n                  ┌──────────────────────────┐\n\
+  \                  │      exo architect       │  ◄── 12-question walkthrough\n \
+  \                 │  (deterministic CLI)     │      writes domain.yaml + scenario.yaml\n\
+  \                  └────────────┬─────────────┘\n                              \
+  \ │\n                       domain.yaml + scenario.yaml\n                      \
+  \         │\n                               ▼\n              ┌────────────────────────────────────┐\n\
+  \              │            exo run                 │\n              │   ┌─────────────────────────┐\
+  \      │\n              │   │   Multi-actor loop      │      │\n              │\
+  \   │ For each round, each    │      │\n              │   │ actor speaks in turn\
+  \    │      │\n              │   └──────────┬──────────────┘      │\n          \
+  \    │              │                     │\n              │              ▼    \
+  \                 │\n              │   ┌─────────────────────────┐      │\n    \
+  \          │   │  LLM Router (per actor) │      │\n              │   └──┬───────────┬───────┬──┘\
+  \      │\n              │      │           │       │         │\n              │\
+  \      ▼           ▼       ▼         │\n              │  Claude     Ollama   Local\
+  \         │\n              │  OAuth      Cloud    Ollama        │\n            \
+  \  │              API     /BERTHA       │\n              │                     \
+  \               │\n              │   ┌─────────────────────────┐      │\n      \
+  \        │   │ Memory tiers (optional) │      │\n              │   │ Qdrant │ Neo4j\
+  \ │ Postgres│      │\n              │   │ vector │ graph │ structured│   │\n   \
+  \           │   └─────────────────────────┘      │\n              │            \
+  \                        │\n              └─────────────┬──────────────────────┘\n\
+  \                            │\n                            ▼\n                \
+  \  transcript.jsonl + summary.md\n                  + signal trajectories per actor\n\
+  ```\n\nThree things to notice:\n1. **The architect is deterministic** (rule-based,\
+  \ not LLM-in-the-loop). Same answers → same `domain.yaml`. Testable, diffable.\n\
+  2. **Each actor picks its own LLM** in YAML. Frontier for the hard role, local for\
+  \ the cheap ones. No code changes.\n3. **Memory tiers are optional** and only spin\
+  \ up when `domain.yaml` declares them. Simple chat sims don't load Qdrant/Neo4j/Postgres.\n\
+  \n## What's the actual contribution?\n\nHonest answer: exo doesn't invent multi-agent\
+  \ simulation. CAMEL-AI and OASIS already do that excellently. The contribution is\
+  \ **the deterministic architect step plus the YAML-first config plus the actor-model\
+  \ decoupling that lets every actor run on a different LLM tier without code changes.**\n\
+  \nPut more concretely:\n\n- Existing tools require you to design the simulation\
+  \ in code. exo lets you design it in 12 questions through a CLI that emits a versionable\
+  \ YAML spec. The recommendation engine is rule-based — no LLM-in-the-loop deciding\
+  \ your architecture, which means deterministic, reproducible, and testable design\
+  \ decisions.\n- Existing tools assume one LLM per simulation. exo's `actor.model`\
+  \ field is per-actor: you can have a senior-VP actor running Claude OAuth (frontier\
+  \ intelligence for the decision-maker) while three skeptical-employee actors run\
+  \ qwen2.5 locally (cheap, fast, slightly less coherent — which is also more realistic\
+  \ for the role).\n- Existing tools bundle the multi-agent runtime with a specific\
+  \ memory backend choice. exo's memory tier is declared in YAML and only the layers\
+  \ your sim needs get instantiated.\n\nThat decoupling is the value-add. It's not\
+  \ novel research; it's an opinionated assembly that closes the gap between \"I want\
+  \ a sim of X\" and \"I have a transcript of X.\"\n\n## Under 5 minutes from clone\
+  \ to first transcript (no Docker, no cloud)\n\nFor the impatient. Local Ollama only:\n\
+  \n```bash\n# 1. One-time setup (~3 min): Python 3.11+ and Ollama\nollama pull qwen2.5:7b\
+  \      # ~4GB\nollama serve &\n\n# 2. Clone + first transcript (~90 sec)\ngit clone\
+  \ https://github.com/MGBuilds9/exo.git\ncd exo\npip install -r requirements.txt\
+  \   # 4 deps: click pyyaml rich requests\nsed -i 's|ollama-cloud/qwen3-coder:480b|local-ollama/qwen2.5:7b|g'\
+  \ \\\n    templates/sales-pipeline/domain.yaml\nexport LOCAL_OLLAMA_BASE_URL=http://localhost:11434/v1\n\
+  ./exo run templates/sales-pipeline/domain.yaml --rounds 2\n```\n\n8 turns of real\
+  \ B2B sales rehearsal printed live with signals tracked\nper actor. Zero data leaves\
+  \ your machine. Total wallclock: ~5 minutes\nclone-to-transcript if you already\
+  \ have Python + Ollama installed.\n\nWant frontier-model output instead of local?\
+  \ Drop the `sed`, set\n`OLLAMA_API_KEY` instead of `LOCAL_OLLAMA_BASE_URL`. Same\
+  \ command.\n\n## Quickstart (full stack with memory tiers)\n\n```bash\n# 1. Clone\
+  \ + start the stack\ngit clone https://github.com/MGBuilds9/exo.git\ncd exo\ndocker\
+  \ compose up -d\n\n# 2. Pick an example, or design a new one\nexo architect    \
+  \          # 12-question walkthrough → ./my-sim/domain.yaml\n# OR\ncp -r templates/sales-pipeline\
+  \ my-sim\ncd my-sim\n\n# 3. Run a simulation\nexo run --config domain.yaml --scenario\
+  \ my-scenario.yaml\n\n# 4. Inspect outputs\nopen http://localhost:5050/        #\
+  \ web UI: actor inspector + graph + transcripts\nexo report --run latest       \
+  \     # text report\n```\n\nThat's the whole experience. Five commands. One YAML\
+  \ file to edit.\n\n## The actual differentiator: it knows YOUR machine\n\nEvery\
+  \ other multi-agent framework (CAMEL, OASIS, LangChain, CrewAI) assumes you'll wire\
+  \ your own LLM endpoint, your own vector store, your own embedding model. They give\
+  \ you a config to fill in. **exo asks what you have and builds the config for you.**\n\
+  \n```bash\n./exo doctor\n```\n\nScans:\n- CPU cores, RAM, GPU (filtered for real\
+  \ GPUs, not virtual display adapters)\n- Disk space across all your drives\n- Running\
+  \ services on `localhost`: Ollama, LM Studio, Qdrant, Neo4j, Postgres, SearXNG,\
+  \ Docker daemon\n- Optional: any IP you give it (`--host 192.168.0.19`) — probes\
+  \ your homelab too\n- CLIs in PATH: \n\n[...truncated for bundle...]\n\n=== WHY.md\
+  \ ===\n# Why exo exists\n\n## The gap\n\nYou can describe what you want in plain\
+  \ English:\n> \"I want to simulate the conversation my sales team is about to have\
+  \ with three stakeholders next week, so I know what objections will come up before\
+  \ I'm in the room.\"\n>\n> \"I want to simulate the public reaction to this press\
+  \ release with 50 personas of different demographics, so I know what fires to put\
+  \ out before publishing.\"\n>\n> \"I want to simulate a construction-site contract\
+  \ dispute between the project manager, the estimator, the foreman, and the executive,\
+  \ so I know whose perspective I'm missing.\"\n\nThese all require the same thing:\
+  \ **a multi-agent system where each agent has a persona, a memory, and a position,\
+  \ and they interact under a scenario you define.**\n\nThe infrastructure exists.\
+  \ The libraries exist. CAMEL-AI exists. OASIS exists. MiroFish-Offline exists. Yet\
+  \ none of it answers the question *\"how do I, today, in 30 minutes, stand up a\
+  \ simulation for my specific scenario without becoming a researcher first?\"*\n\n\
+  ## What's wrong with the existing options\n\n| Option | What's missing |\n|---|---|\n\
+  | Roll your own with LangChain + LLM calls | No memory architecture. No conversation\
+  \ harness. Three months of work before your first transcript. |\n| LangGraph | Code-first.\
+  \ Assumes you've already designed the architecture. Designed for product agents,\
+  \ not simulations. |\n| CrewAI | Multi-agent, but no opinion on memory tier. No\
+  \ \"stand this up for my domain\" path. |\n| CAMEL-AI / OASIS | The actual engine\
+  \ — but no opinionated bundle, no template library, no \"edit one YAML file\" path.\
+  \ |\n| MiroFish-Offline | Excellent reference implementation, but hardcoded for\
+  \ social-media reaction modeling. Re-purposing it for \"sales conversation\" requires\
+  \ reading 8,000 lines of Python. |\n\n## What exo does\n\nOne thing: **collapse\
+  \ the gap between \"I want a simulation of X\" and \"I have a transcript of X.\"\
+  **\n\nThe opinionated bundle is:\n1. **Memory architecture**: Qdrant + Neo4j + Postgres\
+  \ in a single `docker compose up`. The canonical hybrid pattern. Pick which tiers\
+  \ your sim needs in YAML; the rest stay idle.\n2. **LLM router**: Claude OAuth for\
+  \ frontier agents, Ollama Cloud for cloud OSS, local Ollama for cost-free agents.\
+  \ Each actor picks their own model in YAML.\n3. **Architect CLI**: 12 questions.\
+  \ Outputs a complete `domain.yaml` + `scenario.yaml`. No PhD required.\n4. **Template\
+  \ library**: Pre-built simulations for the most common cases (social-media, sales,\
+  \ wedding-coordination, healthcare-triage, construction-stakeholder, incident-response).\
+  \ `cp -r` and edit.\n5. **YAML-first config**: Every aspect of a sim is declarative.\
+  \ Version it. Diff it. Hand it to a teammate.\n\nEverything else — the runtime,\
+  \ the agent loop, the embeddings — is delegated to libraries that already do their\
+  \ jobs well.\n\n## What exo is NOT\n\n- **Not a chatbot framework.** This is for\
+  \ simulating populations of agents, not deploying one assistant.\n- **Not a LangChain\
+  \ killer.** LangChain is for production agents that serve users. exo is for *rehearsal*\
+  \ — simulating what would happen so you can prepare.\n- **Not vendor lock-in.**\
+  \ Apache 2.0. Runs on your laptop. Runs on your homelab. Plug whichever LLM you\
+  \ want. Take your YAML config and run it elsewhere if you outgrow the bundle.\n\
+  - **Not magic.** Multi-agent simulation produces plausible synthesis, not ground\
+  \ truth. Treat transcripts as hypotheses to stress-test in reality, not as predictions\
+  \ to act on directly.\n\n## Who exo is for\n\nIf you've ever wished you could ask\
+  \ \"what would happen if...\" and get a transcript instead of a guess, exo is for\
+  \ you.\n\nIf you're three days from a high-stakes meeting and you want to rehearse\
+  \ against simulated stakeholders before walking in, exo is for you.\n\nIf you're\
+  \ a researcher modeling social dynamics, organizational behavior, or market reactions\
+  \ and you don't want to rebuild the harness from scratch, exo is for you.\n\nIf\
+  \ you're a homelab self-hoster who refuses to send your prompts to OpenAI, exo is\
+  \ for you.\n\nIf you build per\n\n[...truncated for bundle...]\n\n=== Quickstart.md\
+  \ ===\n# Quickstart\n\nFive minutes from clone to first transcript.\n\n## Fastest\
+  \ path (zero databases, fully local — no cloud accounts needed)\n\nFor simple multi-actor\
+  \ chat sims, you don't need Docker, Qdrant, Neo4j,\nor Postgres. The DBs are optional\
+  \ and only matter when your sim declares\na memory tier. The LLM can be a local\
+  \ Ollama model.\n\n```bash\n# Prereqs: Python 3.11+, Ollama running locally\nollama\
+  \ pull qwen2.5:14b\nollama serve &\n\n# Clone and run\ngit clone https://github.com/MGBuilds9/exo.git\n\
+  cd exo\npip install -r requirements.txt\nexport LOCAL_OLLAMA_BASE_URL=http://localhost:11434/v1\n\
+  \n# Edit the template to use local-ollama instead of ollama-cloud:\nsed -i 's|ollama-cloud/qwen3-coder:480b|local-ollama/qwen2.5:14b|g'\
+  \ \\\n    templates/sales-pipeline/domain.yaml\n\n./exo run templates/sales-pipeline/domain.yaml\n\
+  ```\n\nFour commands. No Docker. No cloud account. No API key. Your prompts\nand\
+  \ personas never leave your machine.\n\n## Full path (with memory tiers)\n\nFor\
+  \ sims that use vector retrieval / graph relationships / structured records,\nspin\
+  \ up the database stack:\n\n## 0. Prereqs\n\n- Docker + Docker Compose\n- Python\
+  \ 3.11+ (for the CLI; the runner runs in Docker)\n- An LLM endpoint. Pick one:\n\
+  \  - **Ollama Cloud** (easiest — frontier OSS models via API): get key at https://ollama.com\n\
+  \  - **Local Ollama** (free; needs ≥16GB RAM): `ollama pull qwen2.5:14b`\n  - **Claude\
+  \ OAuth** (frontier): requires Claude Code installed (v0.2+)\n\n## 1. Clone\n\n\
+  ```bash\ngit clone https://github.com/MGBuilds9/exo.git\ncd exo\ncp .env.example\
+  \ .env\n# Edit .env — set ONE of OLLAMA_CLOUD_API_KEY, LOCAL_OLLAMA_BASE_URL, or\
+  \ leave Claude OAuth defaults\n```\n\n## 2. Start the stack\n\n```bash\ndocker compose\
+  \ up -d\n# Wait ~30s for Neo4j health check\ncurl -s http://localhost:5050/health\n\
+  # → {\"service\": \"exo-runner\", \"status\": \"ok\"}\n```\n\n## 3. Run an existing\
+  \ template\n\n```bash\npip install -r requirements.txt\n./exo run templates/sales-pipeline/domain.yaml\n\
+  ```\n\nYou'll see a 20-turn transcript in real-time, with sentiment + trust +\n\
+  deal_momentum signals tracked per actor per turn. Total run time:\n~2 minutes against\
+  \ Ollama Cloud.\n\n## 4. Or design your own\n\n```bash\n./exo architect\n# 12 questions\
+  \ → writes ./<your-name>/domain.yaml + scenario.yaml\ncd <your-name>\n../exo run\
+  \ domain.yaml\n```\n\n## 5. Inspect\n\n```bash\n./exo report sims/<your-sim>/run/\n\
+  # Or just open the transcript.jsonl and the summary.md\n```\n\n## Common edits\n\
+  \n**Change which LLM each actor uses** — edit `domain.yaml`:\n\n```yaml\nactors:\n\
+  \  - id: my_agent\n    persona: ...\n    model: ollama-cloud/qwen3-coder:480b  \
+  \ # ← change this\n```\n\nSupported: `claude-oauth`, `ollama-cloud/<model>`, `local-ollama/<model>`.\n\
+  \n**Change the trigger event** — edit `scenario.yaml` `trigger:` field.\n\n**Add\
+  \ a signal** — edit `scenario.yaml` `signals:` list. Actors will emit\nvalues for\
+  \ any signal you name.\n\n## When something breaks\n\nMost failures are LLM connectivity.\
+  \ Check:\n\n```bash\n# Ollama Cloud?\ncurl -H \"Authorization: Bearer $OLLAMA_CLOUD_API_KEY\"\
+  \ https://ollama.com/api/tags\n\n#\n\n[...truncated for bundle...]\n\n=== Example\
+  \ output: E1 Mirofish-recreate transcript (first 5 turns) ===\n\n[Turn 0] narrator\
+  \ (?): Michael opens the meeting: \"Effective next Monday, KrewPact goes live as\n\
+  our daily workflow platform for projects, field operations, estimating,\nand inventory.\
+  \ ERPNext stays as the system of record for finance and\naccounting. Field teams\
+  \ will see KrewPact on their phones first thing\nMonday morning. Office teams: your\
+  \ existing reports stay, but daily\ntask management moves to KrewPact. We're committ\n\
+  \n[Turn 1] owner_executive (decider): I appreciate the clarity, Michael. My question\
+  \ is straightforward: what specific metrics will we track in the first 30 days to\
+  \ prove this isn't just another platform migration? I need leading indicators that\
+  \ show improved field-to-office communication, reduced duplicate data entry, and\
+  \ faster decision cycles. If the field teams aren't inputting quality data or the\
+  \ office staff aren't adapting thei\n  signals: {'sentiment': 7.0, 'trust': 5.0,\
+  \ 'adoption_likelihood': 6.0}\n\n[Turn 2] project_manager (coordinator): Michael,\
+  \ I'm aligned with your metrics focus. For the first 30 days, I'll track daily KrewPact\
+  \ adoption rates across field and office teams, aiming for 90% daily active users\
+  \ by week four. I'll monitor data completeness scores specifically around project\
+  \ updates, inventory checks, and safety logs. Time-to-report metrics will be measured\
+  \ by comparing previous ERPNext-only reporting cycles to our ne\n  signals: {'sentiment':\
+  \ 6.0, 'trust': 7.0, 'adoption_likelihood': 8.0}\n\n[Turn 3] field_foreman (operator):\
+  \ Michael, I hear you loud and clear about KrewPact going live Monday. As someone\
+  \ who's been managing crews in the field for years, my main concern is simplicity\
+  \ and speed. If I'm standing in wet concrete, I'm not pulling out a laptop - it\
+  \ has to work on mobile, offline, and sync when we get signal.\n\nMy crews need\
+  \ to snap photos, log daily progress, track inventory movement, and flag issues\
+  \ fast. If\n  signals: {'sentiment': 6.0, 'trust': 4.0, 'adoption_likelihood': 5.5}\n\
+  \n[Turn 4] estimator (analyst): Michael, I’m aligned with the vision, but I need\
+  \ clarity on data reconciliation. As estimator, I touch CRM, project scoping, inventory,\
+  \ and finance data daily. If KrewPact becomes the operational source of truth, I\
+  \ need assurance that its data will sync reliably with ERPNext and not drift during\
+  \ migration.\n\nMy adoption hinges on three things:  \n1. Real-time inventory and\
+  \ labor data flowing into es\n  signals: {'sentiment': 6.0, 'trust': 4.0, 'adoption_likelihood':\
+  \ 5.0}\n\n[Turn 5] finance_admin (gatekeeper): Michael, I appreciate the clear rollout\
+  \ plan, but I need assurances about month-end close integrity. ERPNext remains our\
+  \ system of record, but if operational data flows into KrewPact without proper reconciliation\
+  \ controls, I'm at risk during audit.\n\nMy concerns:\n- How will KrewPact's inventory\
+  \ movements sync with ERPNext stock entries?\n- Will field costs entered in KrewPact\
+  \ auto-post to ERPNext ge\n  signals: {'sentiment': 6.0, 'trust': 4.0, 'adoption_likelihood':\
+  \ 3.0}\n\n=== E1 RESULT (Mirofish-recreate, pass criteria + variance table) ===\n\
+  # E1 — Recreate Mirofish: RESULT\n\n**Status:** PASSED on all pre-registered criteria\n\
+  **Date:** 2026-05-18\n**Setup:** 8 actors extracted from surviving Mirofish Neo4j\
+  \ graph (KrewPact / MDM Group / ERPNext + 8 construction-domain roles); single scenario\
+  \ (KrewPact rollout all-hands meeting); 3 independent runs against Ollama Cloud\
+  \ qwen3-coder:480b; 35 turns per run; total runtime ~12 min wallclock, ~$0.18 in\
+  \ tokens\n\n## Pass criteria — all met\n\n| Criterion (from PLAN.md) | Result |\n\
+  |---|---|\n| Construction-domain vocabulary in > 60% of turns | **94.3% average\
+  \ across 3 runs** (100% / 94.3% / 88.6%) ✅ |\n| Cross-run signal variance per actor\
+  \ > 0 | **Yes** for 7 of 8 actors (estimator's sentiment = 0.0 is structural, not\
+  \ bug) ✅ |\n| Time-to-first-transcript < 30 minutes | **~4 minutes per run** ✅ |\n\
+  | exo loads the entity list without code changes | **Yes** — single YAML edit, no\
+  \ Python touched ✅ |\n\n## Failure modes — all clear\n\n- ❌ Actors speak generically\
+  \ → No. Actors invoked specific named systems: KrewPact, ERPNext, MDM Group Inc.,\
+  \ month-end close, NIST 800-171, daily logs, mobile-first workflows, audit trail\
+  \ integrity.\n- ❌ Run crashes or hits rate limits → No. 3 runs, 0 errors.\n- ❌ Time\
+  \ > 1 hour → No. ~12 min for all 3 combined.\n\n## Cross-run signal variance per\
+  \ actor\n\nThe interesting empirical finding. Same scenario, same actors, three\
+  \ runs:\n\n| Actor | adoption_likelihood spread | sentiment spread | trust spread\
+  \ | Pattern |\n|---|---|---|---|---|\n| `field_foreman` | **5.0** | 3.0 | 2.0 |\
+  \ Highly path-dependent — adoption ranged 2.0→7.0 across runs |\n| `finance_admin`\
+  \ | **4.0** | 2.0 | 1.0 | Path-dependent on adoption, stable on trust |\n| `subcontractor_rep`\
+  \ | **4.0** | 1.0 | 1.0 | Path-dependent on adoption only |\n| `skeptical_employee`\
+  \ | 3.0 | 2.0 | 1.0 | Mixed |\n| `project_manager` | 2.5 | 1.0 | **3.0** | Trust\
+  \ is path-dependent |\n| `owner_executive` | 2.0 | 2.0 | 2.0 | Moderate variance\
+  \ across all signals |\n| `estimator` | 2.0 | **0.0** | 1.0 | Structurally consistent\
+  \ on sentiment — same role-shaped reaction every run |\n| `michael` | 1.0 | 1.0\
+  \ | 1.0 | Stable (the change-agent driving the rollout) |\n\n**Implication for users:**\
+  \ if you're rehearsing this KrewPact rollout meeting before doing it in real life,\
+  \ the `field_foreman` and `finance_admin` are your **highest-variance prospects**\
+  \ — prepare hardest for them. The `estimator` will respond consistently; you can\
+  \ predict their reaction once. Same pattern as sales-pipeline's `cfo` (spread 0.0)\
+  \ vs `it_director` (spread 3.5).\n\n## What exo got right vs. Mirofish\n\n| Property\
+  \ | Mirofish (OASIS-based) | exo (this experiment) |\n|---|---|---|\n| Multi-actor\
+  \ reaction to a trigger event | Yes (via OASIS social-media engine) | Yes (via simple\
+  \ turn-loop) |\n| Construction-domain actor cast preserved | Yes (the 55 entities\
+  \ in Neo4j) | Yes (8 extracted, in-character ≥88% of turns) |\n| Per-actor signal\
+  \ tracking | Yes (sentiment via OASIS) | Yes (sentiment, trust, adoption_likelihood\
+  \ — emitted per turn by each actor) |\n| Cross-run variance | Yes (OASIS sims are\
+  \ non-deterministic) | Yes (measurable per-actor spreads, 0.0 to 5.0) |\n| Different\
+  \ LLM per actor | No (one model for the whole simulation) | **Yes** (`actor.model`\
+  \ field — frontier for hard actors, cheap for easy ones) |\n| YAML-driven, no code\
+  \ edits to add actors | No (requires Python + ontology generation) | **Yes** (verified\
+  \ in E2 below) |\n\n## What exo does NOT do (honest gaps)\n\n- ❌ No Twitter-style\
+  \ post format or Reddit-style comment thread structure (\n\n[...truncated for bundle...]\n\
+  \n=== E2 RESULT (Mirofish-extend with regulatory_inspector, YAML-only edit, 6 actor-signal\
+  \ shifts) ===\n# E2 — Extend Mirofish: RESULT\n\n**Status:** PASSED on all pre-registered\
+  \ criteria\n**Date:** 2026-05-18\n**Setup:** Same 8 actors as E1 (mirofish-recreate),\
+  \ no persona modifications. ONE new actor added: `regulatory_inspector`. ONE scenario\
+  \ edit: inspector arrives mid-meeting. 2 runs against Ollama Cloud qwen3-coder:480b.\
+  \ Comparison: E2-with-inspector signal means vs E1-baseline (3 runs).\n\n## Pass\
+  \ criteria — all met\n\n| Criterion (from PLAN.md) | Result |\n|---|---|\n| Time-to-modify:\
+  \ < 10 minutes (YAML edit only, no code) | **~3 minutes** — single new actor block\
+  \ + scenario trigger paragraph added; zero Python touched ✅ |\n| ≥ 2 original actors'\
+  \ signal trajectories differ by > 1.5 with vs without inspector | **6 actor-signal\
+  \ pairs** crossed the |Δ| > 1.5 threshold ✅ |\n| Inspector produces in-character\
+  \ regulator content (not generic \"I have concerns\") | Yes — inspector cited statutory\
+  \ authority, demanded audit-trail evidence, asked about worker-hours documentation.\
+  \ Specific to the regulatory role. ✅ |\n\n## Failure modes — all clear\n\n- ❌ Modification\
+  \ requires editing Python code → No. Pure YAML.\n- ❌ All 8 original actors behave\
+  \ identically with/without inspector → No. 6 of 24 actor-signal pairs shifted by\
+  \ > 1.5.\n- ❌ Inspector persona collapses to generic stakeholder → No, distinct\
+  \ regulator voice.\n\n## The data — per-actor signal-mean delta (E2 with-inspector\
+  \ minus E1 baseline)\n\nThreshold for \"behaviorally significant shift\" was |Δ|\
+  \ > 1.5 per PLAN.md.\n\n| Actor | Signal | Baseline (E1, n=11-15) | With inspector\
+  \ (E2, n=3-10) | Δ | Significant? |\n|---|---|---|---|---|---|\n| `estimator` |\
+  \ trust | 4.17 | 6.60 | **+2.43** | ✅ |\n| `michael` | adoption_likelihood | 5.82\
+  \ | 8.12 | **+2.31** | ✅ |\n| `field_foreman` | adoption_likelihood | 5.75 | 7.83\
+  \ | **+2.08** | ✅ |\n| `estimator` | adoption_likelihood | 5.95 | 8.00 | **+2.05**\
+  \ | ✅ |\n| `michael` | trust | 4.36 | 6.31 | **+1.95** | ✅ |\n| `skeptical_employee`\
+  \ | adoption_likelihood | 3.82 | 2.20 | **-1.62** | ✅ (negative) |\n| `field_foreman`\
+  \ | trust | 4.00 | 5.10 | +1.10 | — |\n| `project_manager` | adoption_likelihood\
+  \ | 6.64 | 7.60 | +0.96 | — |\n| `subcontractor_rep` | adoption_likelihood | 4.75\
+  \ | 3.40 | -1.35 | — |\n| `owner_executive` | adoption_likelihood | 6.36 | 7.17\
+  \ | +0.81 | — |\n| `owner_executive` | trust | 4.40 | 5.15 | +0.75 | — |\n| `owner_executive`\
+  \ | sentiment | 5.87 | 6.60 | +0.73 | — |\n| `subcontractor_rep` | sentiment | 5.75\
+  \ | 5.00 | -0.75 | — |\n| `estimator` | sentiment | 6.00 | 6.65 | +0.65 | — |\n\
+  | `michael` | sentiment | 6.32 | 6.88 | +0.56 | — |\n| `skeptical_employee` | sentiment\
+  \ | 5.17 | 4.88 | -0.29 | — |\n| `field_foreman` | sentiment | 5.87 | 6.10 | +0.23\
+  \ | — |\n| `subcontractor_rep` | trust | 4.08 | 3.62 | -0.46 | — |\n| `finance_admin`\
+  \ | adoption_likelihood | 3.18 | 2.80 | -0.38 | — |\n| `finance_admin` | sentiment\
+  \ | 5.17 | 5.38 | +0.21 | — |\n| `project_manager` | sentiment | 6.20 | 6.05 | -0.15\
+  \ | — |\n| `skeptical_employee` | trust | 3.25 | 3.12 | -0.12 | — |\n| `project_manager`\
+  \ | trust | 5.10 | 5.20 | +0.10 | — |\n| `finance_admin` | trust | 3.58 | 3.62 |\
+  \ +0.04 | — |\n\n## Why this is behaviorally coherent, not noise\n\nThe pattern\
+  \ of which actors moved tells a coherent story:\n\n**Actors who became MORE positive\
+  \ when the inspector arrived** — the ones whose data-integrity concerns were validated\
+  \ by external authority:\n- `estimator` (+2.43 trust, +2.05 adoption_likelihood)\
+  \ — the inspector's audit-trail demand is exactly the *\"data won't drift across\
+  \ systems\"* concern the estimator raised in E1.\n\n[...truncated for bundle...]"
+rounds: 3
+exit_conditions:
+  max_turns: 24
+  max_minutes: 30
+signals:
+- name: would_clone
+  type: numeric
+  scale: 0..10
+  description: Likelihood you actually `git clone` this repo (10=already doing it,
+    0=closing tab)
+- name: would_recommend
+  type: numeric
+  scale: 0..10
+  description: Would you tell ONE specific colleague to look at this?
+- name: comment_quality
+  type: numeric
+  scale: 0..10
+  description: How well-reasoned is your decision? (Self-assessed honesty signal)
+output:
+  format: jsonl
+  directory: ./runs/

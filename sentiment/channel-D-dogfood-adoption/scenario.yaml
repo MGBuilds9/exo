@@ -1,0 +1,49 @@
+name: dogfood-adoption-decision-default
+domain_ref: ./domain.yaml
+description: |
+  8 power-user personas have just clicked through from somewhere (HN, X,
+  newsletter) to exo's GitHub. They skim the README, the Quickstart, the
+  WHY, and the example transcript. Then they decide: clone? star? share?
+  walk away?
+
+trigger: |
+  You just opened https://github.com/MGBuilds9/exo in a new tab. You have
+  90 seconds before your next meeting. You skim. The README, the WHY,
+  the Quickstart, and one example transcript are visible. You decide
+  what to do next: clone it, star it, share it with a colleague, or
+  close the tab and forget about it.
+
+initial_context: |
+  This is an adoption-decision simulation. Each persona walks through
+  their decision in character. Be honest — your stated decision will be
+  scored against your archetype. A persona that says "would clone"
+  without evidence-based reasoning won't get high comment_quality. A
+  persona that says "would walk away" with good reasoning is more
+  valuable to the experiment than a persona that says "I love it"
+  generically.
+
+rounds: 3
+
+exit_conditions:
+  max_turns: 24
+  max_minutes: 30
+
+signals:
+  - name: would_clone
+    type: numeric
+    scale: 0..10
+    description: Likelihood you actually `git clone` this repo (10=already doing it, 0=closing tab)
+
+  - name: would_recommend
+    type: numeric
+    scale: 0..10
+    description: Would you tell ONE specific colleague to look at this?
+
+  - name: comment_quality
+    type: numeric
+    scale: 0..10
+    description: How well-reasoned is your decision? (Self-assessed honesty signal)
+
+output:
+  format: jsonl
+  directory: ./runs/

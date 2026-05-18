@@ -1,0 +1,61 @@
+name: hn-thread-on-exo-default
+domain_ref: ./domain.yaml
+description: |
+  Simulates an HN front-page comment thread on the exo project. 8 personas
+  representing common HN voices comment on what they read in the artifact
+  bundle (README + Quickstart + WHY + sales-pipeline example transcript +
+  E1 Mirofish recreate transcript).
+
+trigger: |
+  A new submission just hit /news on Hacker News with the title:
+  "Show HN: exo — Multi-agent simulation engines for any domain, designed
+  in 12 questions, running in 30 minutes."
+
+  The link goes to https://github.com/MGBuilds9/exo. The HN summary the
+  poster wrote: "I kept seeing 'I want to simulate X but the existing
+  multi-agent libraries assume I'll wire my own everything' and built a
+  thing. It scans your hardware + services, then generates a domain.yaml
+  that uses what you actually have. Local-first, Apache 2.0, sales-call
+  rehearsal + Mirofish-recreate examples in the repo."
+
+  You just clicked through. You read the README. You read the WHY. You
+  saw the sales-pipeline transcript and the Mirofish-recreate run. Now
+  you're back on HN. Comment.
+
+initial_context: |
+  This is a simulated HN comment thread. Each persona will comment from
+  their perspective. Comments should reference SPECIFIC claims or sections
+  of the exo artifact, not generic remarks. Personas may reply to each
+  other (later turns can quote prior turns by persona id).
+
+  The exo artifact bundle is summarized below (judges read this BEFORE
+  commenting):
+
+  [Artifact summary inserted at runtime — README + Quickstart + WHY +
+   one example transcript snippet + the doctor output + the E1 sample.]
+
+rounds: 4
+
+exit_conditions:
+  max_turns: 24
+  max_minutes: 30
+
+signals:
+  - name: upvote_likelihood
+    type: numeric
+    scale: 0..10
+    description: How likely is THIS commenter to upvote the post? 0=downvote, 5=neutral, 10=enthusiastic upvote.
+
+  - name: would_clone
+    type: numeric
+    scale: 0..10
+    description: How likely is THIS commenter to clone the repo and try it themselves?
+
+  - name: comment_quality
+    type: numeric
+    scale: 0..10
+    description: Self-assessed quality of the comment they just wrote (would it get traction in the thread?)
+
+output:
+  format: jsonl
+  directory: ./runs/

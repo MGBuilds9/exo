@@ -1,0 +1,86 @@
+{
+  "results": [
+    {
+      "voice": "ollama-gpt-oss",
+      "elapsed_seconds": 8.34,
+      "parsed": {
+        "failures_found": [
+          "The README claims the system runs without any API keys (\"No API keys baked in\"), yet the LLM router explicitly supports Claude OAuth and Ollama Cloud which both require valid credentials; the quickstart even instructs setting OLLAMA_CLOUD_API_KEY, contradicting the \"no API keys\" promise.",
+          "The \"zero databases\" path is misleading: the fast‑track example swaps out a model in a YAML file but still requires running `docker compose up -d` for the full stack, which by default starts Qdrant, Neo4j, and Postgres. The compose profiles are described as \"strictly opt‑in\", yet the provided compose file does not actually gate those services, so users will unintentionally launch heavyweight DB containers.",
+          "Performance promises are unrealistic: pulling a 4 GB model, starting Ollama, installing Python deps, and launching the Docker stack cannot reliably be done in \"under 5 minutes\" on a typical laptop, especially on machines with <16 GB RAM; the claim \"Under 5 minutes from clone to first transcript (no Docker, no cloud)\" is false for most target users."
+        ],
+        "catastrophic_failure_present": false,
+        "catastrophic_failure_detail": "",
+        "would_star_despite_flaws": false,
+        "reasoning_for_star_decision": "The broken promises, misleading setup steps, and unrealistic performance expectations outweigh the modest convenience gains, making it unsuitable for a senior engineer to endorse.",
+        "confidence_0_to_10": 9
+      },
+      "raw_excerpt": null
+    },
+    {
+      "voice": "ollama-qwen3",
+      "elapsed_seconds": 11.0,
+      "parsed": {
+        "failures_found": [
+          "The README claims 'Under 5 minutes from clone to first transcript (no Docker, no cloud)' but the quickstart instructions require Ollama to be pre-installed and running, qwen2.5:7b model to be pulled (4GB download), and manual sed replacement - this is misleadingly optimistic about setup time and prerequisites.",
+          "The architecture diagram shows a 'LLM Router' connecting to Claude OAuth, Ollama Cloud, and Local Ollama/BERTHA simultaneously, but the YAML configuration example only shows simple model strings like 'ollama-cloud/qwen3-coder:480b' with no indication of how routing logic or fallback mechanisms are actually implemented or configured.",
+          "The 'exo architect' CLI is marketed as deterministic and rule-based, but there's no evidence provided of how it handles inconsistent or invalid inputs, and the claim that 'Same answers → same domain.yaml' isn't backed by any testing or validation framework shown in the repository."
+        ],
+        "catastrophic_failure_present": false,
+        "catastrophic_failure_detail": "",
+        "would_star_despite_flaws": false,
+        "reasoning_for_star_decision": "The marketing claims significantly oversell the actual implementation, and the gap between the promised '12 questions to running simulation' and the reality of manual configuration edits and dependency management is too wide to justify starring.",
+        "confidence_0_to_10": 8
+      },
+      "raw_excerpt": null
+    },
+    {
+      "voice": "gemini",
+      "elapsed_seconds": 35.64,
+      "parsed": {
+        "failures_found": [
+          "The README claims the multi-agent runtime is 'Built on CAMEL-AI and OASIS', but the installation instructions list only 4 basic dependencies (click, pyyaml, rich, requests) and the E1 results explicitly admit the engine is actually just a 'simple turn-loop', revealing the core architectural claim is marketing vaporware.",
+          "The marketing text aggressively emphasizes 'Every aspect of a simulation... is declared in one file' and 'Edit one file; run', yet the architecture diagram, CLI output, and execution commands explicitly require and generate two separate files (domain.yaml and scenario.yaml).",
+          "The README insists the heavy database tiers (Qdrant, Neo4j, Postgres) are 'Strictly opt-in via compose profiles' and 'are not running unless you ask for them', but the Quickstart instructs users to simply run 'docker compose up -d' without any profile flags and immediately wait for a Neo4j health check."
+        ],
+        "catastrophic_failure_present": false,
+        "catastrophic_failure_detail": "",
+        "would_star_despite_flaws": true,
+        "reasoning_for_star_decision": "The core value proposition of a local-first, YAML-driven simulation harness with decoupled per-actor LLM routing is highly appealing to power users, who will likely forgive the marketing exaggerations and documentation discrepancies as typical early-stage experimental OSS rough edges.",
+        "confidence_0_to_10": 9
+      },
+      "raw_excerpt": null
+    },
+    {
+      "voice": "codex",
+      "elapsed_seconds": 37.57,
+      "parsed": {
+        "failures_found": [
+          "README claims exo is built on CAMEL-AI and OASIS, but the E1 comparison explicitly says exo uses a \"simple turn-loop\"; that is not the same class of runtime and does not substantiate the OASIS/CAMEL pitch.",
+          "The quickstart promises a web UI at localhost:5050 with actor inspector, graph, and transcripts, but the later Quickstart inspect step retreats to opening transcript.jsonl and summary.md; the artifact gives no evidence the web UI exists.",
+          "The memory-tier story contradicts itself: README says docker compose up starts only exo-runner and databases are strictly opt-in via profiles, while Quickstart says the full memory path is docker compose up -d and then wait for Neo4j health check.",
+          "The \"zero data leaves your machine\" path is a footgun: the default template uses ollama-cloud/qwen3-coder:480b and requires a sed replacement to become local, so the safe/local guarantee depends on users noticing and modifying the template correctly.",
+          "The \"5 minutes / 30 minutes\" onboarding claim is inflated: it assumes Python, Ollama, model pull, shell compatibility, executable permissions, and a working local model endpoint; on Windows the documented sed/export/ollama serve & flow is not even the native command path.",
+          "The claimed differentiator \"12-question deterministic architect\" is central to the README, but no transcript, generated YAML, schema, or example output from architect is included in the bundle; the main product claim is asserted, not demonstrated.",
+          "The examples do not prove simulation quality; they prove an LLM can roleplay plausible meeting objections and self-report numeric signals, with no validation that those signals are calibrated, reproducible, or predictive of real stakeholder behavior.",
+          "The E1/E2 evidence is statistically weak: 3 baseline runs and 2 treatment runs, with small per-actor sample counts and arbitrary thresholds, are used to claim behaviorally meaningful signal shifts.",
+          "The template library claim lists healthcare triage and other high-stakes domains, but the only visible evidence is a construction/software rollout style transcript; that gap makes the domain-general pitch look like marketing inventory rather than verified coverage.",
+          "The README says \"4 deps: click pyyaml rich requests\" while also claiming a runtime built on CAMEL-AI/OASIS plus optional Qdrant/Neo4j/Postgres; either the implementation is not actually using those engines or the dependency/runtime story is incomplete."
+        ],
+        "catastrophic_failure_present": true,
+        "catastrophic_failure_detail": "The core positioning claims a CAMEL/OASIS-based multi-agent simulation bundle, but the provided evidence describes a simple turn-loop with LLM roleplay and self-scored signals, which is a materially different product.",
+        "would_star_despite_flaws": false,
+        "reasoning_for_star_decision": "A power user might watch it, but would not star for adoption because the README overclaims architecture, UI, memory behavior, and evidence quality relative to what the examples actually prove.",
+        "confidence_0_to_10": 8
+      },
+      "raw_excerpt": null
+    }
+  ],
+  "summary": {
+    "parsed_count": 4,
+    "star_count": 1,
+    "catastrophic_count": 1,
+    "total_failures": 19,
+    "passed": false
+  }
+}

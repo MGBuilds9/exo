@@ -2,32 +2,40 @@
 
 Five minutes from clone to first transcript.
 
-## Fastest path (zero databases, fully local — no cloud accounts needed)
+## Fastest path (fully local — no Docker, no cloud, no API keys)
 
-For simple multi-actor chat sims, you don't need Docker, Qdrant, Neo4j,
-or Postgres. The DBs are optional and only matter when your sim declares
-a memory tier. The LLM can be a local Ollama model.
+For simple multi-actor chat sims, you do NOT need Docker, Qdrant, Neo4j,
+or Postgres. They're available via compose profiles but stay off unless
+you opt in.
+
+**Prereqs** (honest about what you need first):
+- Python 3.11+ installed
+- Ollama installed and running (`ollama serve`) — see [ollama.com](https://ollama.com/download)
+- A chat model pulled locally — `ollama pull qwen2.5:7b` (~4GB) or any model you have
+- On Windows: WSL2 or Git Bash for the `sed` step (or edit the YAML manually)
+
+If you have all of those: 4 commands, ~90 seconds:
 
 ```bash
-# Prereqs: Python 3.11+, Ollama running locally
-ollama pull qwen2.5:14b
-ollama serve &
-
-# Clone and run
 git clone https://github.com/MGBuilds9/exo.git
 cd exo
 pip install -r requirements.txt
 export LOCAL_OLLAMA_BASE_URL=http://localhost:11434/v1
 
-# Edit the template to use local-ollama instead of ollama-cloud:
-sed -i 's|ollama-cloud/qwen3-coder:480b|local-ollama/qwen2.5:14b|g' \
+# Edit the template to use local-ollama instead of ollama-cloud
+# (Or open templates/sales-pipeline/domain.yaml and replace the model
+#  strings manually — that's portable to Windows without sed)
+sed -i 's|ollama-cloud/qwen3-coder:480b|local-ollama/qwen2.5:7b|g' \
     templates/sales-pipeline/domain.yaml
 
 ./exo run templates/sales-pipeline/domain.yaml
 ```
 
-Four commands. No Docker. No cloud account. No API key. Your prompts
-and personas never leave your machine.
+Your prompts and personas never leave your machine.
+
+> **Honest scope note**: the "5-minute" headline above only holds if you already
+> have Python + Ollama + a pulled model. From a fresh machine, you're
+> ~15-30 min including model download. That's still good, just not "5 min."
 
 ## Full path (with memory tiers)
 

@@ -27,7 +27,7 @@
 
 - **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured), the canonical hybrid stack from the [2026 agent-memory guide](./docs/memory-architecture.md). **Strictly opt-in via compose profiles**: `docker compose up` starts only the exo-runner. Use `--profile vector`, `--profile graph`, `--profile sql`, or `--profile all` when your sim's `domain.yaml` declares a memory tier that needs them. The DBs are not running unless you ask for them — period.
 - **LLM router** — Routes requests between Claude OAuth (frontier), Ollama Cloud (cloud OSS), and local Ollama / BERTHA / llama-swap (local OSS). No API keys baked in.
-- **Multi-agent runtime** — Built on [CAMEL-AI](https://github.com/camel-ai/camel) and [OASIS](https://github.com/camel-ai/oasis). Same engine that powers Mirofish.
+- **Multi-agent runtime** — A vendor-neutral turn-loop in pure Python (~600 lines). Each turn, each actor speaks once via its configured LLM; conversation state is the shared context. Not built on CAMEL-AI or OASIS in v0.1, though the design is informed by what those projects do well. v0.2 will add CAMEL-AI integration as an opt-in runtime.
 - **`exo architect`** — Interactive CLI that walks you through the 12 design decisions for a new multi-agent simulation: actors, ontology, scenarios, memory tier, LLM tier. Outputs a complete `domain.yaml` + ready-to-run docker setup.
 - **Template library** — Pre-built simulations for common domains: social-media reaction, sales pipeline, wedding-vendor coordination, healthcare triage, construction stakeholder, software incident response.
 - **YAML-first config** — Every aspect of a simulation (actors, personas, scenarios, memory routing, output schemas) is declared in one file. No hidden Python. Version it. Diff it. Share it.
@@ -141,7 +141,7 @@ Want frontier-model output instead of local? Drop the `sed`, set
 # 1. Clone + start the stack
 git clone https://github.com/MGBuilds9/exo.git
 cd exo
-docker compose up -d
+docker compose up -d            # runner only; DBs are opt-in via --profile
 
 # 2. Pick an example, or design a new one
 exo architect              # 12-question walkthrough → ./my-sim/domain.yaml
@@ -153,8 +153,8 @@ cd my-sim
 exo run --config domain.yaml --scenario my-scenario.yaml
 
 # 4. Inspect outputs
-open http://localhost:5050/        # web UI: actor inspector + graph + transcripts
-exo report --run latest            # text report
+exo report sims/<your-sim>/run/    # text report
+# (web UI at localhost:5050 is a v0.2 deliverable; v0.1 is CLI-only)
 ```
 
 That's the whole experience. Five commands. One YAML file to edit.
@@ -343,18 +343,23 @@ state; the variance is structural, not stylistic.
 
 [Full transcripts of all 3 runs](./examples/sales-pipeline-rehearsal/).
 
-## Examples included
+## What actually ships in v0.1
 
-| Template | What it simulates | Time to first run |
+**One polished template + two real experiment results.** Honesty over inventory.
+
+| Asset | What | Status |
 |---|---|---|
-| `social-media-reaction` | Public reaction to a press release / policy doc (Mirofish-style) | ~5 min |
-| `sales-pipeline` | Multi-stakeholder sales conversation, deal progression | ~3 min |
-| `wedding-vendor-coordination` | Vendor + couple + venue logistics over a planning timeline | ~5 min |
-| `healthcare-triage` | ER intake → diagnostic agents → treatment recommendation | ~8 min |
-| `construction-stakeholder` | PM/Estimator/Foreman/Exec/Subcontractor on a project conflict | ~5 min |
-| `incident-response` | On-call engineers + product + manager during a P0 | ~5 min |
+| `templates/sales-pipeline/` | 4-actor B2B sales rehearsal with hand-polished personas | Shipped, 3 real runs in `examples/` |
+| `experiments/E1-recreate-mirofish/` | 8-actor construction-domain sim, actor cast extracted from a real Mirofish Neo4j graph | Shipped, 3 runs, RESULT.md |
+| `experiments/E2-extend-mirofish/` | Adds `regulatory_inspector` to E1 via YAML-only edit, measurable per-actor signal shift | Shipped, 2 runs, RESULT.md |
 
-Each one is a directory you `cp -r` and edit. Each one runs against the same stack.
+**Templates planned for v0.2** (not yet shipped — honest about this):
+- `social-media-reaction` — OASIS-style public reaction modeling (likely needs CAMEL-AI integration)
+- `wedding-vendor-coordination`
+- `healthcare-triage`
+- `incident-response`
+
+If you build one of these, send a PR.
 
 ## What this is NOT
 
@@ -365,19 +370,16 @@ Each one is a directory you `cp -r` and edit. Each one runs against the same sta
 
 ## What's under the hood
 
-`exo` is shamelessly built on the giants. The opinionated bundle is the value; the libraries underneath are battle-tested:
+`exo` v0.1 is intentionally a thin wrapper. The runtime is ~600 lines of pure Python — a turn-loop, an LLM router (with backends for Ollama / Ollama Cloud / Claude OAuth), and a signal extractor. The memory tiers below are *available* via docker-compose profiles but are not load-bearing in v0.1 simple-chat sims.
 
-- [CAMEL-AI](https://github.com/camel-ai/camel) — the agent runtime
-- [OASIS](https://github.com/camel-ai/oasis) — multi-agent social simulation
-- [Neo4j](https://neo4j.com/) — graph DB
-- [Qdrant](https://qdrant.tech/) — vector DB
-- [LightRAG](https://github.com/HKUDS/LightRAG) — graph + vector RAG layer (used optionally)
-- [PostgreSQL](https://www.postgresql.org/) — structured records
-- [Ollama](https://ollama.com/) — local LLM runtime
+- [Neo4j](https://neo4j.com/) — graph DB (opt-in via `--profile graph`)
+- [Qdrant](https://qdrant.tech/) — vector DB (opt-in via `--profile vector`)
+- [PostgreSQL](https://www.postgresql.org/) — structured records (opt-in via `--profile sql`)
+- [Ollama](https://ollama.com/) — local LLM runtime (your machine)
 - [Ollama Cloud](https://ollama.com/cloud) — frontier OSS models via API
-- [Claude OAuth](https://www.anthropic.com/) — frontier inference via Claude Code
+- [Claude OAuth](https://www.anthropic.com/) — frontier inference via Claude Code (via the `claude` CLI)
 
-If you've used [MiroFish-Offline](https://github.com/nikmcfly/MiroFish-Offline), exo is the generalization of its architecture: same engine, vendor-neutral, YAML-first, designed for any domain.
+For reference: [MiroFish-Offline](https://github.com/nikmcfly/MiroFish-Offline) is a domain-specific multi-agent simulator built on CAMEL-AI + OASIS. exo is a more generic, vendor-neutral substrate — different design choice, narrower runtime, broader domain applicability. exo's v0.1 was *informed by* Mirofish but does not depend on it. If you want OASIS-style Twitter/Reddit simulation specifically, use Mirofish.
 
 ## Reproducibility
 
@@ -403,7 +405,16 @@ Apache 2.0. Build on it. Fork it. Ship a commercial product on top — that's fi
 
 ## Status
 
-v0.1.0. Experimental. The architecture is locked; the templates are real but minimal. Issues and PRs welcome.
+v0.1.0. **Experimental.** What this means honestly:
+
+- The CLI works end-to-end against real Ollama Cloud / local Ollama.
+- One template ships (`sales-pipeline`); the other 5 listed above are v0.2 work, not v0.1 inventory.
+- Two real experiments (`E1`, `E2`) shipped with full transcripts as evidence. N is small (3 baseline + 2 treatment runs); thresholds were chosen ahead of time but the statistical power is appropriate to a v0.1 demo, not a research paper.
+- Memory tiers (Qdrant / Neo4j / Postgres) are wired in compose with opt-in profiles but the runtime doesn't yet read/write to them in the templates. v0.2 work.
+- The web UI at :5050 is a health endpoint stub only. v0.2 work.
+- `claude-oauth` LLM backend is drafted but only `ollama-cloud` and `local-ollama` are battle-tested.
+
+Issues and PRs welcome.
 
 ---
 

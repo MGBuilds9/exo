@@ -1,0 +1,166 @@
+{
+  "channel": "channel-D-dogfood-adoption",
+  "total_turns": 24,
+  "by_actor": {
+    "rapid_evaluator": {
+      "would_clone": {
+        "mean": 7.17,
+        "min": 7.0,
+        "max": 7.5,
+        "n": 3
+      },
+      "would_recommend": {
+        "mean": 3.67,
+        "min": 3.0,
+        "max": 5.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 8.0,
+        "min": 8.0,
+        "max": 8.0,
+        "n": 3
+      }
+    },
+    "thoughtful_evaluator": {
+      "would_clone": {
+        "mean": 7.0,
+        "min": 7.0,
+        "max": 7.0,
+        "n": 3
+      },
+      "would_recommend": {
+        "mean": 5.33,
+        "min": 4.0,
+        "max": 6.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 8.0,
+        "min": 8.0,
+        "max": 8.0,
+        "n": 3
+      }
+    },
+    "skeptical_purchaser": {
+      "would_clone": {
+        "mean": 5.33,
+        "min": 4.0,
+        "max": 6.0,
+        "n": 3
+      },
+      "would_recommend": {
+        "mean": 3.0,
+        "min": 2.0,
+        "max": 4.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 7.0,
+        "min": 7.0,
+        "max": 7.0,
+        "n": 3
+      }
+    },
+    "opportunistic_integrator": {
+      "would_clone": {
+        "mean": 7.0,
+        "min": 7.0,
+        "max": 7.0,
+        "n": 3
+      },
+      "would_recommend": {
+        "mean": 6.0,
+        "min": 6.0,
+        "max": 6.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 8.0,
+        "min": 8.0,
+        "max": 8.0,
+        "n": 3
+      }
+    },
+    "research_engineer": {
+      "would_clone": {
+        "mean": 7.0,
+        "min": 7.0,
+        "max": 7.0,
+        "n": 3
+      },
+      "would_recommend": {
+        "mean": 5.67,
+        "min": 5.0,
+        "max": 6.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 8.0,
+        "min": 8.0,
+        "max": 8.0,
+        "n": 3
+      }
+    },
+    "educator": {
+      "would_clone": {
+        "mean": 7.0,
+        "min": 7.0,
+        "max": 7.0,
+        "n": 3
+      },
+      "would_recommend": {
+        "mean": 5.0,
+        "min": 5.0,
+        "max": 5.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 8.0,
+        "min": 8.0,
+        "max": 8.0,
+        "n": 3
+      }
+    },
+    "consulting_practitioner": {
+      "would_clone": {
+        "mean": 7.0,
+        "min": 7.0,
+        "max": 7.0,
+        "n": 3
+      },
+      "would_recommend": {
+        "mean": 5.67,
+        "min": 5.0,
+        "max": 6.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 8.0,
+        "min": 8.0,
+        "max": 8.0,
+        "n": 3
+      }
+    },
+    "contributor_seeker": {
+      "would_clone": {
+        "mean": 5.0,
+        "min": 4.0,
+        "max": 7.0,
+        "n": 3
+      },
+      "would_recommend": {
+        "mean": 7.0,
+        "min": 6.0,
+        "max": 8.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 7.67,
+        "min": 7.0,
+        "max": 8.0,
+        "n": 3
+      }
+    }
+  }
+}

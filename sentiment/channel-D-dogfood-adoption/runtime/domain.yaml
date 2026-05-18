@@ -1,0 +1,121 @@
+name: dogfood-adoption-decision
+purpose: Eat-our-own-dogfood — use exo itself to simulate 8 power-user personas going
+  through the adoption decision after seeing exo on GitHub. Tests both the artifact
+  AND the runtime simultaneously.
+created_by: exo-architect v0.1.0 (Phase 3 channel D)
+system_kind: customer-service
+scale: small
+memory:
+  tier: none
+  vector_backend: none
+  graph_backend: none
+  sql_backend: none
+actors:
+- id: rapid_evaluator
+  persona: 'Builds AI products full-time, evaluates tools weekly. Trial-and-discard
+
+    cadence. Cares about: clone-to-working-demo time, are claims supported
+
+    by examples in the repo. Will adopt if the demo runs in <10 min and
+
+    solves a real problem; will dismiss after 30 sec if not.
+
+    '
+  role: adopter
+  model: ollama-cloud/qwen3-coder:480b
+- id: thoughtful_evaluator
+  persona: 'AI/ML lead at a 100-person startup. Picks team tools quarterly. Will
+
+    spend 2 hours evaluating, including reading source. Cares about:
+
+    governance signals (maintainer responsiveness, issue count, recent
+
+    commits), code quality, architectural soundness. Slow adopter,
+
+    high-conviction once committed.
+
+    '
+  role: adopter
+  model: ollama-cloud/qwen3-coder:480b
+- id: skeptical_purchaser
+  persona: 'Has been burned by 4 AI-framework hype cycles. Default position:
+
+    "show me production receipts." Will not adopt without concrete
+
+    evidence of real-world use (case studies, user count, github star
+
+    velocity). Will downvote anything with marketing voice in the README.
+
+    '
+  role: adopter
+  model: ollama-cloud/qwen3-coder:480b
+- id: opportunistic_integrator
+  persona: 'Maintains a B2B SaaS that could benefit from agent simulation.
+
+    Looking for tools they can integrate, not just use. Cares about:
+
+    API stability, license commercial-friendliness, can-I-fork-and-
+
+    ship-this. Apache 2.0 is critical. Will integrate if the YAML
+
+    config is stable enough to call programmatically.
+
+    '
+  role: adopter
+  model: ollama-cloud/qwen3-coder:480b
+- id: research_engineer
+  persona: 'Industry research lab. Builds bespoke multi-agent simulations for
+
+    papers. Has used CAMEL, OASIS, AutoGen, MARL frameworks. Knows the
+
+    space cold. Will adopt only if exo offers something concretely
+
+    different from those, not just a different API surface.
+
+    '
+  role: adopter
+  model: ollama-cloud/qwen3-coder:480b
+- id: educator
+  persona: 'Teaches "Multi-Agent Systems" at a university. Looking for tools
+
+    students can run on their laptops. Cares about: zero-cost defaults,
+
+    pedagogical clarity, "can a 2nd-year CS student get this running."
+
+    Will recommend if the Quickstart actually delivers.
+
+    '
+  role: adopter
+  model: ollama-cloud/qwen3-coder:480b
+- id: consulting_practitioner
+  persona: 'Runs an AI consulting practice. Picks tools to use in client
+
+    engagements (sales rehearsals, change-management workshops,
+
+    stakeholder modeling). Cares about: does this make the consulting
+
+    deliverable better, can I rebrand it / vendor-fingerprint it, is
+
+    the workflow billable.
+
+    '
+  role: adopter
+  model: ollama-cloud/qwen3-coder:480b
+- id: contributor_seeker
+  persona: 'Looks for open-source projects to contribute to as career-building.
+
+    Cares about: maintainer responsiveness, CONTRIBUTING.md, "good
+
+    first issue" labels, recent commit cadence. Will star + open a PR
+
+    within a week if the project signals it welcomes contributors.
+
+    '
+  role: adopter
+  model: ollama-cloud/qwen3-coder:480b
+runtime:
+  default_model: ollama-cloud/qwen3-coder:480b
+  fallback_model: ollama-cloud/qwen3-coder:480b
+  temperature: 0.7
+  parallel_agents: 4
+  log_level: INFO

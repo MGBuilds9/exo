@@ -1,0 +1,134 @@
+{
+  "channel": "channel-A-hn-thread",
+  "total_turns": 24,
+  "by_actor": {
+    "rust_evangelist": {
+      "upvote_likelihood": {
+        "mean": 3.0,
+        "min": 3.0,
+        "max": 3.0,
+        "n": 3
+      },
+      "would_clone": {
+        "mean": 2.0,
+        "min": 2.0,
+        "max": 2.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 7.33,
+        "min": 7.0,
+        "max": 8.0,
+        "n": 3
+      }
+    },
+    "ai_cynic": {
+      "upvote_likelihood": {
+        "mean": 5.67,
+        "min": 4.0,
+        "max": 7.0,
+        "n": 3
+      },
+      "would_clone": {
+        "mean": 4.5,
+        "min": 3.0,
+        "max": 6.5,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 7.33,
+        "min": 7.0,
+        "max": 8.0,
+        "n": 3
+      }
+    },
+    "indie_hacker_hn": {
+      "upvote_likelihood": {
+        "mean": 7.33,
+        "min": 7.0,
+        "max": 7.5,
+        "n": 3
+      },
+      "would_clone": {
+        "mean": 8.0,
+        "min": 8.0,
+        "max": 8.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 6.17,
+        "min": 6.0,
+        "max": 6.5,
+        "n": 3
+      }
+    },
+    "faang_staff_eng": {
+      "upvote_likelihood": {
+        "mean": 4.0,
+        "min": 4.0,
+        "max": 4.0,
+        "n": 3
+      },
+      "would_clone": {
+        "mean": 3.0,
+        "min": 3.0,
+        "max": 3.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 7.0,
+        "min": 7.0,
+        "max": 7.0,
+        "n": 3
+      }
+    },
+    "security_eng_hn": {
+      "upvote_likelihood": {
+        "mean": 5.33,
+        "min": 4.0,
+        "max": 6.0,
+        "n": 3
+      },
+      "would_clone": {
+        "mean": 4.67,
+        "min": 4.0,
+        "max": 5.0,
+        "n": 3
+      },
+      "comment_quality": {
+        "mean": 7.0,
+        "min": 7.0,
+        "max": 7.0,
+        "n": 3
+      }
+    },
+    "mlops_veteran": {
+      "would_clone": {
+        "mean": 4.0,
+        "min": 3.0,
+        "max": 5.0,
+        "n": 2
+      }
+    },
+    "oss_maintainer_hn": {
+      "upvote_likelihood": {
+        "mean": 6.5,
+        "min": 6.0,
+        "max": 7.0,
+        "n": 2
+      },
+      "would_clone": {
+        "mean": 6.0,
+        "min": 5.0,
+        "max": 7.0,
+        "n": 2
+      },
+      "comment_quality": {
+        "mean": 8.0,
+        "min": 8.0,
+        "max": 8.0,
+        "n": 2
+      }
+    }
+  }
+}
