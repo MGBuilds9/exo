@@ -25,7 +25,7 @@
 
 `exo` is an opinionated starter kit for multi-agent simulation engines. It bundles:
 
-- **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured). The canonical hybrid stack from the [2026 agent-memory guide](./docs/memory-architecture.md). **All three are optional and lazy-started** — a simple 4-actor chat sim runs with zero databases. The DBs only spin up when your `domain.yaml` declares a memory tier that needs them.
+- **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured), the canonical hybrid stack from the [2026 agent-memory guide](./docs/memory-architecture.md). **Strictly opt-in via compose profiles**: `docker compose up` starts only the exo-runner. Use `--profile vector`, `--profile graph`, `--profile sql`, or `--profile all` when your sim's `domain.yaml` declares a memory tier that needs them. The DBs are not running unless you ask for them — period.
 - **LLM router** — Routes requests between Claude OAuth (frontier), Ollama Cloud (cloud OSS), and local Ollama / BERTHA / llama-swap (local OSS). No API keys baked in.
 - **Multi-agent runtime** — Built on [CAMEL-AI](https://github.com/camel-ai/camel) and [OASIS](https://github.com/camel-ai/oasis). Same engine that powers Mirofish.
 - **`exo architect`** — Interactive CLI that walks you through the 12 design decisions for a new multi-agent simulation: actors, ontology, scenarios, memory tier, LLM tier. Outputs a complete `domain.yaml` + ready-to-run docker setup.
