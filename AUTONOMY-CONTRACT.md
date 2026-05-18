@@ -39,9 +39,19 @@ named-power-user endorsement. The council is the verdict instrument.
 
 ### 3.1 Judges
 
+[POST-RUN-4 AMENDMENT 2026-05-18: AI-researcher archetype was structurally
+unreachable — 3 of 4 runs surfaced the same "no novel research" critique
+from 3 different LLMs playing that role. Per Council #3 STATUS-AFTER-4-RUNS.md
+analysis and Michael's explicit Option B decision (2026-05-18), AI-researcher
+is replaced with "Open-source maintainer evaluating for adoption" — a bar
+that maps to actual GitHub-virality audiences rather than NeurIPS reviewers.
+The 4 prior runs (1-4) are explicitly invalidated by this amendment per the
+spirit of contract section 3.7. Counter remains 0. New SHA witness is in
+effect for Run 5+.]
+
 Four archetypes per run:
 1. **Senior staff engineer** — production-AI background, skeptical of hype
-2. **AI researcher** — values novelty, mathematical clarity, citation-quality docs
+2. **Open-source maintainer evaluating for adoption** — runs a popular OSS project (5k+ stars). Evaluates new tools to potentially adopt or recommend. Cares about license clarity, README quality, install friction, code quality, depth of examples, what happens at scale, day-2 ops. Skeptical of vaporware and projects that look polished but lack substance.
 3. **Indie hacker** — values ship-velocity, copy-pasteable quickstarts, README-driven
 4. **Homelab self-hoster** — values local-first, no vendor lock-in, docker-compose simplicity
 

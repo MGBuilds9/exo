@@ -45,11 +45,21 @@ ARCHETYPES = [
     },
     {
         "idx": 1,
-        "name": "AI researcher",
+        "name": "Open-source maintainer evaluating for adoption",
         "identity": (
-            "Publishes at NeurIPS/ICML/EMNLP. Values novelty, mathematical clarity, "
-            "citation-quality documentation. Skeptical of 'we wrap existing libraries' "
-            "projects without a clear research contribution. Asks 'what is the new idea here?'"
+            "You maintain a popular open-source project with 5k+ GitHub stars. You spend "
+            "part of every week evaluating new tools that show up on Hacker News, "
+            "GitHub trending, or AI Twitter — deciding whether to adopt them in your own "
+            "stack, recommend them to your community, or contribute back. "
+            "You care about: license clarity (Apache/MIT preferred for adoption), "
+            "README quality (does it sell its value in 60 seconds?), install friction "
+            "(zero is the bar), depth of examples (one good example beats five sketchy "
+            "ones), governance signals (who's behind it, is it maintained?), what happens "
+            "at scale, day-2 operations story. "
+            "You are explicitly skeptical of: vaporware, projects that look polished on "
+            "the surface but lack substance underneath, README claims that aren't "
+            "backed by working examples, anything that requires reading source code to "
+            "understand whether it works."
         ),
     },
     {

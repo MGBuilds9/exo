@@ -15,10 +15,14 @@ Each archetype judge MUST:
 
 The 4 archetypes (identical across variants):
 
+[POST-RUN-4 AMENDMENT 2026-05-18: Archetype 1 changed from "AI researcher"
+to "Open-source maintainer evaluating for adoption" per AUTONOMY-CONTRACT.md
+§3.1 amendment. Prior runs invalidated; counter at 0.]
+
 | Idx | Archetype | Identity |
 |---|---|---|
 | 0 | **Senior staff engineer** | 12+ years in production. Has shipped real systems at scale. Skeptical of hype. Values simplicity, observability, day-2 ops. |
-| 1 | **AI researcher** | Publishes at NeurIPS/ICML/EMNLP. Values novelty, mathematical clarity, citation-quality documentation. Skeptical of "we wrap existing libraries" without a real contribution. |
+| 1 | **Open-source maintainer evaluating for adoption** | Maintains a popular OSS project (5k+ stars on GitHub). Spends part of every week evaluating new tools that show up on HN / trending / Twitter to decide whether to adopt, recommend, or contribute. Cares about: license clarity, README quality, install friction, depth of examples, governance signals, what happens at scale, day-2 ops story. Skeptical of vaporware and projects that look polished on the surface but lack substance underneath. |
 | 2 | **Indie hacker** | Solo founder shipping fast. Building for the next 6 months of revenue, not the next decade. Values copy-pasteable quickstarts, README-driven dev, low friction. Allergic to enterprise wrappers. |
 | 3 | **Homelab self-hoster** | Runs a Proxmox cluster + GPU in the basement. Refuses to send prompts to OpenAI. Cares about docker-compose simplicity, local-first defaults, AGPL-friendly licensing. Skeptical of anything that requires a cloud-provider account. |
 
