@@ -109,7 +109,33 @@ Put more concretely:
 
 That decoupling is the value-add. It's not novel research; it's an opinionated assembly that closes the gap between "I want a sim of X" and "I have a transcript of X."
 
-## Quickstart
+## Under 5 minutes from clone to first transcript (no Docker, no cloud)
+
+For the impatient. Local Ollama only:
+
+```bash
+# 1. One-time setup (~3 min): Python 3.11+ and Ollama
+ollama pull qwen2.5:7b      # ~4GB
+ollama serve &
+
+# 2. Clone + first transcript (~90 sec)
+git clone https://github.com/MGBuilds9/exo.git
+cd exo
+pip install -r requirements.txt   # 4 deps: click pyyaml rich requests
+sed -i 's|ollama-cloud/qwen3-coder:480b|local-ollama/qwen2.5:7b|g' \
+    templates/sales-pipeline/domain.yaml
+export LOCAL_OLLAMA_BASE_URL=http://localhost:11434/v1
+./exo run templates/sales-pipeline/domain.yaml --rounds 2
+```
+
+8 turns of real B2B sales rehearsal printed live with signals tracked
+per actor. Zero data leaves your machine. Total wallclock: ~5 minutes
+clone-to-transcript if you already have Python + Ollama installed.
+
+Want frontier-model output instead of local? Drop the `sed`, set
+`OLLAMA_API_KEY` instead of `LOCAL_OLLAMA_BASE_URL`. Same command.
+
+## Quickstart (full stack with memory tiers)
 
 ```bash
 # 1. Clone + start the stack
