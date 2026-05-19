@@ -27,6 +27,7 @@ from rich.prompt import Prompt
 
 from exo_runtime.execute import (
     classify_command, SafetyClass, run_command, parse_output,
+    load_fixture, ReplayRunner,
 )
 from exo_runtime.execute.session import (
     new_session, append_step, finalize,
@@ -168,7 +169,8 @@ def _signal_to_followup(signal: str) -> str:
 
 def run(*, plan_path: str, out_dir: str | None = None,
         auto: bool = False, allow_caution: bool = False,
-        max_steps: int = 10) -> None:
+        max_steps: int = 10,
+        replay_fixture: str | None = None) -> None:
     p_in = Path(plan_path)
     if not p_in.exists():
         console.print(f"[red]Plan not found: {plan_path}[/red]")
@@ -179,12 +181,20 @@ def run(*, plan_path: str, out_dir: str | None = None,
         console.print("[yellow]No actionable steps found in the plan.[/yellow]")
         return
 
+    # Pick command-runner: replay if a fixture is given, otherwise live subprocess.
+    runner_fn = run_command
+    replay_label = ""
+    if replay_fixture:
+        fixture = load_fixture(replay_fixture)
+        runner_fn = ReplayRunner(fixture)
+        replay_label = f"\n[bold magenta]REPLAY MODE[/bold magenta]: {fixture.description} ({Path(replay_fixture).name})"
+
     console.print(Panel.fit(
         f"[bold cyan]exo execute[/bold cyan] · plan: [yellow]{p_in.name}[/yellow]\n"
         f"Found {len(actions)} issue(s) with proposed first actions.\n"
         f"Mode: [cyan]{'auto (safe commands only)' if auto else 'interactive (confirm each step)'}[/cyan]  "
-        f"max_steps: [cyan]{max_steps}[/cyan]",
-        border_style="cyan",
+        f"max_steps: [cyan]{max_steps}[/cyan]{replay_label}",
+        border_style="magenta" if replay_fixture else "cyan",
     ))
 
     session = new_session(str(p_in))
@@ -244,7 +254,7 @@ def run(*, plan_path: str, out_dir: str | None = None,
         next_decision = ""
         if approved:
             console.print("  [dim]Running...[/dim]")
-            result = run_command(cmd, timeout=60)
+            result = runner_fn(cmd, timeout=60)
             result_dict = {
                 "command": result.command,
                 "exit_code": result.exit_code,
