@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>exo · best open-source repos by capability</title>
+<meta name="description" content="Data-driven leaderboard of the best open-source repos by AI infrastructure capability. Refreshed weekly. No LLM bias.">
+
+<style>
+  :root {
+    --bg: #0a0e14; --panel: #11161e; --line: #1f2630;
+    --text: #d4dae3; --muted: #8b949e; --accent: #58a6ff;
+    --good: #3fb950; --warn: #d29922; --bad: #f85149;
+    --chip: #21262d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+  h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: -0.02em; }
+  h2 { margin: 32px 0 12px; font-size: 20px; }
+  h3 { margin: 24px 0 8px; font-size: 16px; }
+  .sub { color: var(--muted); font-size: 14px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 8px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 18px 20px; margin: 14px 0;
+  }
+  .card h3 { margin-top: 0; }
+  .row { display: flex; justify-content: space-between; gap: 24px; align-items: baseline; }
+  .chip {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: var(--chip); color: var(--muted); font-size: 11px;
+    font-family: "SF Mono", Menlo, monospace; margin-right: 4px;
+  }
+  .grade {
+    font-weight: 600; font-size: 22px; min-width: 60px; text-align: right;
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .grade-good { color: var(--good); }
+  .grade-mid  { color: var(--warn); }
+  .grade-low  { color: var(--bad); }
+  table {
+    width: 100%; border-collapse: collapse; margin: 12px 0;
+    font-size: 13px;
+  }
+  th, td {
+    padding: 8px 10px; text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  th { font-weight: 600; color: var(--muted); }
+  td.num { font-family: "SF Mono", Menlo, monospace; text-align: right; }
+  .rationale {
+    font-size: 12px; color: var(--muted); font-family: "SF Mono", Menlo, monospace;
+    background: var(--bg); padding: 10px 12px; border-radius: 4px;
+    margin-top: 8px; white-space: pre-wrap; max-height: 200px; overflow-y: auto;
+  }
+  .legend { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .toc a {
+    display: block; padding: 14px 16px; border: 1px solid var(--line);
+    border-radius: 6px; background: var(--panel);
+    color: var(--text);
+  }
+  .toc a:hover { border-color: var(--accent); text-decoration: none; }
+  .toc-cap-name { font-weight: 600; font-size: 14px; }
+  .toc-cap-leader { color: var(--accent); font-family: "SF Mono", Menlo, monospace; font-size: 13px; margin-top: 6px; }
+  .toc-cap-desc { color: var(--muted); font-size: 12px; margin-top: 4px; }
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  .pill {
+    display: inline-block; padding: 2px 8px; border-radius: 12px;
+    background: var(--chip); color: var(--muted); font-size: 11px;
+  }
+  .install {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px 18px; font-family: "SF Mono", Menlo, monospace; font-size: 13px;
+    margin: 16px 0;
+  }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>exo · best open-source repos by capability</h1>
+    <div class="sub">Data-driven scoring against live GitHub signals. No LLM bias in the ranking.</div>
+    <div class="meta">
+      <span class="pill">refreshed 2026-05-19</span>
+      <span class="pill">9 capabilities</span>
+      <span class="pill">49 candidates evaluated</span>
+      <span class="pill">profile: default</span>
+    </div>
+  </header>
+
+  <p>This is what <code>exo recommend</code> produces, run weekly across every capability. Each leaderboard scores candidate repos against four sub-scores — maintenance, popularity, governance, and license fit — using a fixed deterministic formula against live GitHub data. The LLM never picks the repo. We do, with data you can audit.</p>
+
+  <div class="install">
+    pip install exo-cli &nbsp;&nbsp;<span style="color:var(--muted)">·</span>&nbsp;&nbsp; <a href="https://github.com/MGBuilds9/exo">github.com/MGBuilds9/exo</a>
+  </div>
+
+  <h2>Capabilities</h2>
+  <div class="toc">
+    
+        <a href="c/memory-tier.html">
+          <div class="toc-cap-name">memory-tier</div>
+          
+            <div class="toc-cap-leader">cpacker/MemGPT · 10.0/10</div>
+          <div class="toc-cap-desc">Long-term semantic + episodic memory for AI agents</div>
+        </a>
+        <a href="c/observability.html">
+          <div class="toc-cap-name">observability</div>
+          
+            <div class="toc-cap-leader">langfuse/langfuse · 9.5/10</div>
+          <div class="toc-cap-desc">LLM call tracing, eval, cost tracking, agent debugging</div>
+        </a>
+        <a href="c/multi-agent-runtime.html">
+          <div class="toc-cap-name">multi-agent-runtime</div>
+          
+            <div class="toc-cap-leader">crewAIInc/crewAI · 9.75/10</div>
+          <div class="toc-cap-desc">Orchestration of multiple LLM agents working together</div>
+        </a>
+        <a href="c/hitl-approval.html">
+          <div class="toc-cap-name">hitl-approval</div>
+          
+            <div class="toc-cap-leader">agno-agi/agno · 9.5/10</div>
+          <div class="toc-cap-desc">Human-in-the-loop consent gates for agent execution</div>
+        </a>
+        <a href="c/calibration.html">
+          <div class="toc-cap-name">calibration</div>
+          
+            <div class="toc-cap-leader">promptfoo/promptfoo · 9.75/10</div>
+          <div class="toc-cap-desc">Prompt optimization + LLM output evaluation against ground truth</div>
+        </a>
+        <a href="c/vector-db.html">
+          <div class="toc-cap-name">vector-db</div>
+          
+            <div class="toc-cap-leader">qdrant/qdrant · 9.5/10</div>
+          <div class="toc-cap-desc">Vector database for semantic search / RAG</div>
+        </a>
+        <a href="c/graph-db.html">
+          <div class="toc-cap-name">graph-db</div>
+          
+            <div class="toc-cap-leader">HKUDS/LightRAG · 9.75/10</div>
+          <div class="toc-cap-desc">Graph database for knowledge / dependency reasoning</div>
+        </a>
+        <a href="c/local-llm-runtime.html">
+          <div class="toc-cap-name">local-llm-runtime</div>
+          
+            <div class="toc-cap-leader">ollama/ollama · 9.25/10</div>
+          <div class="toc-cap-desc">Run LLMs on your own hardware</div>
+        </a>
+        <a href="c/agent-memory-router.html">
+          <div class="toc-cap-name">agent-memory-router</div>
+          
+            <div class="toc-cap-leader">mem0ai/mem0 · 9.75/10</div>
+          <div class="toc-cap-desc">Decide where (vector / graph / SQL) a query should retrieve from</div>
+        </a>
+  </div>
+
+  <h2>How this is scored</h2>
+  <p>For each candidate repo we fetch live GitHub signals via the <code>gh</code> CLI: stars, forks, push recency, recent commit count, recent release count, contributor count, open issue count, age, license, archive status. Four sub-scores each contribute to a 0–10 composite:</p>
+  <ul>
+    <li><strong>Maintenance</strong> — push recency + 90-day commit volume + recent releases. Heavy penalty for archived/disabled.</li>
+    <li><strong>Popularity</strong> — stars with a stars-per-day momentum bonus.</li>
+    <li><strong>Governance</strong> — contributor count, healthy issue backlog, age.</li>
+    <li><strong>License fit</strong> — matches your constraint (any / permissive / no-AGPL / no-copyleft).</li>
+  </ul>
+  <p>Weights for the default profile: maintenance 30%, popularity 30%, governance 25%, license fit 15%. Other profiles available in the CLI: <code>reliable</code>, <code>cutting-edge</code>, <code>commercial</code>.</p>
+
+  <h2>Use it locally</h2>
+  <p>The leaderboard lives here because it's a side-effect — the real product is the CLI. Get a personalized ranking with your own license constraint and weight profile:</p>
+  <div class="install">
+    exo recommend &lt;capability&gt; --weight-profile reliable --license no-agpl
+  </div>
+  <p>Or, even better: describe what you're trying to build and let <code>exo solve</code> propose what capability you need, then chain to <code>exo recommend</code> automatically.</p>
+
+  <footer>
+    <p>Generated by <a href="https://github.com/MGBuilds9/exo/blob/main/scripts/build_leaderboard.py">scripts/build_leaderboard.py</a> on 2026-05-19T16:57:06.208808+00:00.</p>
+    <p>Raw data: <a href="data.json">data.json</a> · <a href="data.csv">data.csv</a>. PRs to expand the candidate pools welcome.</p>
+  </footer>
+</div>
+</body>
+</html>

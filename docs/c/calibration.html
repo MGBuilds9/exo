@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>exo · calibration leaderboard</title>
+<meta name="description" content="Best open-source Prompt optimization + LLM output evaluation against ground truth. Data-driven scoring.">
+
+<style>
+  :root {
+    --bg: #0a0e14; --panel: #11161e; --line: #1f2630;
+    --text: #d4dae3; --muted: #8b949e; --accent: #58a6ff;
+    --good: #3fb950; --warn: #d29922; --bad: #f85149;
+    --chip: #21262d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+  h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: -0.02em; }
+  h2 { margin: 32px 0 12px; font-size: 20px; }
+  h3 { margin: 24px 0 8px; font-size: 16px; }
+  .sub { color: var(--muted); font-size: 14px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 8px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 18px 20px; margin: 14px 0;
+  }
+  .card h3 { margin-top: 0; }
+  .row { display: flex; justify-content: space-between; gap: 24px; align-items: baseline; }
+  .chip {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: var(--chip); color: var(--muted); font-size: 11px;
+    font-family: "SF Mono", Menlo, monospace; margin-right: 4px;
+  }
+  .grade {
+    font-weight: 600; font-size: 22px; min-width: 60px; text-align: right;
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .grade-good { color: var(--good); }
+  .grade-mid  { color: var(--warn); }
+  .grade-low  { color: var(--bad); }
+  table {
+    width: 100%; border-collapse: collapse; margin: 12px 0;
+    font-size: 13px;
+  }
+  th, td {
+    padding: 8px 10px; text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  th { font-weight: 600; color: var(--muted); }
+  td.num { font-family: "SF Mono", Menlo, monospace; text-align: right; }
+  .rationale {
+    font-size: 12px; color: var(--muted); font-family: "SF Mono", Menlo, monospace;
+    background: var(--bg); padding: 10px 12px; border-radius: 4px;
+    margin-top: 8px; white-space: pre-wrap; max-height: 200px; overflow-y: auto;
+  }
+  .legend { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .toc a {
+    display: block; padding: 14px 16px; border: 1px solid var(--line);
+    border-radius: 6px; background: var(--panel);
+    color: var(--text);
+  }
+  .toc a:hover { border-color: var(--accent); text-decoration: none; }
+  .toc-cap-name { font-weight: 600; font-size: 14px; }
+  .toc-cap-leader { color: var(--accent); font-family: "SF Mono", Menlo, monospace; font-size: 13px; margin-top: 6px; }
+  .toc-cap-desc { color: var(--muted); font-size: 12px; margin-top: 4px; }
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  .pill {
+    display: inline-block; padding: 2px 8px; border-radius: 12px;
+    background: var(--chip); color: var(--muted); font-size: 11px;
+  }
+  .install {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px 18px; font-family: "SF Mono", Menlo, monospace; font-size: 13px;
+    margin: 16px 0;
+  }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="sub"><a href="../index.html">← all capabilities</a></div>
+    <h1>calibration</h1>
+    <div class="sub">Prompt optimization + LLM output evaluation against ground truth</div>
+    <div class="meta">
+      <span class="pill">category: calibration</span>
+      <span class="pill">5 candidates</span>
+      <span class="pill">refresh: 60d</span>
+      <span class="pill">scored 2026-05-19</span>
+    </div>
+  </header>
+
+  
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Repository</th><th class="num">Composite</th>
+        <th class="num">Maint.</th><th class="num">Pop.</th>
+        <th class="num">Gov.</th><th class="num">License</th>
+        <th class="num">Stars</th><th class="num">Pushed</th>
+        <th>License</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td class="num">1</td>
+          <td><a href="https://github.com/promptfoo/promptfoo" target="_blank" rel="noopener">promptfoo/promptfoo</a></td>
+          <td class="num"><span class="grade-good">9.75</span></td>
+          <td class="num">10.0</td>
+          <td class="num">10.0</td>
+          <td class="num">9.0</td>
+          <td class="num">10.0</td>
+          <td class="num">21,397</td>
+          <td class="num">0d ago</td>
+          <td>mit</td>
+        </tr>
+        <tr>
+          <td colspan="10"><details><summary class="legend">show rationale</summary>
+            <div class="rationale">maintenance: pushed 0d ago → +4.0
+maintenance: 100 commits in 90d → +3.0
+maintenance: 16 releases in 90d → +3.0
+popularity: 21397 stars → 9
+popularity bonus: 19.2 stars/day → +1.0
+governance: 100 contributors → +5.0
+governance: 279 open issues (manageable) → +2.0
+governance: 3.1 year(s) old → +2.0 stability
+license_fit: mit (no constraint) → 10.0</div>
+          </details></td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td><a href="https://github.com/stanfordnlp/dspy" target="_blank" rel="noopener">stanfordnlp/dspy</a></td>
+          <td class="num"><span class="grade-good">9.45</span></td>
+          <td class="num">9.0</td>
+          <td class="num">10.0</td>
+          <td class="num">9.0</td>
+          <td class="num">10.0</td>
+          <td class="num">34,527</td>
+          <td class="num">0d ago</td>
+          <td>mit</td>
+        </tr>
+        <tr>
+          <td colspan="10"><details><summary class="legend">show rationale</summary>
+            <div class="rationale">maintenance: pushed 0d ago → +4.0
+maintenance: 100 commits in 90d → +3.0
+maintenance: 2 releases in 90d → +2.0
+popularity: 34527 stars → 9
+popularity bonus: 28.2 stars/day → +1.5
+governance: 100 contributors → +5.0
+governance: 479 open issues (manageable) → +2.0
+governance: 3.4 year(s) old → +2.0 stability
+license_fit: mit (no constraint) → 10.0</div>
+          </details></td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td><a href="https://github.com/mlflow/mlflow" target="_blank" rel="noopener">mlflow/mlflow</a></td>
+          <td class="num"><span class="grade-good">9.25</span></td>
+          <td class="num">10.0</td>
+          <td class="num">10.0</td>
+          <td class="num">7.0</td>
+          <td class="num">10.0</td>
+          <td class="num">26,009</td>
+          <td class="num">0d ago</td>
+          <td>apache-2.0</td>
+        </tr>
+        <tr>
+          <td colspan="10"><details><summary class="legend">show rationale</summary>
+            <div class="rationale">maintenance: pushed 0d ago → +4.0
+maintenance: 100 commits in 90d → +3.0
+maintenance: 10 releases in 90d → +3.0
+popularity: 26009 stars → 9
+popularity bonus: 9.0 stars/day → +1.0
+governance: 100 contributors → +5.0
+governance: 2088 open issues (backlog risk) → +0
+governance: 8.0 year(s) old → +2.0 stability
+license_fit: apache-2.0 (no constraint) → 10.0</div>
+          </details></td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td><a href="https://github.com/confident-ai/deepeval" target="_blank" rel="noopener">confident-ai/deepeval</a></td>
+          <td class="num"><span class="grade-good">9.15</span></td>
+          <td class="num">9.0</td>
+          <td class="num">9.0</td>
+          <td class="num">9.0</td>
+          <td class="num">10.0</td>
+          <td class="num">15,552</td>
+          <td class="num">0d ago</td>
+          <td>apache-2.0</td>
+        </tr>
+        <tr>
+          <td colspan="10"><details><summary class="legend">show rationale</summary>
+            <div class="rationale">maintenance: pushed 0d ago → +4.0
+maintenance: 100 commits in 90d → +3.0
+maintenance: 1 releases in 90d → +2.0
+popularity: 15552 stars → 8
+popularity bonus: 15.3 stars/day → +1.0
+governance: 100 contributors → +5.0
+governance: 265 open issues (manageable) → +2.0
+governance: 2.8 year(s) old → +2.0 stability
+license_fit: apache-2.0 (no constraint) → 10.0</div>
+          </details></td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td><a href="https://github.com/openai/evals" target="_blank" rel="noopener">openai/evals</a></td>
+          <td class="num"><span class="grade-good">7.3</span></td>
+          <td class="num">2.0</td>
+          <td class="num">9.0</td>
+          <td class="num">10.0</td>
+          <td class="num">10.0</td>
+          <td class="num">18,492</td>
+          <td class="num">35d ago</td>
+          <td>other</td>
+        </tr>
+        <tr>
+          <td colspan="10"><details><summary class="legend">show rationale</summary>
+            <div class="rationale">maintenance: pushed 35d ago → +2.0
+popularity: 18492 stars → 8
+popularity bonus: 15.3 stars/day → +1.0
+governance: 100 contributors → +5.0
+governance: 200 open issues (healthy) → +3.0
+governance: 3.3 year(s) old → +2.0 stability
+license_fit: other (no constraint) → 10.0</div>
+          </details></td>
+        </tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <h3>Use this in your project</h3>
+    <p>To run this evaluation locally with your own constraints:</p>
+    <div class="install">exo recommend calibration --weight-profile reliable --license no-agpl</div>
+    <p>The CLI supports four weight profiles: <code>default</code> (balanced), <code>reliable</code> (favor maintenance + governance), <code>cutting-edge</code> (favor popularity), <code>commercial</code> (favor license fit).</p>
+  </div>
+
+  <footer>
+    <p><a href="../data.json">data.json</a> · <a href="../index.html">all capabilities</a> · <a href="https://github.com/MGBuilds9/exo">exo on GitHub</a></p>
+  </footer>
+</div>
+</body>
+</html>
