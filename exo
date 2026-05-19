@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 import click
 
-from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd
+from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd, execute_cmd
 
 VERSION = "0.1.0"
 
@@ -102,6 +102,19 @@ def recommend_command(capability: str, license_constraint: str, weight_profile: 
     """
     recommend_cmd.run(capability=capability, license_constraint=license_constraint,
                       weight_profile=weight_profile, as_json=as_json, out_dir=out_dir)
+
+
+@main.command("execute")
+@click.argument("plan_path", type=click.Path(exists=True))
+@click.option("--out", "out_dir", type=click.Path(), default=None, help="Output directory for the session record.")
+@click.option("--auto", is_flag=True, help="Auto-run SAFE commands without prompting (CAUTION/DESTRUCTIVE still gated).")
+@click.option("--allow-caution", is_flag=True, help="With --auto, also auto-run CAUTION-class commands.")
+@click.option("--max-steps", type=int, default=10, help="Maximum number of steps to walk in this session.")
+def execute_command(plan_path: str, out_dir: str | None,
+                    auto: bool, allow_caution: bool, max_steps: int) -> None:
+    """Walk a solve plan with consent gates. Safe-by-default; destructive ops double-confirmed."""
+    execute_cmd.run(plan_path=plan_path, out_dir=out_dir,
+                    auto=auto, allow_caution=allow_caution, max_steps=max_steps)
 
 
 if __name__ == "__main__":
