@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 import click
 
-from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd
+from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd
 
 VERSION = "0.1.0"
 
@@ -69,6 +69,39 @@ def report_command(run_dir: str) -> None:
 def doctor_command(extra_hosts: tuple[str, ...], as_json: bool) -> None:
     """Scan local hardware + services + cloud accounts; recommend a personalized stack."""
     doctor_cmd.run(extra_hosts=list(extra_hosts), as_json=as_json)
+
+
+@main.command("solve")
+@click.argument("source_path", type=click.Path(exists=True))
+@click.option("--top", "top_n", type=int, default=5, help="Number of top issues to plan for.")
+@click.option("--out", "out_dir", type=click.Path(), default=None, help="Output directory for the plan markdown.")
+@click.option("--non-interactive", is_flag=True, help="Skip clarifying-question prompts; just produce the plan.")
+@click.option("--no-recommend", is_flag=True, help="Skip the auto-invocation of `exo recommend` for capability hints.")
+def solve_command(source_path: str, top_n: int, out_dir: str | None,
+                  non_interactive: bool, no_recommend: bool) -> None:
+    """Read a data source, identify issues, propose action plan."""
+    solve_cmd.run(source_path=source_path, top_n=top_n, out_dir=out_dir,
+                  interactive=not non_interactive, invoke_recommend=not no_recommend)
+
+
+@main.command("recommend")
+@click.argument("capability")
+@click.option("--license", "license_constraint",
+              type=click.Choice(["any", "permissive", "no-agpl", "no-copyleft"]),
+              default="any", help="License constraint for candidates.")
+@click.option("--weight-profile",
+              type=click.Choice(["default", "reliable", "cutting-edge", "commercial"]),
+              default="default", help="Scoring weights.")
+@click.option("--json", "as_json", is_flag=True, help="Emit machine-readable JSON.")
+@click.option("--out", "out_dir", type=click.Path(), default=None, help="Persist a snapshot of the ranking.")
+def recommend_command(capability: str, license_constraint: str, weight_profile: str,
+                      as_json: bool, out_dir: str | None) -> None:
+    """Score and rank candidate repos for a capability using live GitHub data.
+
+    Use 'list' as the capability to see all available capability slugs.
+    """
+    recommend_cmd.run(capability=capability, license_constraint=license_constraint,
+                      weight_profile=weight_profile, as_json=as_json, out_dir=out_dir)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,134 @@
+# Capability taxonomy for `exo recommend`.
+# The LLM doesn't pick repos. We do, with live data + scoring.
+# Candidate pools are curated. Quarterly refresh expected via PRs.
+#
+# Schema:
+#   capabilities:
+#     <slug>:
+#       description: one-line human description
+#       category: memory | observability | runtime | hitl | calibration | vector-db | graph-db | ...
+#       candidate_pool: [<owner/name>, ...]
+#       refresh_cadence: 30d | 90d
+#       license_hard_requirements: optional list — drop candidates outside these
+#       notes: optional context for the recommendation output
+
+capabilities:
+
+  memory-tier:
+    description: "Long-term semantic + episodic memory for AI agents"
+    category: memory
+    candidate_pool:
+      - mem0ai/mem0
+      - cpacker/MemGPT
+      - letta-ai/letta
+      - topoteretes/cognee
+      - getzep/zep
+      - microsoft/graphrag
+      - pgvector/pgvector
+      - run-llama/llama_index
+    refresh_cadence: 30d
+    notes: |
+      Pick depends on whether you need just vector recall (mem0 / pgvector),
+      paged long-context (letta / MemGPT), graph + vector hybrid (cognee /
+      graphrag), or framework integration (llama_index).
+
+  observability:
+    description: "LLM call tracing, eval, cost tracking, agent debugging"
+    category: observability
+    candidate_pool:
+      - langfuse/langfuse
+      - Arize-ai/phoenix
+      - mlflow/mlflow
+      - traceloop/openllmetry
+      - laminar-ai/laminar
+      - lunary-ai/lunary
+      - helicone/helicone
+    refresh_cadence: 30d
+    notes: |
+      Self-hostable options: langfuse, phoenix, mlflow, lunary, helicone.
+      OTel-native (vendor-neutral instrumentation): openllmetry.
+
+  multi-agent-runtime:
+    description: "Orchestration of multiple LLM agents working together"
+    category: runtime
+    candidate_pool:
+      - langchain-ai/langgraph
+      - microsoft/autogen
+      - crewAIInc/crewAI
+      - agno-agi/agno
+      - camel-ai/camel
+      - camel-ai/oasis
+      - openai/swarm
+      - phidatahq/phidata
+    refresh_cadence: 30d
+
+  hitl-approval:
+    description: "Human-in-the-loop consent gates for agent execution"
+    category: hitl
+    candidate_pool:
+      - HumanLayer/humanlayer
+      - agno-agi/agno
+      - langchain-ai/langgraph
+    refresh_cadence: 60d
+    notes: |
+      agno + langgraph have HITL built-in via approval decorators / breakpoints;
+      humanlayer is orchestration-agnostic (Slack/Email/Discord routing).
+
+  calibration:
+    description: "Prompt optimization + LLM output evaluation against ground truth"
+    category: calibration
+    candidate_pool:
+      - stanfordnlp/dspy
+      - promptfoo/promptfoo
+      - mlflow/mlflow
+      - openai/evals
+      - confident-ai/deepeval
+    refresh_cadence: 60d
+
+  vector-db:
+    description: "Vector database for semantic search / RAG"
+    category: vector-db
+    candidate_pool:
+      - qdrant/qdrant
+      - chroma-core/chroma
+      - pgvector/pgvector
+      - weaviate/weaviate
+      - milvus-io/milvus
+      - lancedb/lancedb
+    refresh_cadence: 30d
+
+  graph-db:
+    description: "Graph database for knowledge / dependency reasoning"
+    category: graph-db
+    candidate_pool:
+      - neo4j/neo4j
+      - memgraph/memgraph
+      - apache/age
+      - HKUDS/LightRAG
+    refresh_cadence: 60d
+
+  local-llm-runtime:
+    description: "Run LLMs on your own hardware"
+    category: runtime
+    candidate_pool:
+      - ollama/ollama
+      - ggerganov/llama.cpp
+      - vllm-project/vllm
+      - mlc-ai/mlc-llm
+      - LMStudio-ai/lmstudio.js
+    refresh_cadence: 60d
+
+  agent-memory-router:
+    description: "Decide where (vector / graph / SQL) a query should retrieve from"
+    category: memory
+    candidate_pool:
+      - mem0ai/mem0
+      - microsoft/graphrag
+      - HKUDS/LightRAG
+      - run-llama/llama_index
+    refresh_cadence: 60d
+    notes: |
+      Most "memory routers" are framework-internal. These projects expose
+      the routing logic in different shapes — pick based on whether you
+      want declarative routing rules (graphrag), LLM-classifier routing
+      (llama_index), or implicit auto-routing (mem0 / lightrag).

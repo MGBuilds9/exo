@@ -2,10 +2,11 @@
 
 # exo
 
-**Multi-actor LLM simulation engine. YAML-driven, local-first, vendor-neutral.**
-**`exo doctor` scans your hardware + services; `exo architect` designs a sim in 12 questions; `exo run` drives the conversation.**
+**An AI copilot for your infrastructure: reads what's there, asks what matters, picks the right tools with live data, and walks you through the fix.**
 
-*v0.1 — designed for 3–12 actor rehearsal sims. Apache 2.0.*
+**`exo doctor` scans your machine. `exo solve` diagnoses your data. `exo recommend` picks tools using live GitHub signals — not AI vibes. `exo architect` designs multi-actor simulations. `exo run` drives them.**
+
+*v0.2 — local-first, vendor-neutral, Apache 2.0.*
 
 [![Docker](https://img.shields.io/badge/Docker-compose%20up-2496ED?style=flat-square&logo=docker&logoColor=white)](#quickstart)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](./LICENSE)
@@ -15,24 +16,25 @@
 
 ---
 
-> **What if you could simulate the next quarter of your sales pipeline before working on it?**
-> **The likely reactions to a press release before publishing it?**
-> **A construction site's stakeholder dynamics before a contract dispute lands?**
+> **What if your AI didn't just read your topology — it asked you the right clarifying questions, proposed the cheapest hypothesis to test first, and picked the right monitoring tool with live data showing why this repo and not that one?**
 >
-> The infrastructure for these simulations exists ([CAMEL-AI](https://github.com/camel-ai/camel), [OASIS](https://github.com/camel-ai/oasis), [MiroFish](https://github.com/nikmcfly/MiroFish-Offline)). What doesn't exist is the **opinionated bundle that lets you stand one up for your domain in an afternoon, without renting it from a vendor.**
+> That's what `exo solve` + `exo recommend` do. With `exo run` as the rehearsal mode for when you want to simulate the conversation before you have it.
 >
-> That's `exo`.
+> Everything is local-first. The LLM router routes to Claude OAuth, Ollama Cloud, or your local Ollama — your call, your credentials. The recommendation engine uses live GitHub data, not training-time intuition.
 
 ## What it is
 
-`exo` is an opinionated starter kit for multi-agent simulation engines. It bundles:
+`exo` is a CLI toolkit for AI-assisted infrastructure work. Five subcommands compose into one loop:
 
-- **Memory architecture** — Qdrant (vector) + Neo4j (graph) + Postgres (structured) defined in `compose.yaml` as profile-gated services. **You opt them in manually**: `docker compose --profile graph up` will start Neo4j alongside the runner. There is no auto-detection from `domain.yaml`; if you declare a memory tier, you also pass the matching profile flag at start time. (v0.2 may automate this; v0.1 is manual.)
-- **LLM router** — Routes requests between Claude OAuth (frontier), Ollama Cloud (cloud OSS), and local Ollama / BERTHA / llama-swap (local OSS). Pick one of these in your environment — you supply the credentials (`OLLAMA_API_KEY`, Claude Code OAuth login, or a local Ollama at `LOCAL_OLLAMA_BASE_URL`). exo does not ship any keys; you choose which provider you trust.
-- **Multi-agent runtime** — A vendor-neutral turn-loop in pure Python (~600 lines). Each turn, each actor speaks once via its configured LLM; conversation state is the shared context. Not built on CAMEL-AI or OASIS in v0.1, though the design is informed by what those projects do well. v0.2 will add CAMEL-AI integration as an opt-in runtime.
-- **`exo architect`** — Interactive CLI that walks you through the 12 design decisions for a new multi-agent simulation: actors, ontology, scenarios, memory tier, LLM tier. Outputs a complete `domain.yaml` + ready-to-run docker setup.
-- **Template library** — Pre-built simulations for common domains: social-media reaction, sales pipeline, wedding-vendor coordination, healthcare triage, construction stakeholder, software incident response.
-- **YAML-first config** — Every aspect of a simulation (actors, personas, scenarios, memory routing, output schemas) is declared in one file. No hidden Python. Version it. Diff it. Share it.
+1. **`exo doctor`** — Scans your machine: Ollama, Qdrant, Neo4j, Postgres, Docker, Claude CLI, cloud account env vars. Recommends concrete backends from what's actually there.
+2. **`exo solve <data-source>`** — Reads HTML topology / JSON / YAML / text. Extracts issues. Ranks by impact × actionability. Outputs a structured plan: diagnosis → ranked hypotheses (cheapest test first) → first concrete action (with consent gate) → verification → clarifying questions to ask before going deeper.
+3. **`exo recommend <capability>`** — Scores candidate repos for a capability (memory tier, observability, HITL, multi-agent runtime, etc.) using live GitHub data: stars-per-day velocity, last-commit recency, contributor count, release cadence, license fit. Produces a ranked list with the data backing each rank. The LLM never decides which repo is best. The data does.
+4. **`exo architect`** — Walks 12 questions for designing a multi-actor simulation, with hardware-aware backend selection. Outputs `domain.yaml` + `scenario.yaml`.
+5. **`exo run`** — Drives the simulation: each actor speaks in turn via its configured LLM, signals tracked per turn, transcript + summary written.
+
+**solve + recommend = the action loop.** **architect + run = the rehearsal loop.** **doctor = the foundation under both.**
+
+The recommendation engine specifically addresses a problem most AI tools have: when an LLM suggests a repo, it might be picking what it remembers from training, not what's actually best today. `exo recommend` pulls live data and shows you the scoring rationale.
 
 ## Why does this exist?
 
