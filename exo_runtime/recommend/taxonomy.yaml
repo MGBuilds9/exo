@@ -40,13 +40,15 @@ capabilities:
       - Arize-ai/phoenix
       - mlflow/mlflow
       - traceloop/openllmetry
-      - laminar-ai/laminar
-      - lunary-ai/lunary
       - helicone/helicone
+      - Agenta-AI/agenta
     refresh_cadence: 30d
     notes: |
-      Self-hostable options: langfuse, phoenix, mlflow, lunary, helicone.
+      Self-hostable options: langfuse, phoenix, mlflow, helicone, agenta.
       OTel-native (vendor-neutral instrumentation): openllmetry.
+      [v0.2.1: removed `laminar-ai/laminar` and `lunary-ai/lunary` — no
+       canonical public GitHub repo (laminar.sh has no public repo;
+       lunary's only public repo is the python client, not the platform).]
 
   multi-agent-runtime:
     description: "Orchestration of multiple LLM agents working together"
