@@ -263,6 +263,30 @@ class MemoryStore:
     def outcome_count(self) -> int:
         return int(self.conn.execute("SELECT COUNT(*) FROM outcomes").fetchone()[0])
 
+    def prior_outcomes_for_component(self, component_type: str,
+                                     exclude_issue: Optional[str] = None,
+                                     limit: int = 5) -> list[dict]:
+        """Cross-issue recall by component type.
+
+        'I'm planning for an lxc-class issue. Here's what other lxc outcomes
+        looked like recently.'
+        """
+        if exclude_issue:
+            rows = self.conn.execute("""
+                SELECT issue_name, confirmed_root_cause, fix_applied, recorded_at
+                FROM outcomes
+                WHERE component_type = ? AND issue_name != ?
+                ORDER BY recorded_at DESC LIMIT ?
+            """, (component_type, exclude_issue, limit)).fetchall()
+        else:
+            rows = self.conn.execute("""
+                SELECT issue_name, confirmed_root_cause, fix_applied, recorded_at
+                FROM outcomes
+                WHERE component_type = ?
+                ORDER BY recorded_at DESC LIMIT ?
+            """, (component_type, limit)).fetchall()
+        return [dict(r) for r in rows]
+
     def all_sessions(self, limit: int = 50) -> list[dict]:
         rows = self.conn.execute("""
             SELECT session_id, plan_source, started_at, ended_at, resolution,

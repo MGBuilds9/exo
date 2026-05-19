@@ -124,52 +124,51 @@ def run(*, source_path: str, top_n: int = 5,
     # Render plan inline
     console.print()
     console.print(Panel.fit("Per-issue diagnostic plan", border_style="cyan"))
-    # Pull prior negative results once per session
+    # Pull prior negative results + cross-issue priors once, then close cleanly.
+    mem = None
     try:
         mem = MemoryStore()
     except Exception:
-        mem = None
+        pass
 
-    for i, ip in enumerate(plan.plans, 1):
-        console.print(f"\n[bold cyan]{i}. {ip.issue.name}[/bold cyan] · severity {ip.issue.severity} · {ip.issue.issue_type}")
+    try:
+        for i, ip in enumerate(plan.plans, 1):
+            console.print(f"\n[bold cyan]{i}. {ip.issue.name}[/bold cyan] · severity {ip.issue.severity} · {ip.issue.issue_type}")
 
+            if mem is not None:
+                regrets = mem.tried_and_failed(
+                    ip.issue.name, component_type=ip.issue.component_type, limit=5)
+                priors = []
+                if ip.issue.component_type:
+                    priors = mem.prior_outcomes_for_component(
+                        ip.issue.component_type, exclude_issue=ip.issue.name, limit=3)
+                if regrets:
+                    console.print(f"  [bold yellow]⚠ Previously tried and didn't work:[/bold yellow]")
+                    for r in regrets[:3]:
+                        console.print(f"    - {r['what_was_tried']}  [dim]({r['why_it_didnt_work']})[/dim]")
+                if priors:
+                    console.print(f"  [bold green]Prior {ip.issue.component_type} outcomes:[/bold green]")
+                    for p in priors:
+                        console.print(f"    - {p['issue_name']}: {p['confirmed_root_cause']}")
+
+            console.print(f"  [italic]Diagnosis:[/italic] {ip.diagnosis[:300]}")
+            console.print(f"  [italic]Hypotheses:[/italic]")
+            for h in ip.hypotheses:
+                console.print(f"    - {h}")
+            console.print(f"  [italic]First action (needs your consent):[/italic] {ip.first_action.description}")
+            if ip.first_action.command:
+                console.print(f"    [yellow]{ip.first_action.command}[/yellow]")
+            console.print(f"  [italic]Clarifying questions:[/italic]")
+            for q in ip.clarifying_questions:
+                console.print(f"    [dim]?[/dim] {q}")
+            if ip.recommended_capability:
+                console.print(
+                    f"  [italic]Tool suggestion:[/italic] [bold]{ip.recommended_capability}[/bold] "
+                    f"[dim](would call: exo recommend {ip.recommended_capability})[/dim]"
+                )
+    finally:
         if mem is not None:
-            regrets = mem.tried_and_failed(
-                ip.issue.name, component_type=ip.issue.component_type, limit=5)
-            priors = []
-            # Also surface prior outcomes by component type
-            if ip.issue.component_type:
-                rows = mem.conn.execute("""
-                    SELECT issue_name, confirmed_root_cause, fix_applied, recorded_at
-                    FROM outcomes
-                    WHERE component_type = ? AND issue_name != ?
-                    ORDER BY recorded_at DESC LIMIT 3
-                """, (ip.issue.component_type, ip.issue.name)).fetchall()
-                priors = [dict(r) for r in rows]
-            if regrets:
-                console.print(f"  [bold yellow]⚠ Previously tried and didn't work:[/bold yellow]")
-                for r in regrets[:3]:
-                    console.print(f"    - {r['what_was_tried']}  [dim]({r['why_it_didnt_work']})[/dim]")
-            if priors:
-                console.print(f"  [bold green]Prior {ip.issue.component_type} outcomes:[/bold green]")
-                for p in priors:
-                    console.print(f"    - {p['issue_name']}: {p['confirmed_root_cause']}")
-
-        console.print(f"  [italic]Diagnosis:[/italic] {ip.diagnosis[:300]}")
-        console.print(f"  [italic]Hypotheses:[/italic]")
-        for h in ip.hypotheses:
-            console.print(f"    - {h}")
-        console.print(f"  [italic]First action (needs your consent):[/italic] {ip.first_action.description}")
-        if ip.first_action.command:
-            console.print(f"    [yellow]{ip.first_action.command}[/yellow]")
-        console.print(f"  [italic]Clarifying questions:[/italic]")
-        for q in ip.clarifying_questions:
-            console.print(f"    [dim]?[/dim] {q}")
-        if ip.recommended_capability:
-            console.print(
-                f"  [italic]Tool suggestion:[/italic] [bold]{ip.recommended_capability}[/bold] "
-                f"[dim](would call: exo recommend {ip.recommended_capability})[/dim]"
-            )
+            mem.close()
 
     # Persist plan
     if out_dir is None:
