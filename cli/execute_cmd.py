@@ -35,6 +35,7 @@ from exo_runtime.execute.session import (
 from exo_runtime.execute.runner import CommandResult
 from exo_runtime.execute.parser import ObservedSignal
 from exo_runtime.execute.safety import is_runnable_without_explicit_consent
+from exo_runtime.memory import MemoryStore, tried_and_failed
 
 console = Console()
 
@@ -286,7 +287,7 @@ def run(*, plan_path: str, out_dir: str | None = None,
         finalize(session, "completed",
                  f"Walked through {len(session.steps)} step(s) from the plan.")
 
-    # Persist
+    # Persist to disk artifacts
     if out_dir is None:
         out_dir = str(p_in.parent / "exo-execute")
     out_path = Path(out_dir)
@@ -295,6 +296,17 @@ def run(*, plan_path: str, out_dir: str | None = None,
     json_path = out_path / f"{session.session_id}.json"
     write_session_md(session, md_path)
     write_session_json(session, json_path)
+
+    # Persist to memory store (for recall, calibration, negative-results)
+    try:
+        from dataclasses import asdict
+        with MemoryStore() as store:
+            store.record_session(asdict(session))
+        memory_status = "[green]session indexed to memory store[/green]"
+    except Exception as e:
+        memory_status = f"[yellow]memory store write failed: {e}[/yellow]"
+
     console.print(f"\n[bold green]Session complete — resolution: {session.resolution}[/bold green]")
     console.print(f"  Markdown: [cyan]{md_path}[/cyan]")
     console.print(f"  JSON:     [cyan]{json_path}[/cyan]")
+    console.print(f"  Memory:   {memory_status}")

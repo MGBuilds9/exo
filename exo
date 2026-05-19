@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 import click
 
-from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd, execute_cmd
+from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd, execute_cmd, memory_cmd
 
 VERSION = "0.1.0"
 
@@ -115,6 +115,9 @@ def execute_command(plan_path: str, out_dir: str | None,
     """Walk a solve plan with consent gates. Safe-by-default; destructive ops double-confirmed."""
     execute_cmd.run(plan_path=plan_path, out_dir=out_dir,
                     auto=auto, allow_caution=allow_caution, max_steps=max_steps)
+
+
+main.add_command(memory_cmd.memory)
 
 
 if __name__ == "__main__":
