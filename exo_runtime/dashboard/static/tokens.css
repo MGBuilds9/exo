@@ -1,0 +1,161 @@
+/* Design tokens — single source of truth, mirrors DESIGN.md.
+   View-aware values are set per-view via body.view-topology / body.view-pulse. */
+
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Recursive:wght@300;400;500;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  /* Shared brand chips — stable across views */
+  --proxmox: #E57000;
+  --docker: #2496ED;
+  --pi: #C51A4A;
+  --windows: #00A4EF;
+  --baremetal: #94A3B8;
+
+  /* Type roles */
+  --font-display: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-mono: 'Recursive', 'Recursive Mono', ui-monospace, monospace;
+  --font-serif: 'PT Serif', Georgia, serif;
+
+  /* Spacing scale (4px base) */
+  --space-2xs: 2px;
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Motion */
+  --motion-hover: 120ms;
+  --motion-panel: 180ms;
+  --motion-toggle: 220ms;
+  --motion-morph: 260ms;
+}
+
+/* TOPOLOGY view tokens — light ops-room */
+body.view-topology {
+  --surface:    #F4F1EA;
+  --surface-2:  #FBF9F2;
+  --ink:        #172026;
+  --muted:      #6B7682;
+  --grid:       #D8D1C4;
+  --selected:   #005F73;
+  --proposed:   #CA6702;
+  --fault:      #AE2012;
+  --healthy:    #94A55C;
+  --warn:       #E8A04A;
+}
+
+/* PULSE view tokens — dark organic */
+body.view-pulse {
+  --surface:    #0c0a09;
+  --surface-2:  #08070b;
+  --ink:        #fafaf9;
+  --muted:      #5c544c;
+  --grid:       #181c20;
+  --selected:   #4ade80;
+  --proposed:   #4ade80;
+  --fault:      #d97757;
+  --healthy:    #4ade80;
+  --warn:       #f59e0b;
+}
+
+/* Universal resets */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+a { color: var(--selected); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Topbar — shared chrome */
+.topbar {
+  height: 56px;
+  border-bottom: 1px solid var(--grid);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-lg);
+  gap: var(--space-lg);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.brand {
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.brand::after {
+  content: '·';
+  margin: 0 var(--space-sm);
+  color: var(--muted);
+}
+.crumbs {
+  color: var(--muted);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+}
+.crumbs strong { color: var(--ink); font-weight: 500; }
+.topbar-spacer { flex: 1; }
+.topbar-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.topbar-meta strong { color: var(--ink); font-weight: 500; }
+
+/* View toggle */
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--grid);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.view-toggle a {
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: transparent;
+  text-decoration: none;
+  transition: color var(--motion-hover) ease-out, background var(--motion-hover) ease-out;
+  border-right: 1px solid var(--grid);
+}
+.view-toggle a:last-child { border-right: none; }
+.view-toggle a:hover { color: var(--ink); }
+.view-toggle a.active {
+  color: var(--surface);
+  background: var(--selected);
+}
+
+/* Brand chips (host type) */
+.chip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 1px 6px;
+  border: 1px solid currentColor;
+  border-radius: 1px;
+  text-transform: uppercase;
+  margin-right: var(--space-xs);
+  vertical-align: middle;
+}
+.chip-proxmox { color: var(--proxmox); }
+.chip-gpu     { color: var(--healthy); }
+.chip-pin     { color: var(--muted); }
+
+/* Tabular data */
+[data-tabular] { font-variant-numeric: tabular-nums; font-family: var(--font-mono); }

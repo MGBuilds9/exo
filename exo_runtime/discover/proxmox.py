@@ -219,10 +219,18 @@ def probe_proxmox_cluster(seed_hosts: list[str],
                     notes=cfg.get("description", "")[:120],
                 ))
 
-        # If we got data from this seed, no need to keep probing others (they're in same cluster)
-        if resources and hosts:
-            if verbose:
-                print(f"    discovered {len(hosts)} hosts + {len(workloads)} workloads via {seed}")
-            break
+        if verbose and resources:
+            print(f"    {seed}: {sum(1 for r in resources if r.get('type') == 'node')} node(s), "
+                  f"{sum(1 for r in resources if r.get('type') in ('lxc','qemu'))} workload(s)")
 
-    return list(hosts.values()), workloads
+    # Dedupe workloads (in case a clustered seed returned overlap)
+    seen_ids: set[tuple[str, str]] = set()
+    deduped_workloads = []
+    for w in workloads:
+        key = (w.workload_id, w.current_host)
+        if key in seen_ids:
+            continue
+        seen_ids.add(key)
+        deduped_workloads.append(w)
+
+    return list(hosts.values()), deduped_workloads

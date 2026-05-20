@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 import click
 
-from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd, execute_cmd, memory_cmd, plan_cmd, discover_cmd
+from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd, execute_cmd, memory_cmd, plan_cmd, discover_cmd, dashboard_cmd
 
 VERSION = "0.1.0"
 
@@ -122,6 +122,19 @@ def execute_command(plan_path: str, out_dir: str | None,
 
 
 main.add_command(memory_cmd.memory)
+
+
+@main.command("dashboard")
+@click.argument("fleet_path", type=click.Path(exists=True))
+@click.option("--port", type=int, default=8080, help="Port to bind.")
+@click.option("--host", default="127.0.0.1", help="Bind address.")
+@click.option("--no-open", "no_open_browser", is_flag=True,
+              help="Don't auto-open the browser.")
+def dashboard_command(fleet_path: str, port: int, host: str,
+                      no_open_browser: bool) -> None:
+    """Launch the exo dashboard. Topology + Pulse views per DESIGN.md."""
+    dashboard_cmd.run(fleet_path=fleet_path, port=port, host=host,
+                      open_browser=not no_open_browser)
 
 
 @main.command("discover")

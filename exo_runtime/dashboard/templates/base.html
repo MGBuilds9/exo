@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}exo · {{ vm.name }}{% endblock %}</title>
+  <link rel="stylesheet" href="/static/tokens.css">
+  {% block styles %}{% endblock %}
+</head>
+<body class="view-{{ view }}">
+  <header class="topbar">
+    <div class="brand">exo</div>
+    <div class="crumbs">fleet · <strong>{{ vm.name }}</strong> · {{ view }}</div>
+    <div class="topbar-spacer"></div>
+    <nav class="view-toggle" aria-label="View">
+      <a href="/{% if vm.fleet_path %}?fleet={{ vm.fleet_path | urlencode }}&strategy={{ vm.strategy }}{% endif %}"
+         class="{{ 'active' if view == 'topology' else '' }}">Topology</a>
+      <a href="/pulse{% if vm.fleet_path %}?fleet={{ vm.fleet_path | urlencode }}&strategy={{ vm.strategy }}{% endif %}"
+         class="{{ 'active' if view == 'pulse' else '' }}">Pulse</a>
+    </nav>
+    <div class="topbar-meta">
+      <strong>{{ vm.hosts | length }}</strong> hosts ·
+      <strong>{{ vm.workloads | length }}</strong> workloads ·
+      <strong>{{ vm.moves | length }}</strong> proposed moves ·
+      strategy <strong>{{ vm.strategy }}</strong>
+    </div>
+  </header>
+
+  {% block content %}{% endblock %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

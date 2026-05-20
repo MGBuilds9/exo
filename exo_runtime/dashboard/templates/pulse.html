@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block styles %}<link rel="stylesheet" href="/static/pulse.css">{% endblock %}
+
+{% block content %}
+{# Pulse view — force-directed-feeling layout. For V1 we compute deterministic
+   polar positions per host based on stress (high-stress hosts are anchored,
+   low-stress hosts orbit). Real force-directed comes in V2. #}
+
+{# Compute positions: hosts arranged around the canvas center; service orbits per host. #}
+{% set canvas_w = 1600 %}
+{% set canvas_h = 800 %}
+{% set host_radius = 360 %}
+{% set num_hosts = vm.hosts | length %}
+
+<main class="canvas">
+  <div class="atmos atmos-crit" style="top: 18%; left: 16%;"></div>
+  <div class="atmos atmos-calm" style="bottom: 14%; right: 14%;"></div>
+  <div class="atmos atmos-mid" style="top: 55%; left: 45%;"></div>
+
+  <svg class="graph" viewBox="0 0 {{ canvas_w }} {{ canvas_h }}" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <radialGradient id="halo-crit" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="var(--fault)" stop-opacity="0.45"/>
+        <stop offset="100%" stop-color="var(--fault)" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="halo-calm" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="var(--healthy)" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="var(--healthy)" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="halo-mid" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="var(--muted)" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="var(--muted)" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    {# Compute host positions in a row #}
+    {% set hosts_with_pos = [] %}
+    {% for h in vm.hosts %}
+      {% set hx = (loop.index0 + 1) * canvas_w / (num_hosts + 1) %}
+      {% set hy = canvas_h * 0.5 %}
+      {% set _ = hosts_with_pos.append({'h': h, 'x': hx, 'y': hy, 'idx': loop.index0}) %}
+    {% endfor %}
+
+    {# Host halos and rings #}
+    {% for hp in hosts_with_pos %}
+      {% set h = hp.h %}
+      {% set halo = 'halo-crit' if h.status == 'red' else ('halo-calm' if h.status == 'green' else 'halo-mid') %}
+      {% set ring_class = 'host-ring-crit' if h.status == 'red' else 'host-ring-calm' %}
+      {% set ring_color = 'var(--fault)' if h.status == 'red' else ('var(--healthy)' if h.status == 'green' else 'var(--muted)') %}
+      <circle cx="{{ hp.x }}" cy="{{ hp.y }}" r="180" fill="url(#{{ halo }})"/>
+      <circle cx="{{ hp.x }}" cy="{{ hp.y }}" r="78" fill="none" stroke="{{ ring_color }}" stroke-width="1.4" opacity="0.55" class="{{ ring_class }}"/>
+      <circle cx="{{ hp.x }}" cy="{{ hp.y }}" r="58" fill="rgba(214,207,196,0.04)" stroke="{{ ring_color }}" stroke-width="0.6"/>
+    {% endfor %}
+
+    {# Service satellites — orbital positions per host #}
+    {% for hp in hosts_with_pos %}
+      {% set h = hp.h %}
+      {% set n = h.workloads | length %}
+      {% for w in h.workloads %}
+        {% set angle = (loop.index0 * 360.0 / n) %}
+        {% set orbit_r = 130 + ((loop.index0 % 3) * 28) %}
+        {% set rad = angle * 3.14159 / 180 %}
+        {% set sx = hp.x + orbit_r * (rad | float) | round(0) %}
+        {# Use a precomputed cos/sin via Python's math is not directly available in Jinja; use SVG transforms #}
+        <g transform="translate({{ hp.x }} {{ hp.y }}) rotate({{ angle }})">
+          <circle cx="0" cy="-{{ orbit_r }}" r="{{ 5 + (w.ram_mb // 4096) }}"
+                  fill="rgba(214,207,196,0.14)" stroke="var(--ink)" stroke-opacity="0.4" stroke-width="0.5"/>
+          <line x1="0" y1="0" x2="0" y2="-{{ orbit_r - 8 }}" stroke="var(--muted)" stroke-width="0.4" opacity="0.4"/>
+        </g>
+      {% endfor %}
+
+      {# Proposed (ghost) workloads — same orbit family, but mint-dashed #}
+      {% for pw in h.proposed_workloads %}
+        {% set angle = ((h.workloads | length + loop.index0) * 360.0 / ((h.workloads | length) + (h.proposed_workloads | length) + 1)) %}
+        {% set orbit_r = 165 + ((loop.index0 % 2) * 18) %}
+        <g transform="translate({{ hp.x }} {{ hp.y }}) rotate({{ angle }})">
+          <circle cx="0" cy="-{{ orbit_r }}" r="6"
+                  fill="rgba(74,222,128,0.18)" stroke="var(--healthy)" stroke-width="0.8" stroke-dasharray="3,2"/>
+        </g>
+      {% endfor %}
+    {% endfor %}
+
+    {# Migration ghost-particles drifting between hosts #}
+    {% for m in vm.moves[:9] %}
+      {% set from_host = (hosts_with_pos | selectattr('h.name', 'equalto', m.from) | first) %}
+      {% set to_host = (hosts_with_pos | selectattr('h.name', 'equalto', m.to) | first) %}
+      {% if from_host and to_host %}
+      <circle cx="{{ from_host.x }}" cy="{{ from_host.y - 90 - loop.index * 12 }}" r="5"
+              fill="rgba(74,222,128,0.2)" stroke="var(--healthy)" stroke-width="0.6">
+        <animate attributeName="cx"
+                 values="{{ from_host.x }};{{ to_host.x }}"
+                 dur="{{ 3.2 + (loop.index0 % 4) * 0.3 }}s" repeatCount="indefinite"/>
+        <animate attributeName="cy"
+                 values="{{ from_host.y - 90 - loop.index * 12 }};{{ to_host.y - 90 - loop.index * 12 }}"
+                 dur="{{ 3.2 + (loop.index0 % 4) * 0.3 }}s" repeatCount="indefinite"/>
+      </circle>
+      {% endif %}
+    {% endfor %}
+  </svg>
+
+  {# Host labels — positioned over their nodes via percentage #}
+  {% for hp in hosts_with_pos %}
+    {% set h = hp.h %}
+    <div class="host-label" style="left: {{ (hp.x / canvas_w * 100) }}%; top: {{ (hp.y / canvas_h * 100) }}%;">
+      {{ h.name }}
+      <small>
+        {% if h.status == 'red' %}<span class="badge red">SUFFERING · {{ h.ram_used_pct }}% RAM</span>
+        {% elif h.status == 'green' %}<span class="badge green">SPACIOUS · {{ h.ram_used_pct }}% RAM</span>
+        {% else %}<span class="badge calm">STABLE · {{ h.ram_used_pct }}% RAM</span>
+        {% endif %}
+      </small>
+    </div>
+  {% endfor %}
+
+  {# Editorial annotations — serif italic pull-quotes #}
+  {% set red_host = (vm.hosts | selectattr('status', 'equalto', 'red') | first) %}
+  {% set green_host = (vm.hosts | selectattr('status', 'equalto', 'green') | first) %}
+
+  {% if red_host %}
+  <div class="anno" style="top: 120px; left: 40px;">
+    <em>{{ red_host.workloads | length }} services</em> orbit {{ red_host.name }}.
+    The cluster is so tight, <span class="crit">they are suffocating each other.</span>
+  </div>
+  {% endif %}
+
+  {% if green_host and green_host.name != red_host.name %}
+  <div class="anno" style="top: 120px; right: 40px; text-align: right;">
+    <em>{{ green_host.workloads | length }} services</em> orbit {{ green_host.name }}.
+    There is <span class="highlight">space here.</span>
+  </div>
+  {% endif %}
+
+  {% if vm.moves %}
+  <div class="anno" style="bottom: 90px; left: 40px; max-width: 320px;">
+    <em>{{ vm.moves | length }} particles</em> drift between them. Each is a
+    <span class="num">pct migrate</span>. Wave 1 starts at
+    <span class="num">{{ vm.waves[0].steps[0].risk if vm.waves else '?' }}/10</span> risk.
+  </div>
+  {% endif %}
+
+  <div class="bottom-strip">
+    The fleet has a center of gravity. Move what's at the edge first.
+    <span class="small">{{ vm.waves | length }} waves · low-risk first · accelerate small-batch</span>
+  </div>
+</main>
+{% endblock %}

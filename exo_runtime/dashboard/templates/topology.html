@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block styles %}<link rel="stylesheet" href="/static/topology.css">{% endblock %}
+
+{% block content %}
+{# LEFT: inventory tree #}
+<aside class="inv">
+  <div class="inv-group">
+    <h4>Hosts</h4>
+    {% for h in vm.hosts %}
+    <div class="inv-item {% if loop.first %}active{% endif %}">
+      <span class="dot dot-{% if h.status == 'red' %}red{% elif h.status == 'yellow' %}yellow{% else %}green{% endif %}"></span>
+      {{ h.name }}
+      <span class="ip">{{ h.cpu_threads }}t · {{ (h.ram_mb / 1024) | round(0, 'floor') | int }} GB</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% for h in vm.hosts %}
+  <div class="inv-group">
+    <h4>On {{ h.name }} ({{ h.workloads | length }})</h4>
+    {% for w in h.workloads %}
+    <div class="inv-item">
+      <span class="dot dot-{% if w.needs_gpu %}green{% elif w.tier == 'storage' or w.pin %}blue{% else %}green{% endif %}"></span>
+      {{ w.name }}
+      <span class="ip">{{ w.id }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+
+  {% if vm.violations %}
+  <div class="inv-group violations">
+    <h4>⚠ Violations · {{ vm.violations | length }}</h4>
+    {% for v in vm.violations[:5] %}
+    <div class="inv-item">
+      <span class="dot dot-red"></span>{{ v.workload }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</aside>
+
+{# CENTER: chassis canvas #}
+<main class="canvas">
+  <div class="canvas-pad">
+    {% for h in vm.hosts %}
+    <section class="chassis {{ h.status }}">
+      <div class="chassis-head">
+        <div>
+          <div class="chassis-name">{{ h.name }}</div>
+          <span class="chip chip-proxmox">proxmox</span>
+          {% if h.has_gpu %}<span class="chip chip-gpu">GPU</span>{% endif %}
+        </div>
+        <div class="chassis-stats">
+          <div>{{ h.cpu_threads }} thr · {{ (h.ram_mb / 1024) | round(0, 'floor') | int }} GB</div>
+          <div class="num">RAM
+            <span class="{% if h.ram_used_pct >= 85 %}red{% elif h.ram_used_pct >= 70 %}yellow{% endif %}">
+              {{ h.ram_used_pct }}%
+            </span>
+          </div>
+          {% if h.ram_used_pct != h.proposed_ram_used_pct %}
+          <div class="num">→ <span class="amber">{{ h.proposed_ram_used_pct }}%</span></div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="chassis-bar">
+        <div class="chassis-bar-fill" style="width: {{ [h.ram_used_pct, 100] | min }}%"></div>
+      </div>
+      <div class="chassis-grid">
+        {% for w in h.workloads %}
+        <div class="slot {% if w.pin %}pinned{% endif %} {% if w.needs_gpu %}gpu{% endif %}">
+          <div class="name">{{ w.name }}</div>
+          <div class="meta">
+            {{ (w.ram_mb / 1024) | round(1) }} GB · {{ w.type }}{% if w.pin %} · pin{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+        {% for pw in h.proposed_workloads %}
+        <div class="slot ghost">
+          <div class="name">+ {{ pw.name }}</div>
+          <div class="meta">from {{ pw.from }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+</main>
+
+{# RIGHT: inspector #}
+<aside class="inspector">
+  {% set primary = vm.hosts[0] %}
+  <div class="ins-head">
+    <h2>{{ primary.name }}</h2>
+    <div class="sub">
+      {{ primary.cpu_threads }} thr · {{ (primary.ram_mb / 1024) | round(0, 'floor') | int }} GB
+      {% if primary.has_gpu %}· GPU{% endif %}
+    </div>
+  </div>
+
+  {% if primary.ram_used_pct >= 85 %}
+  <div class="why-block">
+    <div class="head red">Critical · RAM at {{ primary.ram_used_pct }}%</div>
+    <div class="body">
+      <span class="num">{{ primary.ram_used_mb }} / {{ primary.ram_mb }} MB</span> allocated.
+      Hosts <span class="num">{{ primary.workloads | length }}</span> workloads.
+      Proposed: <span class="num">{{ primary.proposed_workloads | length }}</span> arrivals,
+      target RAM <span class="num">{{ primary.proposed_ram_used_pct }}%</span>.
+    </div>
+  </div>
+  {% elif primary.ram_used_pct >= 70 %}
+  <div class="why-block warning">
+    <div class="head yellow">Heads up · RAM at {{ primary.ram_used_pct }}%</div>
+    <div class="body">Within band but worth watching.</div>
+  </div>
+  {% else %}
+  <div class="why-block healthy">
+    <div class="head green">Healthy · RAM at {{ primary.ram_used_pct }}%</div>
+    <div class="body">Has headroom for additional placements.</div>
+  </div>
+  {% endif %}
+
+  <div class="ins-section">
+    <h3>Proposed rebalance · {{ vm.waves | length }} wave(s)</h3>
+    <div class="ins-list">
+      {% for wave in vm.waves %}
+      <div class="wave {% if wave.steps | selectattr('risk', 'ge', 8) | list | length > 0 %}risk-high{% elif wave.steps | selectattr('risk', 'ge', 5) | list | length > 0 %}risk-med{% else %}risk-low{% endif %}">
+        <div class="wave-head">Wave {{ wave.n }} · {{ wave.label }} ({{ wave.steps | length }})</div>
+        {% for s in wave.steps %}
+        <div class="wave-step">
+          risk {{ s.risk }}/10 · <strong>{{ s.workload }}</strong>: {{ s.from }} → {{ s.to }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+      {% if not vm.waves %}
+      <div class="ins-row"><span class="label">no moves</span><span class="val">fleet is balanced</span></div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="ins-section">
+    <h3>Metrics · {{ vm.strategy }} strategy</h3>
+    <div class="ins-list">
+      <div class="ins-row"><span class="label">Variance</span><span class="val">{{ vm.metrics.get('variance', '—') }}</span></div>
+      <div class="ins-row"><span class="label">RAM mean</span><span class="val">{{ vm.metrics.get('util_mean', '—') }}%</span></div>
+      <div class="ins-row"><span class="label">RAM max (usable)</span><span class="val">{{ vm.metrics.get('util_max', '—') }}%</span></div>
+      <div class="ins-row"><span class="label">RAM max (physical)</span><span class="val">{{ vm.metrics.get('physical_util_max', '—') }}%</span></div>
+      <div class="ins-row"><span class="label">CPU mean</span><span class="val">{{ vm.metrics.get('cpu_util_mean', '—') }}%</span></div>
+      <div class="ins-row"><span class="label">Workloads placed</span><span class="val">{{ vm.metrics.get('workloads_placed', '—') }} / {{ vm.metrics.get('workloads_total', '—') }}</span></div>
+    </div>
+  </div>
+
+  <div class="ins-section">
+    <h3>Framework basis</h3>
+    <div class="frameworks">
+      <span class="fw">K8s scheduler</span>
+      <span class="fw">VMware DRS</span>
+      <span class="fw">AWS 7 Rs</span>
+      <span class="fw">C4 model</span>
+    </div>
+  </div>
+
+  {% if vm.violations %}
+  <div class="ins-section violations">
+    <h3>⚠ Violations · {{ vm.violations | length }}</h3>
+    {% for v in vm.violations %}
+    <div class="violation-item">
+      <div class="name">{{ v.workload }} → {{ v.target }}</div>
+      <div class="reason">{{ v.reason }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</aside>
+{% endblock %}
