@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 import click
 
-from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd, execute_cmd, memory_cmd
+from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd, execute_cmd, memory_cmd, plan_cmd
 
 VERSION = "0.1.0"
 
@@ -122,6 +122,22 @@ def execute_command(plan_path: str, out_dir: str | None,
 
 
 main.add_command(memory_cmd.memory)
+
+
+@main.command("plan")
+@click.argument("fleet_path", type=click.Path(exists=True))
+@click.option("--strategy", type=click.Choice(["balanced", "specialized", "consolidated"]),
+              default="specialized")
+@click.option("--out", "out_dir", type=click.Path(), default=None,
+              help="Output dir for the plan markdown.")
+@click.option("--steps-per-wave", type=int, default=3,
+              help="How many moves to batch per migration wave.")
+def plan_command(fleet_path: str, strategy: str, out_dir: str | None,
+                 steps_per_wave: int) -> None:
+    """Rebalance a fleet description. Reads hosts + workloads + constraints,
+    produces a target placement + risk-ordered migration plan."""
+    plan_cmd.run(fleet_path=fleet_path, strategy=strategy,
+                 out_dir=out_dir, steps_per_wave=steps_per_wave)
 
 
 if __name__ == "__main__":
