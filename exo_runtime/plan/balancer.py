@@ -70,6 +70,15 @@ def _filter(workload: Workload, host: Host, current_assignments: dict[str, str],
 
     A host that fails any check here is excluded from consideration.
     """
+    # Hard constraint: ownership boundary
+    # If a host has an `owner`, it is a strict allowlist — only workloads with a
+    # matching owner can land there. Ownerless workloads CANNOT use owned hosts
+    # (treated as foreign). Hosts without an owner accept any workload.
+    # Maps to organizational boundaries (multi-tenant homelabs, family servers).
+    if host.owner and workload.owner != host.owner:
+        if workload.owner:
+            return False, f"ownership: {host.owner}'s host won't accept {workload.owner}'s workload"
+        return False, f"ownership: {host.owner}'s host requires matching owner tag"
     # Hard constraint: pinning
     if workload.pin_to_host and workload.pin_to_host != host.name:
         return False, f"pinned to {workload.pin_to_host}"

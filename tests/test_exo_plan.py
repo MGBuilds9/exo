@@ -218,6 +218,70 @@ def test_topology_spread_across_host_separates_peers():
         "dns-1 and dns-2 should land on different hosts (topology spread)"
 
 
+def test_ownership_boundary_blocks_cross_owner_placement():
+    """A workload with owner=michael should NOT land on a host with owner=david,
+    even if the host has capacity."""
+    fleet = Fleet(
+        name="multi-tenant",
+        hosts=[
+            Host(name="michaels-box", cpu_threads=8, ram_mb=32000, disk_gb=200,
+                 owner="michael"),
+            Host(name="davids-box", cpu_threads=8, ram_mb=64000, disk_gb=200,
+                 owner="david"),  # bigger but owned by david
+        ],
+        workloads=[
+            Workload(name="m-app", workload_id="1", workload_type="lxc",
+                     current_host="michaels-box", ram_mb=4000, owner="michael"),
+            Workload(name="d-app", workload_id="2", workload_type="lxc",
+                     current_host="davids-box", ram_mb=4000, owner="david"),
+        ],
+    )
+    p = balance_fleet(fleet)
+    assert p.assignments["m-app"] == "michaels-box"
+    assert p.assignments["d-app"] == "davids-box"
+    # No violations: both placements respected boundaries
+    assert len(p.violations) == 0
+
+
+def test_ownerless_workload_cannot_use_owned_host():
+    """A workload without an owner cannot land on an owner-tagged host
+    (host.owner is a strict allowlist, not a soft hint)."""
+    fleet = Fleet(
+        name="boundary",
+        hosts=[
+            Host(name="davids-box", cpu_threads=4, ram_mb=64000, disk_gb=100,
+                 owner="david"),  # strict
+            Host(name="freebox", cpu_threads=4, ram_mb=16000, disk_gb=100),  # ownerless
+        ],
+        workloads=[
+            Workload(name="shared-tool", workload_id="1", workload_type="lxc",
+                     current_host="freebox", ram_mb=2000),  # no owner
+        ],
+    )
+    p = balance_fleet(fleet)
+    # Shared tool must land on freebox, not davids-box
+    assert p.assignments["shared-tool"] == "freebox"
+
+
+def test_ownerless_host_accepts_any_workload():
+    """A host without an owner accepts any workload (including owned ones)."""
+    fleet = Fleet(
+        name="mixed",
+        hosts=[
+            Host(name="freebox", cpu_threads=8, ram_mb=64000, disk_gb=200),  # ownerless
+        ],
+        workloads=[
+            Workload(name="m-app", workload_id="1", workload_type="lxc",
+                     current_host="freebox", ram_mb=2000, owner="michael"),
+            Workload(name="shared", workload_id="2", workload_type="lxc",
+                     current_host="freebox", ram_mb=2000),  # no owner
+        ],
+    )
+    p = balance_fleet(fleet)
+    assert p.assignments["m-app"] == "freebox"
+    assert p.assignments["shared"] == "freebox"
+
+
 def test_evaluate_placement_exposes_cpu_and_physical_metrics():
     """The new metrics — cpu_util and physical_util — should be returned."""
     fleet = _small_fleet()

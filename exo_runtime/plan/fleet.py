@@ -23,6 +23,7 @@ class Host:
     has_gpu: bool = False
     gpu_model: str = ""
     role_hint: str = ""        # "compute" / "storage" / "edge" / ""
+    owner: Optional[str] = None  # whose host this is; planner won't cross owners
     notes: str = ""
     # Computed at load time
     headroom_pct: float = 0.15  # reserve 15% capacity by default
@@ -50,6 +51,7 @@ class Workload:
     dependency_group: str = ""    # workloads with same group prefer same host
     tier: str = "user"            # "edge" / "compute" / "user" / "storage" — maps to K8s nodeAffinity preferred
     migration_strategy: str = "relocate"  # 7 Rs: rehost/relocate/replatform/refactor/repurchase/retire/retain
+    owner: Optional[str] = None   # whose workload this is; must match host.owner when both set
     notes: str = ""
 
     @property
