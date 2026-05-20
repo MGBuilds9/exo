@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 import click
 
-from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd, execute_cmd, memory_cmd, plan_cmd
+from cli import architect_cmd, run_cmd, report_cmd, doctor_cmd, solve_cmd, recommend_cmd, execute_cmd, memory_cmd, plan_cmd, discover_cmd
 
 VERSION = "0.1.0"
 
@@ -122,6 +122,34 @@ def execute_command(plan_path: str, out_dir: str | None,
 
 
 main.add_command(memory_cmd.memory)
+
+
+@main.command("discover")
+@click.option("--proxmox-host", "proxmox_hosts", multiple=True, required=True,
+              help="Proxmox seed host IP (repeatable). At least one required.")
+@click.option("--subnet", default="192.168.0.0/24", help="LAN subnet to sweep.")
+@click.option("--inventory", "inventory_path", type=click.Path(), default=None,
+              help="Path to an existing HOMELAB-INVENTORY.md to cross-reference.")
+@click.option("--out", "out_path", default="fleet.yaml", help="Output path for fleet.yaml.")
+@click.option("--name", "fleet_name", default="my-fleet", help="Fleet name to embed.")
+@click.option("--ssh-user", default="root", help="SSH username for Proxmox hosts.")
+@click.option("--skip-lan", is_flag=True, help="Skip the LAN sweep (Proxmox only).")
+@click.option("--verbose", "-v", is_flag=True)
+def discover_command(proxmox_hosts: tuple[str, ...], subnet: str,
+                     inventory_path: str | None, out_path: str, fleet_name: str,
+                     ssh_user: str, skip_lan: bool, verbose: bool) -> None:
+    """Auto-build fleet.yaml from live Proxmox + LAN + inventory.
+
+    SSHs to each Proxmox seed host, enumerates the cluster, sweeps the LAN
+    for unmanaged devices, classifies them, writes a fleet.yaml ready for
+    `exo plan`.
+    """
+    discover_cmd.run(
+        proxmox_hosts=list(proxmox_hosts), subnet=subnet,
+        inventory_path=inventory_path, out_path=out_path,
+        fleet_name=fleet_name, ssh_user=ssh_user,
+        skip_lan=skip_lan, verbose=verbose,
+    )
 
 
 @main.command("plan")
