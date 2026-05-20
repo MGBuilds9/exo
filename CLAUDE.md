@@ -20,6 +20,18 @@ All algorithm choices map to published frameworks in `docs/PRINCIPLES.md`.
 - Subcommands: `cli/<name>_cmd.py` for entry, `exo_runtime/<name>/` for logic
 - Every new capability needs an entry in `docs/PRINCIPLES.md` citing its framework basis
 
+## Design System
+
+Always read `DESIGN.md` before making any visual or UI decisions. All font
+choices, colors, spacing, layout grids, motion timings, and aesthetic
+direction are defined there. Do not deviate without explicit user approval.
+In QA mode, flag any code that doesn't match `DESIGN.md`.
+
+Two views are first-class: `Topology` (default, daily-driver, light ops-room)
+and `Pulse` (secondary, organic glance, dark default). Both inherit shared
+semantic color tokens and the Atkinson Hyperlegible + Recursive Mono +
+PT Serif type system.
+
 ## Skill routing
 
 When the user's request matches an available skill, ALWAYS invoke it using the Skill
